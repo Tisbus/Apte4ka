@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/aidKitDetailFragment"
+        android:name="com.example.apte4ka.presentation.fragment.AidKitDetailFragment"
+        android:label="AidKitDetailFragment" >
+        <action
+            android:id="@+id/action_aidKitDetailFragment_to_preparationEditFragment"
+            app:destination="@id/preparationEditFragment" />
+        <action
+            android:id="@+id/action_aidKitDetailFragment_to_preparationAddFragment"
+            app:destination="@id/preparationAddFragment" />
+        <action
+            android:id="@+id/action_aidKitDetailFragment_to_preparationDetailFragment"
+            app:destination="@id/preparationDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listAidKitFragment"
+        android:name="com.example.apte4ka.presentation.fragment.ListAidKitFragment"
+        android:label="ListAidKitFragment" >
+        <action
+            android:id="@+id/action_listAidKitFragment_to_aidKitDetailFragment"
+            app:destination="@id/aidKitDetailFragment" />
+        <action
+            android:id="@+id/action_listAidKitFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_listAidKitFragment_to_searchFragment2"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_listAidKitFragment_to_aidKitAddFragment"
+            app:destination="@id/aidKitAddFragment" />
+        <action
+            android:id="@+id/action_listAidKitFragment_to_aidKitEditFragment"
+            app:destination="@id/aidKitEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/preparationAddFragment"
+        android:name="com.example.apte4ka.presentation.fragment.PreparationAddFragment"
+        android:label="PreparationAddFragment" >
+        <action
+            android:id="@+id/action_preparationAddFragment_to_aidKitDetailFragment2"
+            app:destination="@id/aidKitDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/preparationDetailFragment"
+        android:name="com.example.apte4ka.presentation.fragment.PreparationDetailFragment"
+        android:label="PreparationDetailFragment" >
+        <action
+            android:id="@+id/action_preparationDetailFragment_to_aidKitDetailFragment"
+            app:destination="@id/aidKitDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/preparationEditFragment"
+        android:name="com.example.apte4ka.presentation.fragment.PreparationEditFragment"
+        android:label="PreparationEditFragment" >
+        <action
+            android:id="@+id/action_preparationEditFragment_to_aidKitDetailFragment"
+            app:destination="@id/aidKitDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.apte4ka.presentation.fragment.SearchFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_listAidKitFragment"
+            app:destination="@id/listAidKitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.apte4ka.presentation.fragment.SplashFragment"
+        android:label="SplashFragment" >
+        <action
+            android:id="@+id/action_splashFragment_to_listAidKitFragment"
+            app:destination="@id/listAidKitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aidKitAddFragment"
+        android:name="com.example.apte4ka.presentation.fragment.AidKitAddFragment"
+        android:label="AidKitAddFragment" >
+        <action
+            android:id="@+id/action_aidKitAddFragment_to_listAidKitFragment"
+            app:destination="@id/listAidKitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aidKitEditFragment"
+        android:name="com.example.apte4ka.presentation.fragment.AidKitEditFragment"
+        android:label="AidKitEditFragment" >
+        <action
+            android:id="@+id/action_aidKitEditFragment_to_listAidKitFragment"
+            app:destination="@id/listAidKitFragment" />
+    </fragment>
+</navigation>
