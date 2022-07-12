@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
     app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/aidKitDetailFragment"
+        tools:layout="@layout/fragment_aid_kit_detail"
         android:name="com.example.apte4ka.presentation.fragment.AidKitDetailFragment"
         android:label="AidKitDetailFragment" >
         <action
@@ -20,6 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/listAidKitFragment"
+        tools:layout="@layout/fragment_list_aid_kit"
         android:name="com.example.apte4ka.presentation.fragment.ListAidKitFragment"
         android:label="ListAidKitFragment" >
         <action
@@ -39,6 +42,7 @@
             app:destination="@id/aidKitEditFragment" />
     </fragment>
     <fragment
+        tools:layout="@layout/fragment_preparation_add"
         android:id="@+id/preparationAddFragment"
         android:name="com.example.apte4ka.presentation.fragment.PreparationAddFragment"
         android:label="PreparationAddFragment" >
@@ -47,6 +51,7 @@
             app:destination="@id/aidKitDetailFragment" />
     </fragment>
     <fragment
+        tools:layout="@layout/fragment_preparation_detail"
         android:id="@+id/preparationDetailFragment"
         android:name="com.example.apte4ka.presentation.fragment.PreparationDetailFragment"
         android:label="PreparationDetailFragment" >
@@ -55,6 +60,7 @@
             app:destination="@id/aidKitDetailFragment" />
     </fragment>
     <fragment
+        tools:layout="@layout/fragment_preparation_edit"
         android:id="@+id/preparationEditFragment"
         android:name="com.example.apte4ka.presentation.fragment.PreparationEditFragment"
         android:label="PreparationEditFragment" >
@@ -63,6 +69,7 @@
             app:destination="@id/aidKitDetailFragment" />
     </fragment>
     <fragment
+        tools:layout="@layout/fragment_search"
         android:id="@+id/searchFragment"
         android:name="com.example.apte4ka.presentation.fragment.SearchFragment"
         android:label="SearchFragment" >
@@ -72,6 +79,7 @@
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
+        tools:layout="@layout/fragment_splash"
         android:name="com.example.apte4ka.presentation.fragment.SplashFragment"
         android:label="SplashFragment" >
         <action
@@ -79,6 +87,7 @@
             app:destination="@id/listAidKitFragment" />
     </fragment>
     <fragment
+        tools:layout="@layout/fragment_aid_kit_add"
         android:id="@+id/aidKitAddFragment"
         android:name="com.example.apte4ka.presentation.fragment.AidKitAddFragment"
         android:label="AidKitAddFragment" >
@@ -87,6 +96,7 @@
             app:destination="@id/listAidKitFragment" />
     </fragment>
     <fragment
+        tools:layout="@layout/fragment_aid_kit_edit"
         android:id="@+id/aidKitEditFragment"
         android:name="com.example.apte4ka.presentation.fragment.AidKitEditFragment"
         android:label="AidKitEditFragment" >
