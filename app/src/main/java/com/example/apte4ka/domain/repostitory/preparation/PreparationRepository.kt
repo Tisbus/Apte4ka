@@ -7,7 +7,7 @@ interface PreparationRepository {
     fun getPreparationList() : LiveData<MutableList<Preparation>>
     fun getPreparationItem(id : Int) : Preparation
     fun addPreparationItem(item : Preparation)
-    fun editPreparationItem(id: Int)
+    fun editPreparationItem(item : Preparation)
     fun deletePreparationItem(id : Int)
     fun deletePreparationAll()
 }

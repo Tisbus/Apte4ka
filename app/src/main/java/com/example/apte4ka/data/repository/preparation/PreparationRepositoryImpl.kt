@@ -2,6 +2,7 @@ package com.example.apte4ka.data.repository.preparation
 
 import androidx.lifecycle.LiveData
 import com.example.apte4ka.data.room.preparation.PreparationDao
+import com.example.apte4ka.domain.entity.aidkit.AidKit
 import com.example.apte4ka.domain.entity.preparation.Preparation
 import com.example.apte4ka.domain.repostitory.preparation.PreparationRepository
 
@@ -16,8 +17,8 @@ class PreparationRepositoryImpl(private val db : PreparationDao) : PreparationRe
         db.addPreparationItem(item)
     }
 
-    override fun editPreparationItem(id: Int) {
-        db.editPreparationItem(id)
+    override fun editPreparationItem(item: Preparation) {
+        db.addPreparationItem(item)
     }
 
     override fun deletePreparationItem(id: Int) {

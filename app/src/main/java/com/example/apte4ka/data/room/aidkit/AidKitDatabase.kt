@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.apte4ka.domain.entity.aidkit.AidKit
 
-@Database(entities = [AidKit::class], version = 1, exportSchema = false)
+@Database(entities = [AidKit::class], version = 2, exportSchema = false)
 abstract class AidKitDatabase : RoomDatabase() {
 
     abstract fun aidKitDao(): AidKitDao

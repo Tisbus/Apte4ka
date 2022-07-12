@@ -17,8 +17,8 @@ class AidKitRepositoryImpl(private val db : AidKitDao) : AidKitRepository {
         db.addAidKitItem(item)
     }
 
-    override fun editAidKitItem(id: Int) {
-        db.editAidKitItem(id)
+    override fun editAidKitItem(item: AidKit) {
+        db.addAidKitItem(item)
     }
 
     override fun deleteAidKitItem(id: Int) {

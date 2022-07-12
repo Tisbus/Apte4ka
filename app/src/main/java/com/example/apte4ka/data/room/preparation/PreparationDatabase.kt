@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.apte4ka.domain.entity.preparation.Preparation
 
-@Database(entities = [Preparation::class], version = 1, exportSchema = false)
+@Database(entities = [Preparation::class], version = 2, exportSchema = false)
 abstract class PreparationDatabase : RoomDatabase() {
 
     abstract fun preparationDao(): PreparationDao

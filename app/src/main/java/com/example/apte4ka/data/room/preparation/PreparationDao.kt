@@ -15,9 +15,6 @@ interface PreparationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addPreparationItem(item: Preparation)
 
-    @Query("SELECT * FROM preparation WHERE id = :id")
-    fun editPreparationItem(id: Int)
-
     @Query("DELETE FROM preparation WHERE id = :id")
     fun deletePreparationItem(id: Int)
 

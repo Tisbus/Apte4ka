@@ -84,7 +84,8 @@
         android:label="SplashFragment" >
         <action
             android:id="@+id/action_splashFragment_to_listAidKitFragment"
-            app:destination="@id/listAidKitFragment" />
+            app:destination="@id/listAidKitFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_aid_kit_add"

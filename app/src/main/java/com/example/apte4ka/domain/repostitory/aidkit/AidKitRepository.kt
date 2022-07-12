@@ -7,7 +7,7 @@ interface AidKitRepository {
     fun getAidKitList() : LiveData<MutableList<AidKit>>
     fun getAidKitItem(id : Int) : AidKit
     fun addAidKitItem(item : AidKit)
-    fun editAidKitItem(id: Int)
+    fun editAidKitItem(item : AidKit)
     fun deleteAidKitItem(id : Int)
     fun deleteAidKitAll()
 }

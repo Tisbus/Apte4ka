@@ -12,8 +12,6 @@ interface AidKitDao {
     fun getAidKitItem(id: Int): AidKit
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addAidKitItem(item: AidKit)
-    @Query("SELECT * FROM aid_kit WHERE id = :id")
-    fun editAidKitItem(id: Int)
     @Query("DELETE FROM aid_kit WHERE id = :id")
     fun deleteAidKitItem(id: Int)
     @Query("DELETE FROM aid_kit")
