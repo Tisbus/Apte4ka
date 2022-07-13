@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_listAidKitFragment_to_aidKitEditFragment"
             app:destination="@id/aidKitEditFragment" />
+        <action
+            android:id="@+id/action_listAidKitFragment_to_preparationAddFragment"
+            app:destination="@id/preparationAddFragment" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_preparation_add"

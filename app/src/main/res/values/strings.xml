@@ -19,4 +19,10 @@
     <string name="tvTextAddAid">Добавить \nАптечку</string>
     <string name="ivbAddAid">ivbAddAid</string>
     <string name="tvTextAddPreparation">Добавить\nЛекарство</string>
+    <string name="aid_kit_name">Название аптечки</string>
+    <string name="enter_name_aid_kit">Введите название аптечки</string>
+    <string name="enter_description_aid_kit">Введите описания аптечки</string>
+    <string name="description_aid_kit">Описание аптечки</string>
+    <string name="button_add">Добавить</string>
+    <string name="img_aid_kit">картинка аптечки</string>
 </resources>

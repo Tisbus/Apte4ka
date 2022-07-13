@@ -89,6 +89,7 @@
             tools:visibility="visible">
 
             <LinearLayout
+                android:id="@+id/linerMainAddAidBlock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -116,10 +117,11 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linerMainAddPrepBlock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_marginStart="20dp"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <ImageView
