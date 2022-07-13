@@ -5,8 +5,6 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "preparation")
 data class Preparation(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
     val aidKit: Int,
     val name: String,
     val symptoms: String,
@@ -14,4 +12,10 @@ data class Preparation(
     val description: String,
     val dataCreate: String,
     val dateExp: String,
-)
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = UNDEFINED_ID
+){
+    companion object{
+        const val UNDEFINED_ID = 0
+    }
+}

@@ -5,8 +5,12 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "aid_kit")
 data class AidKit(
-    @PrimaryKey(autoGenerate = true)
-    val id : Int,
     val name : String,
-    val description : String
-)
+    val description : String,
+    @PrimaryKey(autoGenerate = true)
+    val id : Int = UNDEFINED_ID
+){
+    companion object{
+        const val UNDEFINED_ID = 0
+    }
+}
