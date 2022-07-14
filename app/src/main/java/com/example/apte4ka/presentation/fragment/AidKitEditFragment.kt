@@ -1,60 +1,80 @@
 package com.example.apte4ka.presentation.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.apte4ka.R
+import com.example.apte4ka.databinding.FragmentAidKitEditBinding
+import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AidKitEditFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AidKitEditFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private var aidKitId: Int? = null
+
+    private var _bind: FragmentAidKitEditBinding? = null
+    private val bind: FragmentAidKitEditBinding
+        get() = _bind ?: throw RuntimeException("FragmentAidKitEditBinding == null")
+
+    private val viewModel by lazy {
+        ViewModelProvider(this)[AidKitViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        parseArgs()
         super.onCreate(savedInstanceState)
+    }
+
+    private fun parseArgs() {
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            aidKitId = it.getInt(AID_KIT_ID)
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_aid_kit_edit, container, false)
+    ): View {
+        _bind = FragmentAidKitEditBinding.inflate(layoutInflater, container, false)
+        return bind.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.i("check", aidKitId.toString())
+        getData()
+        saveEditForm()
+
+    }
+
+    private fun saveEditForm() {
+        with(bind) {
+            bind.bConfirmAddAidKit.setOnClickListener {
+                viewModel.editAidKitItem(
+                    etName.text.toString(),
+                    etDescription.text.toString()
+                )
+                findNavController().navigate(R.id.action_aidKitEditFragment_to_listAidKitFragment)
+            }
+        }
+    }
+
+    private fun getData() {
+        aidKitId?.let {
+            viewModel.getAidKitItem(it)
+        }
+        with(bind) {
+            aidEdit = viewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AidKitEditFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AidKitEditFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        const val AID_KIT_ID = "aid_id"
     }
 }

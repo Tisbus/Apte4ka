@@ -25,4 +25,6 @@
     <string name="description_aid_kit">Описание аптечки</string>
     <string name="button_add">Добавить</string>
     <string name="img_aid_kit">картинка аптечки</string>
+    <string name="button_delete">кнопка удалить</string>
+    <string name="button_edit">кнопка изменить</string>
 </resources>

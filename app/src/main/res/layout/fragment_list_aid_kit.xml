@@ -13,7 +13,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fillViewport="true"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,10 +27,10 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerAidKit"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="4dp" />
+                    android:layout_margin="4dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
             </LinearLayout>
         </ScrollView>
 
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintGuide_begin="630dp"
+            app:layout_constraintGuide_begin="610dp"
             app:layout_constraintStart_toStartOf="parent" />
 
         <LinearLayout
