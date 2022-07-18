@@ -41,6 +41,7 @@
             android:text="@{aidEdit.aidKitLD.name}"
             android:textColorHint="#616161"
             android:textSize="14sp"
+            android:maxLength="16"
             tools:ignore="TextContrastCheck" />
     </com.google.android.material.textfield.TextInputLayout>
     <TextView
@@ -73,6 +74,7 @@
             android:text="@{aidEdit.aidKitLD.description}"
             android:textColorHint="#616161"
             android:textSize="14sp"
+            android:maxLength="75"
             tools:ignore="TextContrastCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 

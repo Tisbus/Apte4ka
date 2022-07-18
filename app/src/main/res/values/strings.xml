@@ -27,4 +27,6 @@
     <string name="img_aid_kit">картинка аптечки</string>
     <string name="button_delete">кнопка удалить</string>
     <string name="button_edit">кнопка изменить</string>
+    <string name="prep_img">картинка препарата</string>
+    <string name="text_package">Фасовка:</string>
 </resources>

@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 data class Preparation(
     val aidKit: Int,
     val name: String,
+    val image : String,
     val symptoms: String,
     val packing: String,
     val description: String,
