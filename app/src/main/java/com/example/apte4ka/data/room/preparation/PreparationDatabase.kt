@@ -16,7 +16,7 @@ abstract class PreparationDatabase : RoomDatabase() {
         private val LOCK = Any()
         private var INSTANCE: PreparationDatabase? = null
 
-        private fun getInstance(application: Application): PreparationDatabase {
+        fun getInstance(application: Application): PreparationDatabase {
             INSTANCE?.let {
                 return it
             }
