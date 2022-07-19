@@ -32,4 +32,16 @@
     <string name="symptoms">Симптомы:</string>
     <string name="date_create">Дата создания:</string>
     <string name="date_exp">Срок годности:</string>
+    <string name="name_preparation">Название препарата</string>
+    <string name="enter_name_preparation">Введите название препарата</string>
+    <string name="where_add_aid_kit">В какую аптечку добавить?</string>
+    <string name="upload_photo_preparation">Загрузите фото препарата</string>
+    <string name="add_photo_preparation">фото препарата</string>
+    <string name="add_package_preparation">Укажите фасовку препарата</string>
+    <string name="enter_package_preparation">Введите фасовку препарата</string>
+    <string name="enter_symptoms">Введите симптомы с которыми помогает препарат</string>
+    <string name="description_preparation">Описание препарата</string>
+    <string name="enter_description_preparation">Введите описание препарата</string>
+    <string name="date_create_preparation">Дата создания препарата</string>
+    <string name="data_exp_preparation">Дата окончания срока</string>
 </resources>
