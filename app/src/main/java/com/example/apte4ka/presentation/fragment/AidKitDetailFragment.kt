@@ -7,9 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentAidKitDetailBinding
+import com.example.apte4ka.presentation.adapter.preparation.PreparationAdapter
+import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
 
 class AidKitDetailFragment : Fragment() {
 
@@ -18,6 +22,10 @@ class AidKitDetailFragment : Fragment() {
     private var _bind : FragmentAidKitDetailBinding? = null
     private val bind : FragmentAidKitDetailBinding
     get() = _bind ?: throw RuntimeException("FragmentAidKitDetailBinding == null")
+
+    private lateinit var prepModel : PreparationViewModel
+
+    private lateinit var adapterPrep : PreparationAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         parseArgs()
@@ -38,8 +46,22 @@ class AidKitDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        prepModel = ViewModelProvider(this)[PreparationViewModel::class.java]
         Log.i("check", aidKitId.toString())
+        prepModel.listPreparation.observe(viewLifecycleOwner){
+            adapterPrep.submitList(it)
+        }
+        recyclerSetup()
         addPreparation()
+    }
+
+    private fun recyclerSetup(): RecyclerView {
+        val recyclerView = bind.recyclerListPreparation
+        with(recyclerView) {
+            adapterPrep = PreparationAdapter()
+            adapter = adapterPrep
+        }
+        return recyclerView
     }
 
     private fun addPreparation() {
