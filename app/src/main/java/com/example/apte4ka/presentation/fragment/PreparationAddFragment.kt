@@ -2,38 +2,37 @@ package com.example.apte4ka.presentation.fragment
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentPreparationAddBinding
-import com.example.apte4ka.domain.entity.preparation.Preparation
 import com.example.apte4ka.presentation.adapter.listaidkit.ListAidKitAdapter
 import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
 
 class PreparationAddFragment : Fragment() {
 
-    private var aidKitId : Int? = null
+    private var aidKitId: Int? = null
 
-    private var _bind : FragmentPreparationAddBinding? = null
-    private val bind : FragmentPreparationAddBinding
-    get() = _bind?: throw RuntimeException("FragmentPreparationAddBinding == null")
+    private var _bind: FragmentPreparationAddBinding? = null
+    private val bind: FragmentPreparationAddBinding
+        get() = _bind ?: throw RuntimeException("FragmentPreparationAddBinding == null")
 
-    private lateinit var adapterListAidKit : ListAidKitAdapter
+    private lateinit var adapterListAidKit: ListAidKitAdapter
 
-    private lateinit var aidKitModel : AidKitViewModel
+    private lateinit var aidKitModel: AidKitViewModel
 
-    private lateinit var prepModel : PreparationViewModel
+    private lateinit var prepModel: PreparationViewModel
 
-    private var _aidId : Int? = null
-    private val aidId : Int
-    get() = _aidId ?: throw RuntimeException("aidId == null")
+    private var _aidId: Int? = null
+    private val aidId: Int
+        get() = _aidId ?: throw RuntimeException("aidId == null")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         parseArgs()
@@ -63,7 +62,7 @@ class PreparationAddFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         aidKitModel = ViewModelProvider(this)[AidKitViewModel::class.java]
         prepModel = ViewModelProvider(this)[PreparationViewModel::class.java]
-        aidKitModel.listAidKit.observe(viewLifecycleOwner){
+        aidKitModel.listAidKit.observe(viewLifecycleOwner) {
             adapterListAidKit.submitList(it)
             adapterListAidKit.itemSelect = {
                 _aidId = it.id
@@ -72,7 +71,11 @@ class PreparationAddFragment : Fragment() {
         }
         recyclerSetup()
         addNewPreparation()
+       bind.ivAddPhotoPreparation.setOnClickListener {
+
+       }
     }
+
 
     private fun addNewPreparation() {
         bind.bAddPreparation.setOnClickListener {
@@ -97,7 +100,7 @@ class PreparationAddFragment : Fragment() {
         }
     }
 
-    private fun recyclerSetup() : RecyclerView {
+    private fun recyclerSetup(): RecyclerView {
         val recyclerView = bind.recyclerListSetAidKit
         with(recyclerView) {
             adapterListAidKit = ListAidKitAdapter()
@@ -106,7 +109,9 @@ class PreparationAddFragment : Fragment() {
         return recyclerView
     }
 
-    companion object{
+    companion object {
         const val AID_KIT_ID = "aid_id"
+        const val IMAGE_PICK_CODE = 666
+        const val PERMISSION_CODE = 999
     }
 }
