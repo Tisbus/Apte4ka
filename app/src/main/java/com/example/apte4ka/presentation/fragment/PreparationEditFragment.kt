@@ -1,60 +1,186 @@
 package com.example.apte4ka.presentation.fragment
 
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.apte4ka.R
+import com.example.apte4ka.databinding.FragmentPreparationEditBinding
+import com.example.apte4ka.domain.entity.preparation.Preparation
+import com.example.apte4ka.presentation.adapter.listaidkit.ListAidKitAdapter
+import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
+import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
+import com.squareup.picasso.Picasso
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [PreparationEditFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PreparationEditFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private var _bind: FragmentPreparationEditBinding? = null
+    private val bind: FragmentPreparationEditBinding
+        get() = _bind ?: throw RuntimeException("FragmentPreparationEditBinding == null")
+
+    private lateinit var adapterListAidKit: ListAidKitAdapter
+    private lateinit var viewModelPrep: PreparationViewModel
+    private lateinit var aidKitModel: AidKitViewModel
+    private var urlImg: Uri? = null
+    private var imageUrl: String = ""
+
+    private var _aidId: Int? = null
+    private val aidId: Int
+        get() = _aidId ?: throw RuntimeException("aidId == null")
+
+    private var currentDate: String = ""
+    private var expDate: String = ""
+    private var idPrep: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        parseArgs()
         super.onCreate(savedInstanceState)
+    }
+
+    private fun parseArgs() {
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            idPrep = it.getInt(AID_KIT_ID)
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_preparation_edit, container, false)
+    ): View {
+        _bind = FragmentPreparationEditBinding.inflate(inflater, container, false)
+        return bind.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModelPrep = ViewModelProvider(this)[PreparationViewModel::class.java]
+        aidKitModel = ViewModelProvider(this)[AidKitViewModel::class.java]
+        setupSetDataLayout()
+        aidKitModel.listAidKit.observe(viewLifecycleOwner){
+            adapterListAidKit.submitList(it)
+            adapterListAidKit.itemSelect = {
+                _aidId = it.id
+            }
+        }
+        recyclerSetup()
+        setupSetImages()
+        setupDate()
+        editPrep()
+    }
+
+    private fun editPrep() {
+        bind.bEditPreparation.setOnClickListener {
+            with(bind) {
+                val name = etNamePreparation.text.toString()
+                imageUrl = urlImg.toString()
+                val symptoms = etAddSymptomsPreparation.text.toString()
+                val packing = etPackagePreparation.text.toString()
+                val description = etDescriptionPreparation.text.toString()
+                val dateCreate = currentDate
+                val dateExp = expDate
+                viewModelPrep.editPreparationItem(
+                    aidId,
+                    name,
+                    imageUrl,
+                    symptoms,
+                    packing,
+                    description,
+                    dateCreate,
+                    dateExp)
+            }
+            findNavController().navigate(R.id.action_preparationEditFragment_to_aidKitDetailFragment)
+        }
+    }
+
+    private fun setupDate() {
+        fun getDate(year: Int, month: Int, day: Int): String {
+            val dateFormat = SimpleDateFormat("dd.MM.yyyy")
+            val calendar = Calendar.getInstance()
+            calendar.set(year, month, day)
+            return dateFormat.format(calendar.time)
+        }
+        bind.cvDateCreate.setOnDateChangeListener {
+                calendarView,
+                year,
+                month,
+                day,
+            ->
+            currentDate = getDate(year, month, day)
+        }
+
+        bind.cvDateExp.setOnDateChangeListener {
+                calendarView,
+                year,
+                month,
+                day,
+            ->
+            expDate = getDate(year, month, day)
+        }
+    }
+
+    private fun setupSetImages() {
+        val takeImages =
+            registerForActivityResult(ActivityResultContracts.TakePicture()) { success: Boolean ->
+                if (success) {
+                    Picasso.get().load(urlImg).rotate(90F).into(bind.ivAddPhotoPreparation)
+                }
+            }
+
+        fun takeImages() {
+            val pathImg = File(requireActivity().externalMediaDirs.first(), "Apte4ka")
+            pathImg.mkdirs()
+            val fileName = "img_" + System.currentTimeMillis() + ".jpg"
+            val sdImageDirectoryPath = File(pathImg, fileName)
+            urlImg = FileProvider.getUriForFile(
+                requireContext(),
+                "com.example.apte4ka",
+                sdImageDirectoryPath
+            )
+            takeImages.launch(urlImg)
+        }
+        bind.ivAddPhotoPreparation.setOnClickListener {
+            takeImages()
+        }
+    }
+
+    private fun recyclerSetup(): RecyclerView {
+        val recyclerView = bind.recyclerListSetAidKit
+        with(recyclerView) {
+            adapterListAidKit = ListAidKitAdapter()
+            adapter = adapterListAidKit
+        }
+        return recyclerView
+    }
+
+    private fun setupSetDataLayout() {
+        with(bind){
+            editPrep = viewModelPrep
+            lifecycleOwner = viewLifecycleOwner
+        }
+        idPrep?.let{
+            viewModelPrep.getPreparationItem(it)
+            _aidId = it
+            imageUrl = viewModelPrep.prepLD.value?.image.toString()
+            urlImg = Uri.parse(imageUrl)
+            currentDate = viewModelPrep.prepLD.value?.dataCreate.toString()
+            expDate = viewModelPrep.prepLD.value?.dateExp.toString()
+        }
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PreparationEditFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PreparationEditFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        const val AID_KIT_ID = "aid_id"
     }
 }
