@@ -9,6 +9,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentAidKitDetailBinding
@@ -53,6 +54,52 @@ class AidKitDetailFragment : Fragment() {
         }
         recyclerSetup()
         addPreparation()
+        itemDelete()
+        itemEdit()
+
+    }
+
+    private fun itemEdit() {
+        val itemTHEditCallback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder,
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val bundle = bundleOf(AID_KIT_ID to adapterPrep.currentList[viewHolder.adapterPosition].id)
+                findNavController().navigate(
+                    R.id.action_aidKitDetailFragment_to_preparationEditFragment,
+                    bundle
+                )
+            }
+        }
+        ItemTouchHelper(itemTHEditCallback)
+            .attachToRecyclerView(recyclerSetup())
+    }
+
+    private fun itemDelete() {
+        val itemTHDeleteCallback =
+            object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder,
+                ): Boolean {
+                    return false
+                }
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    prepModel.deletePreparationItem(adapterPrep.currentList[viewHolder.adapterPosition].id)
+                }
+            }
+        ItemTouchHelper(itemTHDeleteCallback)
+            .attachToRecyclerView(recyclerSetup())
     }
 
     private fun recyclerSetup(): RecyclerView {
@@ -60,6 +107,13 @@ class AidKitDetailFragment : Fragment() {
         with(recyclerView) {
             adapterPrep = PreparationAdapter()
             adapter = adapterPrep
+            adapterPrep.itemSelect = {
+                val bundle = bundleOf(AID_KIT_ID to it.id)
+                findNavController().navigate(
+                    R.id.action_aidKitDetailFragment_to_preparationDetailFragment,
+                    bundle
+                )
+            }
         }
         return recyclerView
     }
