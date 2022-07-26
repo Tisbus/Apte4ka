@@ -1,10 +1,13 @@
 package com.example.apte4ka.presentation.fragment
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +18,10 @@ import com.example.apte4ka.databinding.FragmentPreparationAddBinding
 import com.example.apte4ka.presentation.adapter.listaidkit.ListAidKitAdapter
 import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
+import com.squareup.picasso.Picasso
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PreparationAddFragment : Fragment() {
 
@@ -33,6 +40,11 @@ class PreparationAddFragment : Fragment() {
     private var _aidId: Int? = null
     private val aidId: Int
         get() = _aidId ?: throw RuntimeException("aidId == null")
+
+    private var urlImg: Uri? = null
+
+    private var currentDate: String = ""
+    private var expDate: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         parseArgs()
@@ -71,22 +83,71 @@ class PreparationAddFragment : Fragment() {
         }
         recyclerSetup()
         addNewPreparation()
-       bind.ivAddPhotoPreparation.setOnClickListener {
-
-       }
+        setupSetImages()
+        setupDate()
     }
 
+    private fun setupDate() {
+        fun getDate(year: Int, month: Int, day: Int): String {
+            val dateFormat = SimpleDateFormat("dd.MM.yyyy")
+            val calendar = Calendar.getInstance()
+            calendar.set(year, month, day)
+            return dateFormat.format(calendar.time)
+        }
+        bind.cvDateCreate.setOnDateChangeListener {
+                calendarView,
+                year,
+                month,
+                day,
+            ->
+            currentDate = getDate(year, month, day)
+        }
+
+        bind.cvDateExp.setOnDateChangeListener {
+                calendarView,
+                year,
+                month,
+                day,
+            ->
+            expDate = getDate(year, month, day)
+        }
+    }
+
+    private fun setupSetImages() {
+        val takeImages =
+            registerForActivityResult(ActivityResultContracts.TakePicture()) { success: Boolean ->
+                if (success) {
+                    Picasso.get().load(urlImg).rotate(90F).into(bind.ivAddPhotoPreparation)
+                }
+            }
+
+        fun takeImages() {
+            val pathImg = File(requireActivity().externalMediaDirs.first(), "Apte4ka")
+            pathImg.mkdirs()
+            val fileName = "img_" + System.currentTimeMillis() + ".jpg"
+            val sdImageDirectoryPath = File(pathImg, fileName)
+            urlImg = FileProvider.getUriForFile(
+                requireContext(),
+                "com.example.apte4ka",
+                sdImageDirectoryPath
+            )
+            takeImages.launch(urlImg)
+        }
+        bind.ivAddPhotoPreparation.setOnClickListener {
+            takeImages()
+        }
+    }
 
     private fun addNewPreparation() {
         bind.bAddPreparation.setOnClickListener {
             with(bind) {
                 val name = etNamePreparation.text.toString()
-                val image = ""
+                val image = urlImg.toString()
                 val symptoms = etAddSymptomsPreparation.text.toString()
                 val packing = etPackagePreparation.text.toString()
                 val description = etDescriptionPreparation.text.toString()
-                val dateCreate = "14.05.2022"
-                val dateExp = "14.05.2024"
+                val dateCreate = currentDate
+                val dateExp = expDate
                 prepModel.addPreparationItem(aidId,
                     name,
                     image,
@@ -111,7 +172,5 @@ class PreparationAddFragment : Fragment() {
 
     companion object {
         const val AID_KIT_ID = "aid_id"
-        const val IMAGE_PICK_CODE = 666
-        const val PERMISSION_CODE = 999
     }
 }
