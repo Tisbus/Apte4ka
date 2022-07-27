@@ -1,9 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.fragment.PreparationDetailFragment">
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <data>
+
+        <variable
+            name="detailPrep"
+            type="com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.fragment.PreparationDetailFragment">
+
+        <TextView
+            android:id="@+id/tvTitleDetPrep"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:padding="8dp"
+            android:text="@{detailPrep.prepLD.name}"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/ivDetImage"
+            app:layout_constraintEnd_toStartOf="@+id/tvDetPackage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Фурацилин" />
+
+        <TextView
+            android:id="@+id/tvDetPackage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:padding="8dp"
+            android:text="@{detailPrep.prepLD.packing}"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTitleDetPrep"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvTitleDetPrep"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="17 мг" />
+
+        <ImageView
+            android:id="@+id/ivDetImage"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+            android:layout_margin="8dp"
+            android:contentDescription="@string/prep_img"
+            android:padding="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/tvDetTitleDateCreate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitleDetPrep"
+            app:setImagePreparation="@{detailPrep.prepLD.image}"
+            app:srcCompat="@drawable/preparation" />
+
+        <TextView
+            android:id="@+id/tvDetTitleDateCreate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="@string/date_create"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tvDetDateCreate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivDetImage" />
+
+        <TextView
+            android:id="@+id/tvDetDateCreate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="@{detailPrep.prepLD.dataCreate}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvDetTitleDateCreate"
+            app:layout_constraintTop_toBottomOf="@+id/ivDetImage"
+            tools:text="25.04.2022" />
+
+        <TextView
+            android:id="@+id/tvDetTitleDateExp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="@string/date_exp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tvDetDateExp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetTitleDateCreate" />
+
+        <TextView
+            android:id="@+id/tvDetDateExp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="@{detailPrep.prepLD.dateExp}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvDetTitleDateExp"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetDateCreate"
+            tools:text="29.06.2022" />
+
+        <TextView
+            android:id="@+id/tvDetTitleSymptoms"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="@string/symptoms"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/tvDetSymptoms"
+            app:layout_constraintEnd_toStartOf="@+id/tvDetSymptoms"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetTitleDateExp" />
+
+        <TextView
+            android:id="@+id/tvDetSymptoms"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="@{detailPrep.prepLD.symptoms}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvDetTitleSymptoms"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetDateExp"
+            tools:text="Головная боль, кашель, боль в горле" />
+
+        <TextView
+            android:id="@+id/tvDetTitleDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/detail_description"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:padding="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetTitleSymptoms" />
+
+        <TextView
+            android:id="@+id/tvDetDescription"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            tools:text="TextViewTextViewTextViewTextViewTextView"
+            android:padding="4dp"
+            android:text="@{detailPrep.prepLD.description}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetTitleDescription" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

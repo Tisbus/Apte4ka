@@ -44,4 +44,5 @@
     <string name="enter_description_preparation">Введите описание препарата</string>
     <string name="date_create_preparation">Дата создания препарата</string>
     <string name="data_exp_preparation">Дата окончания срока</string>
+    <string name="detail_description">Детальное описание:</string>
 </resources>
