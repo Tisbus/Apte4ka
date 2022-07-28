@@ -9,7 +9,7 @@ import java.util.*
 
 @BindingAdapter("setImagePreparation")
 fun setImagePreparation(iv: ImageView, imgUrl: String) {
-    Picasso.get().load(imgUrl).rotate(90f).into(iv)
+    Picasso.get().load(imgUrl).into(iv)
 }
 
 @BindingAdapter("getCalendarDate")

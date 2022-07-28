@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -117,7 +118,7 @@ class PreparationAddFragment : Fragment() {
         val takeImages =
             registerForActivityResult(ActivityResultContracts.TakePicture()) { success: Boolean ->
                 if (success) {
-                    Picasso.get().load(urlImg).rotate(90F).into(bind.ivAddPhotoPreparation)
+                    Picasso.get().load(urlImg).into(bind.ivAddPhotoPreparation)
                 }
             }
 
@@ -157,7 +158,9 @@ class PreparationAddFragment : Fragment() {
                     dateCreate,
                     dateExp)
             }
-            findNavController().navigate(R.id.action_preparationAddFragment_to_aidKitDetailFragment2)
+            val bundle = bundleOf(AID_KIT_ID to aidKitId)
+            findNavController().navigate(R.id.action_preparationAddFragment_to_aidKitDetailFragment2,
+                bundle)
         }
     }
 

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -101,7 +102,9 @@ class PreparationEditFragment : Fragment() {
                     dateCreate,
                     dateExp)
             }
-            findNavController().navigate(R.id.action_preparationEditFragment_to_aidKitDetailFragment)
+            val bundle = bundleOf(AID_KIT_ID to idPrep)
+            findNavController().navigate(R.id.action_preparationEditFragment_to_aidKitDetailFragment,
+            bundle)
         }
     }
 
@@ -135,7 +138,7 @@ class PreparationEditFragment : Fragment() {
         val takeImages =
             registerForActivityResult(ActivityResultContracts.TakePicture()) { success: Boolean ->
                 if (success) {
-                    Picasso.get().load(urlImg).rotate(90F).into(bind.ivAddPhotoPreparation)
+                    Picasso.get().load(urlImg).into(bind.ivAddPhotoPreparation)
                 }
             }
 

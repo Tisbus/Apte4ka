@@ -49,8 +49,8 @@ class AidKitDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         prepModel = ViewModelProvider(this)[PreparationViewModel::class.java]
         Log.i("check", aidKitId.toString())
-        prepModel.listPreparation.observe(viewLifecycleOwner){
-            adapterPrep.submitList(it)
+            prepModel.listPreparation.observe(viewLifecycleOwner){
+                adapterPrep.submitList(it.filter { i -> i.aidKit == aidKitId })
         }
         recyclerSetup()
         addPreparation()
@@ -128,5 +128,6 @@ class AidKitDetailFragment : Fragment() {
 
     companion object{
         const val AID_KIT_ID = "aid_id"
+        const val AID_KIT_ID_BACK = "aid_id_back"
     }
 }
