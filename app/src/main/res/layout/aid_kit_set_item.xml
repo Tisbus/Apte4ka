@@ -7,7 +7,9 @@
         name="list_aid_kit"
         type="com.example.apte4ka.domain.entity.aidkit.AidKit" />
 </data>
+
     <androidx.cardview.widget.CardView
+        android:id="@+id/cvAidKitItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
@@ -24,8 +26,8 @@
                 android:layout_height="100dp"
                 android:gravity="center"
                 android:padding="4dp"
-                android:textStyle="bold"
                 android:text="@{list_aid_kit.name}"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
