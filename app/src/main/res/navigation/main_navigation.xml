@@ -19,6 +19,11 @@
         <action
             android:id="@+id/action_aidKitDetailFragment_to_preparationDetailFragment"
             app:destination="@id/preparationDetailFragment" />
+        <action
+            android:id="@+id/action_aidKitDetailFragment_to_listAidKitFragment"
+            app:destination="@id/listAidKitFragment"
+            app:popUpTo="@id/listAidKitFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/listAidKitFragment"
@@ -51,7 +56,9 @@
         android:label="PreparationAddFragment" >
         <action
             android:id="@+id/action_preparationAddFragment_to_aidKitDetailFragment2"
-            app:destination="@id/aidKitDetailFragment" />
+            app:destination="@id/aidKitDetailFragment"
+            app:popUpTo="@id/aidKitDetailFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_preparation_detail"
@@ -69,7 +76,9 @@
         android:label="PreparationEditFragment" >
         <action
             android:id="@+id/action_preparationEditFragment_to_aidKitDetailFragment"
-            app:destination="@id/aidKitDetailFragment" />
+            app:destination="@id/aidKitDetailFragment"
+            app:popUpTo="@id/aidKitDetailFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_search"
@@ -78,7 +87,9 @@
         android:label="SearchFragment" >
         <action
             android:id="@+id/action_searchFragment_to_listAidKitFragment"
-            app:destination="@id/listAidKitFragment" />
+            app:destination="@id/listAidKitFragment"
+            app:popUpTo="@id/listAidKitFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -97,7 +108,9 @@
         android:label="AidKitAddFragment" >
         <action
             android:id="@+id/action_aidKitAddFragment_to_listAidKitFragment"
-            app:destination="@id/listAidKitFragment" />
+            app:destination="@id/listAidKitFragment"
+            app:popUpTo="@id/listAidKitFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_aid_kit_edit"
@@ -106,6 +119,8 @@
         android:label="AidKitEditFragment" >
         <action
             android:id="@+id/action_aidKitEditFragment_to_listAidKitFragment"
-            app:destination="@id/listAidKitFragment" />
+            app:destination="@id/listAidKitFragment"
+            app:popUpTo="@id/listAidKitFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

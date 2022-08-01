@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentPreparationAddBinding
+import com.example.apte4ka.domain.entity.aidkit.AidKit
 import com.example.apte4ka.presentation.adapter.listaidkit.ListAidKitAdapter
 import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
@@ -45,6 +46,8 @@ class PreparationAddFragment : Fragment() {
     private var currentDate: String = ""
     private var expDate: String = ""
 
+    private var listAidKit : MutableList<AidKit> = mutableListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -68,13 +71,13 @@ class PreparationAddFragment : Fragment() {
         aidKitModel = ViewModelProvider(this)[AidKitViewModel::class.java]
         prepModel = ViewModelProvider(this)[PreparationViewModel::class.java]
         aidKitModel.listAidKit.observe(viewLifecycleOwner) {
-            adapterListAidKit.submitList(it)
+            listAidKit = it
+            recyclerSetup()
             adapterListAidKit.itemSelect = {
                 _aidId = it.id
                 Log.i("itemId", aidId.toString())
             }
         }
-        recyclerSetup()
         addNewPreparation()
         setupSetImages()
         setupDate()
@@ -159,7 +162,7 @@ class PreparationAddFragment : Fragment() {
     private fun recyclerSetup(): RecyclerView {
         val recyclerView = bind.recyclerListSetAidKit
         with(recyclerView) {
-            adapterListAidKit = ListAidKitAdapter()
+            adapterListAidKit = ListAidKitAdapter(listAidKit)
             adapter = adapterListAidKit
         }
         return recyclerView
