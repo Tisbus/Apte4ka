@@ -2,6 +2,7 @@ package com.example.apte4ka.presentation.fragment
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,8 +50,10 @@ class PreparationEditFragment : Fragment() {
 
     private fun parseArgs() {
         arguments?.let {
-            idPrep = it.getInt(AID_KIT_ID)
+            idPrep = it.getInt(DETAIL_PREP_ID)
+            _aidId = it.getInt(AID_KIT_ID)
         }
+        Log.i("Prep", idPrep.toString() + " " + _aidId.toString())
     }
 
     override fun onCreateView(
@@ -68,6 +71,8 @@ class PreparationEditFragment : Fragment() {
         setupSetDataLayout()
         aidKitModel.listAidKit.observe(viewLifecycleOwner){
             adapterListAidKit.submitList(it)
+/*            Log.i("Prep",  adapterListAidKit.currentList[aidId].id.toString())
+            adapterListAidKit.currentList[aidId].status = true*/
             adapterListAidKit.itemSelect = {
                 _aidId = it.id
             }
@@ -98,7 +103,7 @@ class PreparationEditFragment : Fragment() {
                     dateCreate,
                     dateExp)
             }
-            val bundle = bundleOf(AID_KIT_ID to idPrep)
+            val bundle = bundleOf(AID_KIT_ID to aidId)
             findNavController().navigate(R.id.action_preparationEditFragment_to_aidKitDetailFragment,
             bundle)
         }
@@ -171,7 +176,6 @@ class PreparationEditFragment : Fragment() {
         }
         idPrep?.let{
             viewModelPrep.getPreparationItem(it)
-            _aidId = it
             imageUrl = viewModelPrep.prepLD.value?.image.toString()
             urlImg = Uri.parse(imageUrl)
             currentDate = viewModelPrep.prepLD.value?.dataCreate.toString()
@@ -181,5 +185,6 @@ class PreparationEditFragment : Fragment() {
 
     companion object {
         const val AID_KIT_ID = "aid_id"
+        const val DETAIL_PREP_ID = "detail_prep_id"
     }
 }

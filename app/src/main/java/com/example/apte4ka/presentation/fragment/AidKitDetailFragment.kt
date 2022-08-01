@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentAidKitDetailBinding
 import com.example.apte4ka.presentation.adapter.preparation.PreparationAdapter
+import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
 
 class AidKitDetailFragment : Fragment() {
@@ -73,7 +74,9 @@ class AidKitDetailFragment : Fragment() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val bundle = bundleOf(AID_KIT_ID to adapterPrep.currentList[viewHolder.adapterPosition].id)
+                val bundle = bundleOf(DETAIL_PREP_ID to adapterPrep.currentList[viewHolder.adapterPosition].id,
+                AID_KIT_ID to aidKitId)
+
                 findNavController().navigate(
                     R.id.action_aidKitDetailFragment_to_preparationEditFragment,
                     bundle
@@ -120,14 +123,12 @@ class AidKitDetailFragment : Fragment() {
 
     private fun addPreparation() {
         bind.linerAddPrepBlock.setOnClickListener {
-            val bundle = bundleOf(AID_KIT_ID to aidKitId)
-            findNavController().navigate(R.id.action_aidKitDetailFragment_to_preparationAddFragment,
-                bundle)
+            findNavController().navigate(R.id.action_aidKitDetailFragment_to_preparationAddFragment)
         }
     }
 
     companion object{
         const val AID_KIT_ID = "aid_id"
-        const val AID_KIT_ID_BACK = "aid_id_back"
+        const val DETAIL_PREP_ID = "detail_prep_id"
     }
 }

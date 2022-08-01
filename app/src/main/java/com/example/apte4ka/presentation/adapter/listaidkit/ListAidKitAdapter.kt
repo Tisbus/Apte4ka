@@ -31,11 +31,15 @@ class ListAidKitAdapter :
         val itemListAidKit = getItem(position)
         val binding = holder.binding
         binding.listAidKit = itemListAidKit
+        if(itemListAidKit.status){
+            binding.cvAidKitItem.background.setTint(Color.RED)
+        }
         if (selectItem == position) {
             binding.cvAidKitItem.background.setTint(Color.RED)
         } else {
             binding.cvAidKitItem.background.setTint(Color.WHITE)
         }
+
         binding.root.setOnClickListener {
             itemSelect?.invoke(itemListAidKit)
             selectItem = position

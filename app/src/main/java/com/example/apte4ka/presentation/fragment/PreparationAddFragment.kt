@@ -26,8 +26,6 @@ import java.util.*
 
 class PreparationAddFragment : Fragment() {
 
-    private var aidKitId: Int? = null
-
     private var _bind: FragmentPreparationAddBinding? = null
     private val bind: FragmentPreparationAddBinding
         get() = _bind ?: throw RuntimeException("FragmentPreparationAddBinding == null")
@@ -48,15 +46,9 @@ class PreparationAddFragment : Fragment() {
     private var expDate: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        parseArgs()
         super.onCreate(savedInstanceState)
     }
 
-    private fun parseArgs() {
-        arguments?.let {
-            aidKitId = it.getInt(AID_KIT_ID)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -158,7 +150,7 @@ class PreparationAddFragment : Fragment() {
                     dateCreate,
                     dateExp)
             }
-            val bundle = bundleOf(AID_KIT_ID to aidKitId)
+            val bundle = bundleOf(AID_KIT_ID to aidId)
             findNavController().navigate(R.id.action_preparationAddFragment_to_aidKitDetailFragment2,
                 bundle)
         }

@@ -7,10 +7,12 @@ import androidx.room.PrimaryKey
 data class AidKit(
     val name : String,
     val description : String,
+    var status : Boolean = ACTIVE_STATUS,
     @PrimaryKey(autoGenerate = true)
     val id : Int = UNDEFINED_ID
 ){
     companion object{
         const val UNDEFINED_ID = 0
+        const val ACTIVE_STATUS = false
     }
 }
