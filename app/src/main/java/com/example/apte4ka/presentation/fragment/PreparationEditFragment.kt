@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentPreparationEditBinding
+import com.example.apte4ka.domain.entity.aidkit.AidKit
 import com.example.apte4ka.presentation.adapter.listaidkit.ListAidKitAdapter
 import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
@@ -43,6 +44,8 @@ class PreparationEditFragment : Fragment() {
     private var expDate: String = ""
     private var idPrep: Int? = null
 
+    private var listAidKit : MutableList<AidKit> = mutableListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         parseArgs()
         super.onCreate(savedInstanceState)
@@ -69,15 +72,15 @@ class PreparationEditFragment : Fragment() {
         viewModelPrep = ViewModelProvider(this)[PreparationViewModel::class.java]
         aidKitModel = ViewModelProvider(this)[AidKitViewModel::class.java]
         setupSetDataLayout()
+
         aidKitModel.listAidKit.observe(viewLifecycleOwner){
-            adapterListAidKit.submitList(it)
-/*            Log.i("Prep",  adapterListAidKit.currentList[aidId].id.toString())
-            adapterListAidKit.currentList[aidId].status = true*/
+            listAidKit = it
+            recyclerSetup()
+            listAidKit[aidId-1].status = true
             adapterListAidKit.itemSelect = {
                 _aidId = it.id
             }
         }
-        recyclerSetup()
         setupSetImages()
         setupDate()
         editPrep()
@@ -163,7 +166,7 @@ class PreparationEditFragment : Fragment() {
     private fun recyclerSetup(): RecyclerView {
         val recyclerView = bind.recyclerListSetAidKit
         with(recyclerView) {
-            adapterListAidKit = ListAidKitAdapter()
+            adapterListAidKit = ListAidKitAdapter(listAidKit)
             adapter = adapterListAidKit
         }
         return recyclerView
