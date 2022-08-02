@@ -14,20 +14,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentAidKitDetailBinding
 import com.example.apte4ka.presentation.adapter.preparation.PreparationAdapter
-import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
 
 class AidKitDetailFragment : Fragment() {
 
     private var aidKitId: Int? = null
 
-    private var _bind : FragmentAidKitDetailBinding? = null
-    private val bind : FragmentAidKitDetailBinding
-    get() = _bind ?: throw RuntimeException("FragmentAidKitDetailBinding == null")
+    private var _bind: FragmentAidKitDetailBinding? = null
+    private val bind: FragmentAidKitDetailBinding
+        get() = _bind ?: throw RuntimeException("FragmentAidKitDetailBinding == null")
 
-    private lateinit var prepModel : PreparationViewModel
+    private lateinit var prepModel: PreparationViewModel
 
-    private lateinit var adapterPrep : PreparationAdapter
+    private lateinit var adapterPrep: PreparationAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         parseArgs()
@@ -50,8 +49,8 @@ class AidKitDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         prepModel = ViewModelProvider(this)[PreparationViewModel::class.java]
         Log.i("check", aidKitId.toString())
-            prepModel.listPreparation.observe(viewLifecycleOwner){
-                adapterPrep.submitList(it.filter { i -> i.aidKit == aidKitId })
+        prepModel.listPreparation.observe(viewLifecycleOwner) {
+            adapterPrep.submitList(it.filter { i -> i.aidKit == aidKitId })
         }
         recyclerSetup()
         addPreparation()
@@ -74,8 +73,9 @@ class AidKitDetailFragment : Fragment() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val bundle = bundleOf(DETAIL_PREP_ID to adapterPrep.currentList[viewHolder.adapterPosition].id,
-                AID_KIT_ID to aidKitId)
+                val bundle =
+                    bundleOf(DETAIL_PREP_ID to adapterPrep.currentList[viewHolder.adapterPosition].id,
+                        AID_KIT_ID to aidKitId)
 
                 findNavController().navigate(
                     R.id.action_aidKitDetailFragment_to_preparationEditFragment,
@@ -97,6 +97,7 @@ class AidKitDetailFragment : Fragment() {
                 ): Boolean {
                     return false
                 }
+
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     prepModel.deletePreparationItem(adapterPrep.currentList[viewHolder.adapterPosition].id)
                 }
@@ -111,7 +112,7 @@ class AidKitDetailFragment : Fragment() {
             adapterPrep = PreparationAdapter()
             adapter = adapterPrep
             adapterPrep.itemSelect = {
-                val bundle = bundleOf(AID_KIT_ID to it.id)
+                val bundle = bundleOf(DETAIL_PREP_ID to it.id)
                 findNavController().navigate(
                     R.id.action_aidKitDetailFragment_to_preparationDetailFragment,
                     bundle
@@ -127,7 +128,7 @@ class AidKitDetailFragment : Fragment() {
         }
     }
 
-    companion object{
+    companion object {
         const val AID_KIT_ID = "aid_id"
         const val DETAIL_PREP_ID = "detail_prep_id"
     }

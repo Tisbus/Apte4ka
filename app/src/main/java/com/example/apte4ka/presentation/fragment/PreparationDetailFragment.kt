@@ -25,7 +25,7 @@ class PreparationDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            idPrep = it.getInt(AID_KIT_ID)
+            idPrep = it.getInt(DETAIL_PREP_ID)
         }
     }
 
@@ -50,6 +50,6 @@ class PreparationDetailFragment : Fragment() {
     }
 
     companion object{
-        const val AID_KIT_ID = "aid_id"
+        const val DETAIL_PREP_ID = "detail_prep_id"
     }
 }
