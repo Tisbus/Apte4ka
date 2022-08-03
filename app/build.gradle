@@ -55,7 +55,7 @@ dependencies {
     implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.3')
 
     //room
-    var roomVersion = "2.4.2"
+    var roomVersion = "2.4.3"
     implementation("androidx.room:room-runtime:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
     // To use Kotlin annotation processing tool (kapt)
@@ -64,18 +64,18 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
 
 
-    var lifecycle_version = '2.5.0-rc02'
+    var lifecycle_version = '2.5.1'
     // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
     // Lifecycles only (without ViewModel or LiveData)
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
     // Annotation processor
     //noinspection LifecycleAnnotationProcessorWithJava8
     kapt("androidx.lifecycle:lifecycle-compiler:2.6.0-alpha01")
 
     //navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.1'
 
     //dagger
     implementation 'com.google.dagger:dagger:2.42'

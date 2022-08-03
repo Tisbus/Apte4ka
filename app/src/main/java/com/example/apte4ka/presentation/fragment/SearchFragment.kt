@@ -13,7 +13,6 @@ import com.example.apte4ka.databinding.FragmentSearchBinding
 import com.example.apte4ka.domain.entity.preparation.Preparation
 import com.example.apte4ka.presentation.adapter.search.SearchAdapter
 import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
-import java.util.*
 
 class SearchFragment : Fragment() {
 
@@ -25,13 +24,12 @@ class SearchFragment : Fragment() {
 
     private lateinit var viewModelPreparation: PreparationViewModel
 
-/*    private var displaySearchList: MutableList<Preparation> = mutableListOf()*/
     private var listPrep: MutableList<Preparation> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +44,7 @@ class SearchFragment : Fragment() {
         viewModelPreparation = ViewModelProvider(this)[PreparationViewModel::class.java]
         viewModelPreparation.listPreparation.observe(viewLifecycleOwner) {
             listPrep = it
+            setupRecyclerView()
         }
         setupRecyclerView()
     }
@@ -54,31 +53,23 @@ class SearchFragment : Fragment() {
         inflater.inflate(R.menu.menu, menu)
         val searchItem = menu.findItem(R.id.action_search)
         val searchView = searchItem?.actionView as SearchView
-
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-/*                if (newText?.isNotEmpty() == true) {
-                    displaySearchList.clear()
-                    val search = newText.lowercase(Locale.getDefault())
-                    listPrep.forEach {
-                        if (it.name.lowercase(Locale.getDefault()).contains(search)) {
-                            displaySearchList.add(it)
-                            adapterSearch.notifyDataSetChanged()
-                        }
-                    }
-                }else{
-                    displaySearchList.clear()
-                    displaySearchList = listPrep
-                    adapterSearch.notifyDataSetChanged()
-                }*/
                 adapterSearch.filter.filter(newText)
                 return false
             }
         })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home -> findNavController().navigate(R.id.listAidKitFragment)
+        }
+        return true
     }
 
     private fun goToDetailPreparation(itemId: Int) {
