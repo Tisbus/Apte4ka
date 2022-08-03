@@ -2,9 +2,8 @@ package com.example.apte4ka.presentation.fragment
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -31,6 +30,24 @@ class AidKitDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         parseArgs()
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.action_search -> findNavController().navigate(R.id.searchFragment)
+            android.R.id.home -> requireActivity().onBackPressed()
+        }
+        return true
+    }
+    private fun setupBackButton() {
+        if (activity is AppCompatActivity) {
+            (activity as AppCompatActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
     }
 
     private fun parseArgs() {
@@ -42,6 +59,7 @@ class AidKitDetailFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _bind = FragmentAidKitDetailBinding.inflate(layoutInflater, container, false)
+        setupBackButton()
         return bind.root
     }
 

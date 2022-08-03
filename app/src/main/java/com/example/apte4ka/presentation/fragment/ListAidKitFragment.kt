@@ -2,6 +2,7 @@ package com.example.apte4ka.presentation.fragment
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -36,8 +37,14 @@ class ListAidKitFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.action_search -> findNavController().navigate(R.id.searchFragment)
+            android.R.id.home -> requireActivity().onBackPressed()
         }
         return true
+    }
+    private fun setupBackButton() {
+        if (activity is AppCompatActivity) {
+            (activity as AppCompatActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
     }
 
     override fun onCreateView(
@@ -45,6 +52,7 @@ class ListAidKitFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _bind = FragmentListAidKitBinding.inflate(inflater, container, false)
+        setupBackButton()
         return bind.root
     }
 
