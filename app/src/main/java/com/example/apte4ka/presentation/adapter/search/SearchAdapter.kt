@@ -14,7 +14,7 @@ class SearchAdapter(private var listPrep: MutableList<Preparation>) :
     RecyclerView.Adapter<SearchViewHolder>(), Filterable {
 
     var itemSelect: ((Preparation) -> Unit)? = null
-    var displayList : MutableList<Preparation> = mutableListOf()
+    var displayList: MutableList<Preparation> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val binding = DataBindingUtil.inflate<SearchItemBinding>(
@@ -41,29 +41,27 @@ class SearchAdapter(private var listPrep: MutableList<Preparation>) :
     }
 
     override fun getFilter(): Filter {
-        return object : Filter(){
-            override fun performFiltering(p0: CharSequence?): FilterResults {
-                val listFilter : MutableList<Preparation> = mutableListOf()
-                if(p0==null||p0.isEmpty())
-                {
+        return object : Filter() {
+            override fun performFiltering(charS: CharSequence?): FilterResults {
+                val listFilter: MutableList<Preparation> = mutableListOf()
+                if (charS == null || charS.isEmpty()) {
                     listFilter.addAll(listPrep)
-                }else
-                {
-                    val filterPattern: String = p0.toString().lowercase().trim()
+                } else {
+                    val filterPattern = charS.toString().lowercase().trim()
                     for (item in listPrep) {
                         if (item.name.lowercase().contains(filterPattern)) {
                             listFilter.add(item)
                         }
                     }
                 }
-                val results = Filter.FilterResults()
+                val results = FilterResults()
                 results.values = listFilter
-                return  results
+                return results
             }
 
-            override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
+            override fun publishResults(p0: CharSequence?, fResult: FilterResults?) {
                 displayList.clear()
-                displayList.addAll(p1?.values as MutableList<Preparation>)
+                displayList.addAll(fResult?.values as MutableList<Preparation>)
                 notifyDataSetChanged()
             }
         }

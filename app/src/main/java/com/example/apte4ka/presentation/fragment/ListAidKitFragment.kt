@@ -2,7 +2,6 @@ package com.example.apte4ka.presentation.fragment
 
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -17,11 +16,11 @@ import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 
 class ListAidKitFragment : Fragment() {
 
-    private var _bind : FragmentListAidKitBinding? = null
-    private val bind : FragmentListAidKitBinding
-    get() = _bind ?: throw RuntimeException("FragmentListAidKitBinding == null")
+    private var _bind: FragmentListAidKitBinding? = null
+    private val bind: FragmentListAidKitBinding
+        get() = _bind ?: throw RuntimeException("FragmentListAidKitBinding == null")
 
-    lateinit var viewModel : AidKitViewModel
+    lateinit var viewModel: AidKitViewModel
 
     lateinit var adapterAidKit: AidKitAdapter
 
@@ -35,16 +34,10 @@ class ListAidKitFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.action_search -> findNavController().navigate(R.id.searchFragment)
-            android.R.id.home -> requireActivity().onBackPressed()
+        if (item.itemId == R.id.action_search) {
+            findNavController().navigate(R.id.searchFragment)
         }
         return true
-    }
-    private fun setupBackButton() {
-        if (activity is AppCompatActivity) {
-            (activity as AppCompatActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        }
     }
 
     override fun onCreateView(
@@ -52,7 +45,6 @@ class ListAidKitFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _bind = FragmentListAidKitBinding.inflate(inflater, container, false)
-        setupBackButton()
         return bind.root
     }
 
@@ -61,7 +53,7 @@ class ListAidKitFragment : Fragment() {
         viewModel = ViewModelProvider(this)[AidKitViewModel::class.java]
         addNewAidKit()
         addNewPrep()
-        viewModel.listAidKit.observe(viewLifecycleOwner){
+        viewModel.listAidKit.observe(viewLifecycleOwner) {
             checkAidListSize(it)
             adapterAidKit.submitList(it)
         }
@@ -146,7 +138,7 @@ class ListAidKitFragment : Fragment() {
         }
     }
 
-    private fun setupRecyclerView() : RecyclerView {
+    private fun setupRecyclerView(): RecyclerView {
         val recyclerView = bind.recyclerAidKit
         with(recyclerView) {
             adapterAidKit = AidKitAdapter()
@@ -169,7 +161,8 @@ class ListAidKitFragment : Fragment() {
             findNavController().navigate(R.id.action_listAidKitFragment_to_aidKitAddFragment)
         }
     }
-    companion object{
+
+    companion object {
         const val AID_KIT_ID = "aid_id"
     }
 

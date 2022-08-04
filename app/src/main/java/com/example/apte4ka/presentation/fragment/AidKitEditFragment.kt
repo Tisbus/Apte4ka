@@ -35,11 +35,12 @@ class AidKitEditFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            android.R.id.home -> requireActivity().onBackPressed()
+        if (item.itemId == android.R.id.home) {
+            requireActivity().onBackPressed()
         }
         return true
     }
+
     private fun setupBackButton() {
         if (activity is AppCompatActivity) {
             (activity as AppCompatActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)

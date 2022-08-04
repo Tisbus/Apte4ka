@@ -40,7 +40,7 @@ class AidKitDetailFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.action_search -> findNavController().navigate(R.id.searchFragment)
-            android.R.id.home -> requireActivity().onBackPressed()
+            android.R.id.home -> findNavController().navigate(R.id.listAidKitFragment)
         }
         return true
     }
