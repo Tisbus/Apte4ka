@@ -16,8 +16,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentPreparationAddBinding
 import com.example.apte4ka.domain.entity.aidkit.AidKit
+import com.example.apte4ka.domain.entity.symptom.Symptom
 import com.example.apte4ka.presentation.adapter.listaidkit.ListAidKitAdapter
+import com.example.apte4ka.presentation.adapter.symptom.SymptomAdapter
 import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
+import com.example.apte4ka.presentation.viewmodel.lists.ListsViewModel
 import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
 import com.squareup.picasso.Picasso
 import java.io.File
@@ -31,10 +34,12 @@ class PreparationAddFragment : Fragment() {
         get() = _bind ?: throw RuntimeException("FragmentPreparationAddBinding == null")
 
     private lateinit var adapterListAidKit: ListAidKitAdapter
+    private lateinit var adapterSymptom: SymptomAdapter
 
     private lateinit var aidKitModel: AidKitViewModel
 
     private lateinit var prepModel: PreparationViewModel
+    private lateinit var listsModel: ListsViewModel
 
     private var _aidId: Int? = null
     private val aidId: Int
@@ -46,6 +51,7 @@ class PreparationAddFragment : Fragment() {
     private var expDate: String = ""
 
     private var listAidKit : MutableList<AidKit> = mutableListOf()
+    private var listSymptoms : List<Symptom> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +88,7 @@ class PreparationAddFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         aidKitModel = ViewModelProvider(this)[AidKitViewModel::class.java]
         prepModel = ViewModelProvider(this)[PreparationViewModel::class.java]
+        listsModel = ViewModelProvider(this)[ListsViewModel::class.java]
         aidKitModel.listAidKit.observe(viewLifecycleOwner) {
             listAidKit = it
             recyclerSetup()
@@ -93,6 +100,12 @@ class PreparationAddFragment : Fragment() {
         addNewPreparation()
         setupSetImages()
         setupDate()
+        recyclerSetupSymptom()
+    }
+
+    private fun recyclerSetupSymptom() {
+        listSymptoms = listsModel.listSymptom
+        adapterSymptom = SymptomAdapter(listSymptoms)
     }
 
     private fun setupDate() {
