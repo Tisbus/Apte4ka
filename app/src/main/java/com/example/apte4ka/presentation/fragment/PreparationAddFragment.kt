@@ -97,15 +97,28 @@ class PreparationAddFragment : Fragment() {
                 Log.i("itemId", aidId.toString())
             }
         }
+        recyclerSetupSymptom()
+        selectSymptoms()
         addNewPreparation()
         setupSetImages()
         setupDate()
-        recyclerSetupSymptom()
     }
 
-    private fun recyclerSetupSymptom() {
+    private fun selectSymptoms() {
+        adapterSymptom.itemSelect = {
+            it.status = !it.status
+            adapterSymptom.notifyDataSetChanged()
+        }
+    }
+
+    private fun recyclerSetupSymptom() : RecyclerView {
+        val recyclerSymptoms = bind.rSetSymptoms
         listSymptoms = listsModel.listSymptom
         adapterSymptom = SymptomAdapter(listSymptoms)
+        with(recyclerSymptoms){
+            adapter = adapterSymptom
+        }
+        return recyclerSymptoms
     }
 
     private fun setupDate() {
@@ -164,7 +177,12 @@ class PreparationAddFragment : Fragment() {
             with(bind) {
                 val name = etNamePreparation.text.toString()
                 val image = urlImg.toString()
-                val symptoms = etAddSymptomsPreparation.text.toString()
+                val symptom : MutableList<Symptom> = mutableListOf()
+                listSymptoms.forEach {
+                    if(it.status){
+                        symptom.add(it)
+                    }
+                }
                 val packing = etPackagePreparation.text.toString()
                 val description = etDescriptionPreparation.text.toString()
                 val dateCreate = currentDate
@@ -172,7 +190,7 @@ class PreparationAddFragment : Fragment() {
                 prepModel.addPreparationItem(aidId,
                     name,
                     image,
-                    symptoms,
+                    symptom,
                     packing,
                     description,
                     dateCreate,

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.apte4ka.data.repository.preparation.PreparationRepositoryImpl
 import com.example.apte4ka.domain.entity.preparation.Preparation
+import com.example.apte4ka.domain.entity.symptom.Symptom
 import com.example.apte4ka.domain.usecase.preparation.*
 
 class PreparationViewModel(application: Application) : AndroidViewModel(application) {
@@ -27,7 +28,7 @@ class PreparationViewModel(application: Application) : AndroidViewModel(applicat
         aidKitId: Int,
         name: String,
         image: String,
-        symptoms: String,
+        symptoms: MutableList<Symptom>,
         packing: String,
         description: String,
         dateCreate: String,
@@ -61,7 +62,7 @@ class PreparationViewModel(application: Application) : AndroidViewModel(applicat
         aidKitId: Int,
         name: String,
         image: String,
-        symptoms: String,
+        symptoms: MutableList<Symptom>,
         packing: String,
         description: String,
         dateCreate: String,

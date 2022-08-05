@@ -157,23 +157,16 @@ xmlns:tools="http://schemas.android.com/tools">
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tilAddPackagePreparation" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilAddSymptomsPreparation"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rSetSymptoms"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:padding="4dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/tvTextPreparationSymptoms">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etAddSymptomsPreparation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{editPrep.prepLD.symptoms}"
-                android:hint="@string/enter_symptoms"
-                android:textColorHint="#616161"
-                android:textSize="14sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </androidx.recyclerview.widget.RecyclerView>
 
         <TextView
             android:id="@+id/tvTextDescriptionPreparation"
@@ -186,7 +179,7 @@ xmlns:tools="http://schemas.android.com/tools">
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tilAddSymptomsPreparation" />
+            app:layout_constraintTop_toBottomOf="@+id/rSetSymptoms" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilDescriptionPreparation"

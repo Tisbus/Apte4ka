@@ -15,8 +15,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentPreparationEditBinding
 import com.example.apte4ka.domain.entity.aidkit.AidKit
+import com.example.apte4ka.domain.entity.symptom.Symptom
 import com.example.apte4ka.presentation.adapter.listaidkit.ListAidKitAdapter
+import com.example.apte4ka.presentation.adapter.symptom.SymptomAdapter
 import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
+import com.example.apte4ka.presentation.viewmodel.lists.ListsViewModel
 import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
 import com.squareup.picasso.Picasso
 import java.io.File
@@ -30,8 +33,12 @@ class PreparationEditFragment : Fragment() {
         get() = _bind ?: throw RuntimeException("FragmentPreparationEditBinding == null")
 
     private lateinit var adapterListAidKit: ListAidKitAdapter
+    private lateinit var adapterSymptom: SymptomAdapter
+
     private lateinit var viewModelPrep: PreparationViewModel
     private lateinit var aidKitModel: AidKitViewModel
+    private lateinit var listsModel: ListsViewModel
+
     private var urlImg: Uri? = null
     private var imageUrl: String = ""
 
@@ -44,6 +51,7 @@ class PreparationEditFragment : Fragment() {
     private var idPrep: Int? = null
 
     private var listAidKit : MutableList<AidKit> = mutableListOf()
+    private var listSymptoms : List<Symptom> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         parseArgs()
@@ -84,8 +92,8 @@ class PreparationEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModelPrep = ViewModelProvider(this)[PreparationViewModel::class.java]
         aidKitModel = ViewModelProvider(this)[AidKitViewModel::class.java]
+        listsModel = ViewModelProvider(this)[ListsViewModel::class.java]
         setupSetDataLayout()
-
         aidKitModel.listAidKit.observe(viewLifecycleOwner){
             listAidKit = it
             recyclerSetup()
@@ -94,9 +102,28 @@ class PreparationEditFragment : Fragment() {
                 _aidId = it.id
             }
         }
+        recyclerSetupSymptom()
+        selectSymptoms()
         setupSetImages()
         setupDate()
         editPrep()
+    }
+
+    private fun selectSymptoms() {
+        adapterSymptom.itemSelect = {
+            it.status = !it.status
+            adapterSymptom.notifyDataSetChanged()
+        }
+    }
+
+    private fun recyclerSetupSymptom() : RecyclerView {
+        val recyclerSymptoms = bind.rSetSymptoms
+        listSymptoms = listsModel.listSymptom
+        adapterSymptom = SymptomAdapter(listSymptoms)
+        with(recyclerSymptoms){
+            adapter = adapterSymptom
+        }
+        return recyclerSymptoms
     }
 
     private fun editPrep() {
@@ -104,7 +131,12 @@ class PreparationEditFragment : Fragment() {
             with(bind) {
                 val name = etNamePreparation.text.toString()
                 imageUrl = urlImg.toString()
-                val symptoms = etAddSymptomsPreparation.text.toString()
+                val symptom : MutableList<Symptom> = mutableListOf()
+                listSymptoms.forEach {
+                    if(it.status){
+                        symptom.add(it)
+                    }
+                }
                 val packing = etPackagePreparation.text.toString()
                 val description = etDescriptionPreparation.text.toString()
                 val dateCreate = currentDate
@@ -113,7 +145,7 @@ class PreparationEditFragment : Fragment() {
                     aidId,
                     name,
                     imageUrl,
-                    symptoms,
+                    symptom,
                     packing,
                     description,
                     dateCreate,

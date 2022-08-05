@@ -1,5 +1,6 @@
 package com.example.apte4ka.presentation.adapter.symptom
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -10,7 +11,7 @@ import com.example.apte4ka.domain.entity.symptom.Symptom
 
 class SymptomAdapter(val listSymptom : List<Symptom>) : RecyclerView.Adapter<SymptomViewHolder>() {
 
-    val itemSelect : ((Symptom) -> Unit)? = null
+    var itemSelect : ((Symptom) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SymptomViewHolder {
         val bindView = DataBindingUtil.inflate<SymptomItemBinding>(
@@ -25,6 +26,11 @@ class SymptomAdapter(val listSymptom : List<Symptom>) : RecyclerView.Adapter<Sym
     override fun onBindViewHolder(holder: SymptomViewHolder, position: Int) {
         val itemSymptom = listSymptom[position]
         val bind = holder.bind
+        if(itemSymptom.status){
+            bind.tvSymptomsItem.background.setTint(Color.RED)
+        }else{
+            bind.tvSymptomsItem.background.setTint(Color.WHITE)
+        }
         bind.symptom = itemSymptom
         bind.root.setOnClickListener {
             itemSelect?.invoke(itemSymptom)
