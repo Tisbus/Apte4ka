@@ -107,7 +107,6 @@ class PreparationAddFragment : Fragment() {
     private fun selectSymptoms() {
         adapterSymptom.itemSelect = {
             it.status = !it.status
-            adapterSymptom.notifyDataSetChanged()
         }
     }
 

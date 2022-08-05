@@ -26,14 +26,10 @@ class SymptomAdapter(val listSymptom : List<Symptom>) : RecyclerView.Adapter<Sym
     override fun onBindViewHolder(holder: SymptomViewHolder, position: Int) {
         val itemSymptom = listSymptom[position]
         val bind = holder.bind
-        if(itemSymptom.status){
-            bind.tvSymptomsItem.background.setTint(Color.RED)
-        }else{
-            bind.tvSymptomsItem.background.setTint(Color.WHITE)
-        }
         bind.symptom = itemSymptom
         bind.root.setOnClickListener {
             itemSelect?.invoke(itemSymptom)
+            notifyDataSetChanged()
         }
     }
 
