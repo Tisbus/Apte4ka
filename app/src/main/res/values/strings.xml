@@ -46,4 +46,5 @@
     <string name="data_exp_preparation">Дата окончания срока</string>
     <string name="detail_description">Детальное описание:</string>
     <string name="search">Поиск</string>
+    <string name="clear_filter">Очистить фильтр</string>
 </resources>
