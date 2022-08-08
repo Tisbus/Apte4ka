@@ -157,16 +157,31 @@ xmlns:tools="http://schemas.android.com/tools">
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tilAddPackagePreparation" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rSetSymptoms"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <ScrollView
+            android:id="@+id/nsSymptoms"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:padding="4dp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/tvTextPreparationSymptoms">
-        </androidx.recyclerview.widget.RecyclerView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rSetSymptoms"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:orientation="vertical"
+                    android:padding="4dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/symptom_item" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
         <TextView
             android:id="@+id/tvTextDescriptionPreparation"
@@ -179,7 +194,7 @@ xmlns:tools="http://schemas.android.com/tools">
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rSetSymptoms" />
+            app:layout_constraintTop_toBottomOf="@+id/nsSymptoms" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilDescriptionPreparation"

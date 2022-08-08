@@ -27,6 +27,11 @@ class SymptomAdapter(val listSymptom : List<Symptom>) : RecyclerView.Adapter<Sym
         val itemSymptom = listSymptom[position]
         val bind = holder.bind
         bind.symptom = itemSymptom
+        if(itemSymptom.status){
+            bind.cvSymptom.background.setTint(Color.RED)
+        }else{
+            bind.cvSymptom.background.setTint(Color.WHITE)
+        }
         bind.root.setOnClickListener {
             itemSelect?.invoke(itemSymptom)
             notifyDataSetChanged()

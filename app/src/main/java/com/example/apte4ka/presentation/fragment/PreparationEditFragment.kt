@@ -11,6 +11,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentPreparationEditBinding
@@ -93,6 +94,7 @@ class PreparationEditFragment : Fragment() {
         viewModelPrep = ViewModelProvider(this)[PreparationViewModel::class.java]
         aidKitModel = ViewModelProvider(this)[AidKitViewModel::class.java]
         listsModel = ViewModelProvider(this)[ListsViewModel::class.java]
+        recyclerSetupSymptom()
         setupSetDataLayout()
         aidKitModel.listAidKit.observe(viewLifecycleOwner){
             listAidKit = it
@@ -102,7 +104,6 @@ class PreparationEditFragment : Fragment() {
                 _aidId = it.id
             }
         }
-        recyclerSetupSymptom()
         selectSymptoms()
         setupSetImages()
         setupDate()
@@ -112,7 +113,6 @@ class PreparationEditFragment : Fragment() {
     private fun selectSymptoms() {
         adapterSymptom.itemSelect = {
             it.status = !it.status
-            adapterSymptom.notifyDataSetChanged()
         }
     }
 
@@ -121,6 +121,7 @@ class PreparationEditFragment : Fragment() {
         listSymptoms = listsModel.listSymptom
         adapterSymptom = SymptomAdapter(listSymptoms)
         with(recyclerSymptoms){
+            layoutManager = GridLayoutManager(requireContext(), 3)
             adapter = adapterSymptom
         }
         return recyclerSymptoms
@@ -226,6 +227,14 @@ class PreparationEditFragment : Fragment() {
             viewModelPrep.getPreparationItem(it)
             imageUrl = viewModelPrep.prepLD.value?.image.toString()
             urlImg = Uri.parse(imageUrl)
+            viewModelPrep.prepLD.value?.symptoms?.forEach {
+                for (i in listSymptoms){
+                    if(it.name.contains(i.name)){
+                        i.status = true
+                        adapterSymptom.notifyDataSetChanged()
+                    }
+                }
+            }
             currentDate = viewModelPrep.prepLD.value?.dataCreate.toString()
             expDate = viewModelPrep.prepLD.value?.dateExp.toString()
         }

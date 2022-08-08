@@ -1,5 +1,6 @@
 package com.example.apte4ka.presentation.fragment
 
+import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +13,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentPreparationAddBinding
 import com.example.apte4ka.domain.entity.aidkit.AidKit
@@ -115,6 +118,7 @@ class PreparationAddFragment : Fragment() {
         listSymptoms = listsModel.listSymptom
         adapterSymptom = SymptomAdapter(listSymptoms)
         with(recyclerSymptoms){
+            layoutManager = GridLayoutManager(requireContext(), 3)
             adapter = adapterSymptom
         }
         return recyclerSymptoms
