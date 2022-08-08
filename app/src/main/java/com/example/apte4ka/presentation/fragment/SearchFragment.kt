@@ -1,6 +1,7 @@
 package com.example.apte4ka.presentation.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -59,28 +60,16 @@ class SearchFragment : Fragment() {
         setupRecyclerView()
         recyclerSetupSymptom()
         selectSymptoms()
-        enterFilterSymptom()
     }
 
-    private fun enterFilterSymptom() {
-        bind.bEnterFilter.setOnClickListener {
-            val listFilterSymptoms: MutableList<String> = mutableListOf()
-            listSymptoms.forEach {
-                if (it.status) {
-                    listFilterSymptoms.add(it.name)
-                }
+    private fun getSymptomToList(): MutableList<String> {
+        val listFilterSymptoms: MutableList<String> = mutableListOf()
+        listSymptoms.forEach {
+            if (it.status) {
+                listFilterSymptoms.add(it.name)
             }
-            val listFilterPrep: MutableList<Preparation> = mutableListOf()
-            listPrep.forEach { i ->
-                i.symptoms.forEach { e ->
-                    if (e.name.equals(listFilterSymptoms)) {
-                        listFilterPrep.add(i)
-                    }
-                }
-            }
-            listPrep = listFilterPrep
-            setupRecyclerView()
         }
+        return listFilterSymptoms
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -131,8 +120,10 @@ class SearchFragment : Fragment() {
 
     private fun goToDetailPreparation(itemId: Int) {
         val bundle = bundleOf(DETAIL_PREP_ID to itemId)
-        findNavController().navigate(R.id.action_searchFragment_to_preparationDetailFragment,
-            bundle)
+        findNavController().navigate(
+            R.id.action_searchFragment_to_preparationDetailFragment,
+            bundle
+        )
     }
 
     private fun setupRecyclerView(): RecyclerView {
