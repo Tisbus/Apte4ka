@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentAidKitAddBinding
-import com.example.apte4ka.domain.entity.aidkit.AidKit
 import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 
 class AidKitAddFragment : Fragment() {
@@ -27,7 +26,7 @@ class AidKitAddFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu, menu)
+        inflater.inflate(R.menu.search_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
