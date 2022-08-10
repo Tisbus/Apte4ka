@@ -1,7 +1,11 @@
 package com.example.apte4ka.presentation.fragment
 
 import android.os.Bundle
-import android.view.*
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -14,7 +18,6 @@ import com.example.apte4ka.databinding.FragmentFilterBinding
 import com.example.apte4ka.domain.entity.preparation.Preparation
 import com.example.apte4ka.domain.entity.symptom.Symptom
 import com.example.apte4ka.presentation.adapter.preparation.PreparationAdapter
-import com.example.apte4ka.presentation.adapter.search.SearchAdapter
 import com.example.apte4ka.presentation.adapter.symptom.SymptomAdapter
 import com.example.apte4ka.presentation.viewmodel.lists.ListsViewModel
 import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
@@ -59,10 +62,53 @@ class FilterFragment : Fragment() {
         listsModel = ViewModelProvider(this)[ListsViewModel::class.java]
         viewModelPreparation.listPreparation.observe(viewLifecycleOwner) {
             adapterPrep.submitList(it)
+            enterFilter(adapterPrep.currentList)
+            clearFilter(it)
         }
         setupRecyclerView()
+        dataSymptom()
+    }
+
+    private fun isNotEmptySymptom() : Boolean {
+        var isEmpty = false
+        listSymptoms.forEach { i ->
+            if (i.status) {
+                isEmpty = true
+            }
+        }
+        return isEmpty
+    }
+
+    private fun clearFilter(it: MutableList<Preparation>?) {
+        bind.bClearAll.setOnClickListener { i ->
+            listSymptoms.forEach { i ->
+                i.status = false
+            }
+            adapterPrep.submitList(it)
+            dataSymptom()
+        }
+    }
+
+    private fun dataSymptom() {
         recyclerSetupSymptom()
         selectSymptoms()
+    }
+
+    private fun enterFilter(item: MutableList<Preparation>) {
+        bind.bEnterFilter.setOnClickListener {
+            if(isNotEmptySymptom()) {
+                val itemFilter = mutableListOf<Preparation>()
+                itemFilter.clear()
+                item.forEach {
+                    it.symptoms.forEach { i ->
+                        if (i.name.contains(getSymptomToList())) {
+                            itemFilter.add(it)
+                        }
+                    }
+                }
+                adapterPrep.submitList(itemFilter)
+            }
+        }
     }
 
     private fun recyclerSetupSymptom(): RecyclerView {
@@ -98,7 +144,7 @@ class FilterFragment : Fragment() {
         return filterSymptom
     }
 
-    private fun setSymptomStatus(item : Symptom) {
+    private fun setSymptomStatus(item: Symptom) {
         listSymptoms.forEach {
             if (item != it) {
                 it.status = false
