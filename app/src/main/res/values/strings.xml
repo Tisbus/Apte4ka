@@ -47,4 +47,5 @@
     <string name="detail_description">Детальное описание:</string>
     <string name="search">Поиск</string>
     <string name="clear_filter">Очистить фильтр</string>
+    <string name="filter_30_day">Отфильтровать препараты сроком годности менее 30 дней</string>
 </resources>

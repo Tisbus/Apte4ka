@@ -21,6 +21,8 @@ import com.example.apte4ka.presentation.adapter.preparation.PreparationAdapter
 import com.example.apte4ka.presentation.adapter.symptom.SymptomAdapter
 import com.example.apte4ka.presentation.viewmodel.lists.ListsViewModel
 import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class FilterFragment : Fragment() {
@@ -35,7 +37,6 @@ class FilterFragment : Fragment() {
     private lateinit var viewModelPreparation: PreparationViewModel
     private lateinit var listsModel: ListsViewModel
 
-    private var listPrep: MutableList<Preparation> = mutableListOf()
     private var listSymptoms: List<Symptom> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,7 +70,18 @@ class FilterFragment : Fragment() {
         dataSymptom()
     }
 
-    private fun isNotEmptySymptom() : Boolean {
+    //for api max 26
+    private fun getCountDayToEnd(endDate: String): Long {
+        val fmt = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val toDay = Date()
+        val eDate = fmt.parse(endDate)
+        val milliseconds = eDate?.time?.minus(toDay.time)
+        val days = (milliseconds?.div(1000) ?: throw RuntimeException("div to zero")) / 3600 / 24
+        Log.i("Time", days.toString())
+        return days
+    }
+
+    private fun isNotEmptySymptom(): Boolean {
         var isEmpty = false
         listSymptoms.forEach { i ->
             if (i.status) {
@@ -96,9 +108,9 @@ class FilterFragment : Fragment() {
 
     private fun enterFilter(item: MutableList<Preparation>) {
         bind.bEnterFilter.setOnClickListener {
-            if(isNotEmptySymptom()) {
-                val itemFilter = mutableListOf<Preparation>()
-                itemFilter.clear()
+            val itemFilter = mutableListOf<Preparation>()
+            itemFilter.clear()
+            if (isNotEmptySymptom()) {
                 item.forEach {
                     it.symptoms.forEach { i ->
                         if (i.name.contains(getSymptomToList())) {
@@ -106,6 +118,18 @@ class FilterFragment : Fragment() {
                         }
                     }
                 }
+                if (bind.cbCountEndDay.isChecked) {
+                    itemFilter.removeIf {i ->
+                        getCountDayToEnd(i.dateExp).toInt() > 30
+                    }
+                }
+                adapterPrep.submitList(itemFilter)
+            }
+            if (bind.cbCountEndDay.isChecked && !isNotEmptySymptom()) {
+                    itemFilter.addAll(item)
+                    itemFilter.removeIf{i ->
+                        getCountDayToEnd(i.dateExp).toInt() > 30
+                    }
                 adapterPrep.submitList(itemFilter)
             }
         }

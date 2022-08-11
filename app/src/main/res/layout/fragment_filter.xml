@@ -43,6 +43,17 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </ScrollView>
 
+            <CheckBox
+                android:id="@+id/cbCountEndDay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="11sp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/filter_30_day"
+                app:layout_constraintTop_toBottomOf="@+id/svSymptomsFilter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
             <Button
                 android:id="@+id/bClearAll"
                 android:layout_width="wrap_content"
@@ -51,7 +62,7 @@
                 android:textSize="11sp"
                 app:layout_constraintEnd_toStartOf="@+id/bEnterFilter"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/svSymptomsFilter" />
+                app:layout_constraintTop_toBottomOf="@+id/cbCountEndDay" />
 
             <Button
                 android:id="@+id/bEnterFilter"
@@ -61,7 +72,7 @@
                 android:textSize="11sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/bClearAll"
-                app:layout_constraintTop_toBottomOf="@+id/svSymptomsFilter" />
+                app:layout_constraintTop_toBottomOf="@+id/cbCountEndDay" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
