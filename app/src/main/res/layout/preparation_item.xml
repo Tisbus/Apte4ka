@@ -2,11 +2,11 @@
 <layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<data>
-    <variable
-        name="preparation"
-        type="com.example.apte4ka.domain.entity.preparation.Preparation" />
-</data>
+    <data>
+        <variable
+            name="preparation"
+            type="com.example.apte4ka.domain.entity.preparation.Preparation" />
+    </data>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,11 +33,11 @@
                 android:id="@+id/tvNamePreparation"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:padding="4dp"
                 android:gravity="center"
+                android:padding="2dp"
+                android:text="@{preparation.name}"
                 android:textSize="26sp"
                 android:textStyle="bold"
-                android:text="@{preparation.name}"
                 app:layout_constraintBottom_toTopOf="@+id/tvTextSymptoms"
                 app:layout_constraintEnd_toStartOf="@+id/tvTextPackage"
                 app:layout_constraintStart_toEndOf="@+id/ivPreparationImg"
@@ -49,9 +49,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:textSize="11sp"
                 android:text="@{preparation.packing}"
+                android:textSize="11sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvTextPackage"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="50 мг" />
 
@@ -60,10 +61,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:textStyle="bold"
                 android:text="@string/text_package"
                 android:textSize="11sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/tvPackage"
+                app:layout_constraintStart_toEndOf="@+id/tvNamePreparation"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -81,69 +83,45 @@
 
             <TextView
                 android:id="@+id/tvSymptoms"
-                android:layout_width="100dp"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
                 android:padding="4dp"
-                app:makeSymptomsText="@{preparation.symptoms}"
                 android:textSize="11sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tvTextDataCreate"
+                app:layout_constraintEnd_toStartOf="@+id/tvTextDataEnd"
                 app:layout_constraintStart_toEndOf="@+id/tvTextSymptoms"
                 app:layout_constraintTop_toBottomOf="@+id/tvNamePreparation"
+                app:makeSymptomsText="@{preparation.symptoms}"
                 tools:text="Кашель, боль в голове" />
 
             <TextView
-                android:id="@+id/tvTextDataCreate"
-                android:layout_width="60dp"
+                android:id="@+id/tvTextDataEnd"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                android:text="@string/date_create"
+                android:text="@string/days_left"
                 android:textSize="11sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/tvTextDataExp"
-                app:layout_constraintEnd_toStartOf="@+id/tvDataCreate"
-                app:layout_constraintStart_toEndOf="@+id/tvSymptoms"
+                app:layout_constraintBottom_toTopOf="@+id/tvTextCountDayEnd"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvNamePreparation"
                 app:layout_constraintTop_toBottomOf="@+id/tvTextPackage" />
 
             <TextView
-                android:id="@+id/tvDataCreate"
-                android:layout_width="60dp"
+                android:id="@+id/tvTextCountDayEnd"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                android:text="@{preparation.dataCreate}"
-                android:textSize="11sp"
-                app:layout_constraintBottom_toTopOf="@+id/tvDataExp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tvTextDataCreate"
-                app:layout_constraintTop_toBottomOf="@+id/tvTextPackage"
-                tools:text="19.07.2022" />
-
-            <TextView
-                android:id="@+id/tvTextDataExp"
-                android:layout_width="60dp"
-                android:layout_height="0dp"
-                android:gravity="center"
-                android:text="@string/date_exp"
-                android:textSize="11sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tvDataExp"
-                app:layout_constraintStart_toEndOf="@+id/tvSymptoms"
-                app:layout_constraintTop_toBottomOf="@+id/tvTextDataCreate" />
-
-            <TextView
-                android:id="@+id/tvDataExp"
-                android:layout_width="60dp"
-                android:layout_height="0dp"
-                android:gravity="center"
-                android:text="@{preparation.dateExp}"
-                android:textSize="11sp"
+                app:getCountDayToEnd="@{preparation.dateExp}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tvTextDataExp"
-                app:layout_constraintTop_toBottomOf="@+id/tvTextDataCreate"
-                tools:text="20.07.2022" />
+                app:layout_constraintStart_toStartOf="@+id/tvTextDataEnd"
+                app:layout_constraintTop_toBottomOf="@+id/tvTextDataEnd"
+                tools:text="550 Дней" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

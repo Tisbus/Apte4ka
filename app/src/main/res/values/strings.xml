@@ -48,4 +48,6 @@
     <string name="search">Поиск</string>
     <string name="clear_filter">Очистить фильтр</string>
     <string name="filter_30_day">Отфильтровать препараты сроком годности менее 30 дней</string>
+    <string name="text_end_day">Осталось дней:</string>
+    <string name="days_left">Осталось:</string>
 </resources>

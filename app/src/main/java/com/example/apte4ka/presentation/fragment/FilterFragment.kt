@@ -76,7 +76,8 @@ class FilterFragment : Fragment() {
         val toDay = Date()
         val eDate = fmt.parse(endDate)
         val milliseconds = eDate?.time?.minus(toDay.time)
-        val days = (milliseconds?.div(1000) ?: throw RuntimeException("div to zero")) / 3600 / 24
+        val days = (milliseconds?.div(1000) ?: throw RuntimeException("div to zero")).div(3600)
+            .div(24)
         Log.i("Time", days.toString())
         return days
     }
@@ -98,6 +99,7 @@ class FilterFragment : Fragment() {
             }
             adapterPrep.submitList(it)
             dataSymptom()
+            bind.cbCountEndDay.isChecked = false
         }
     }
 
