@@ -17,6 +17,7 @@ class PreparationViewModel(application: Application) : AndroidViewModel(applicat
     private val editPreparationItemUseCase = EditPreparationItemUseCase(repository)
     private val getPreparationItemUseCase = GetPreparationItemUseCase(repository)
     private val getPreparationListUseCase = GetPreparationListUseCase(repository)
+    private val copyPreparationItemUseCase = CopyPreparationItemUseCase(repository)
 
     val listPreparation = getPreparationListUseCase.getPreparationList()
 
@@ -80,6 +81,32 @@ class PreparationViewModel(application: Application) : AndroidViewModel(applicat
                 dateExp = dateExp
             )
             editPreparationItemUseCase.editPreparationItem(item)
+        }
+    }
+
+    fun copyPreparationItem(
+        aidKitId: Int,
+        name: String,
+        image: String,
+        symptoms: MutableList<Symptom>,
+        packing: String,
+        description: String,
+        dateCreate: String,
+        dateExp: String,
+    ) {
+        _prepLD.value?.let{
+            val item = it.copy(
+                aidKit = aidKitId,
+                name = name,
+                image = image,
+                symptoms = symptoms,
+                packing = packing,
+                description = description,
+                dataCreate = dateCreate,
+                dateExp = dateExp,
+                id = Preparation.UNDEFINED_ID
+            )
+            copyPreparationItemUseCase.copyPreparationItem(item)
         }
     }
 }

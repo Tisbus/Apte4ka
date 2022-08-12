@@ -130,7 +130,8 @@ class AidKitDetailFragment : Fragment() {
             adapterPrep = PreparationAdapter()
             adapter = adapterPrep
             adapterPrep.itemSelect = {
-                val bundle = bundleOf(DETAIL_PREP_ID to it.id)
+                val bundle = bundleOf(DETAIL_PREP_ID to it.id,
+                    AID_KIT_ID to aidKitId)
                 findNavController().navigate(
                     R.id.action_aidKitDetailFragment_to_preparationDetailFragment,
                     bundle

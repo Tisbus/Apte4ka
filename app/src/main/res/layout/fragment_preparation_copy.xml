@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="editPrep"
+            type="com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel" />
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            tools:context=".presentation.fragment.PreparationCopyFragment">
+
+            <TextView
+                android:id="@+id/tvNameAddPreparation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/name_preparation"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/tilNamePreparation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilNamePreparation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvNameAddPreparation">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etNamePreparation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{editPrep.prepLD.name}"
+                    android:hint="@string/enter_name_preparation"
+                    android:textColorHint="#616161"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvTextAidKitId"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/where_add_aid_kit"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilNamePreparation" />
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/svListSetAidKit"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTextAidKitId">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerListSetAidKit"
+                        android:layout_width="0dp"
+                        android:layout_height="90dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:listitem="@layout/aid_kit_set_item" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <TextView
+                android:id="@+id/tvUploadPhotoPreparation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/upload_photo_preparation"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/svListSetAidKit" />
+
+            <ImageView
+                android:id="@+id/ivAddPhotoPreparation"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:contentDescription="@string/add_photo_preparation"
+                android:padding="8dp"
+                app:setImagePreparation="@{editPrep.prepLD.image}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvUploadPhotoPreparation"
+                app:srcCompat="@drawable/ic_add_a_photo_50" />
+
+            <TextView
+                android:id="@+id/tvTextPackagePreparation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/add_package_preparation"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivAddPhotoPreparation" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilAddPackagePreparation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTextPackagePreparation">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPackagePreparation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{editPrep.prepLD.packing}"
+                    android:hint="@string/enter_package_preparation"
+                    android:textColorHint="#616161"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvTextPreparationSymptoms"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/symptoms"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilAddPackagePreparation" />
+
+            <ScrollView
+                android:id="@+id/svSymptoms"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTextPreparationSymptoms">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rSetSymptoms"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:orientation="vertical"
+                        android:padding="4dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:listitem="@layout/symptom_item" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
+
+            <TextView
+                android:id="@+id/tvTextDescriptionPreparation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/description_preparation"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/svSymptoms" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilDescriptionPreparation"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTextDescriptionPreparation">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etDescriptionPreparation"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:text="@{editPrep.prepLD.description}"
+                    android:hint="@string/enter_description_preparation"
+                    android:textColorHint="#616161"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvTextDateCreatePreparation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/date_create_preparation"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tvTextDateExpPreparation"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilDescriptionPreparation" />
+
+            <CalendarView
+                android:id="@+id/cvDateCreate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:getCalendarDate = "@{editPrep.prepLD.dataCreate}"
+                app:layout_constraintBottom_toTopOf="@+id/bCopyPreparation"
+                app:layout_constraintEnd_toStartOf="@+id/cvDateExp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTextDateCreatePreparation" />
+
+            <TextView
+                android:id="@+id/tvTextDateExpPreparation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/data_exp_preparation"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvTextDateCreatePreparation"
+                app:layout_constraintTop_toBottomOf="@+id/tilDescriptionPreparation" />
+
+            <CalendarView
+                android:id="@+id/cvDateExp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp"
+                app:getCalendarDate = "@{editPrep.prepLD.dateExp}"
+                app:layout_constraintBottom_toTopOf="@+id/bCopyPreparation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cvDateCreate"
+                app:layout_constraintTop_toBottomOf="@+id/tvTextDateExpPreparation" />
+
+            <Button
+                android:id="@+id/bCopyPreparation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tvTextAddPreparation"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cvDateCreate" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

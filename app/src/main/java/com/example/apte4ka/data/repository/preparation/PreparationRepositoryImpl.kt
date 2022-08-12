@@ -26,6 +26,10 @@ class PreparationRepositoryImpl(application: Application) : PreparationRepositor
         db.addPreparationItem(item)
     }
 
+    override fun copyPreparationItem(item: Preparation) {
+        db.addPreparationItem(item)
+    }
+
     override fun deletePreparationItem(id: Int) {
         db.deletePreparationItem(id)
     }

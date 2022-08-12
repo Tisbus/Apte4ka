@@ -70,6 +70,11 @@
             app:destination="@id/aidKitDetailFragment"
             app:popUpTo="@id/aidKitDetailFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_preparationDetailFragment_to_preparationCopyFragment"
+            app:destination="@id/preparationCopyFragment"
+            app:popUpTo="@id/preparationDetailFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_preparation_edit"
@@ -148,5 +153,14 @@
             app:destination="@id/preparationDetailFragment"
             app:popUpTo="@id/filterFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/preparationCopyFragment"
+        tools:layout="@layout/fragment_preparation_copy"
+        android:name="com.example.apte4ka.presentation.fragment.PreparationCopyFragment"
+        android:label="PreparationCopyFragment" >
+        <action
+            android:id="@+id/action_preparationCopyFragment_to_aidKitDetailFragment"
+            app:destination="@id/aidKitDetailFragment" />
     </fragment>
 </navigation>

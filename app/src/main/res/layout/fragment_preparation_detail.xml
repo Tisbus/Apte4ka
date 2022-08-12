@@ -147,12 +147,21 @@
             android:id="@+id/tvDetDescription"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            tools:text="TextViewTextViewTextViewTextViewTextView"
             android:padding="4dp"
             android:text="@{detailPrep.prepLD.description}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/bCopyPrepDetail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDetTitleDescription" />
+            app:layout_constraintTop_toBottomOf="@+id/tvDetTitleDescription"
+            tools:text="TextViewTextViewTextViewTextViewTextView" />
+
+        <Button
+            android:id="@+id/bCopyPrepDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/copy_prep"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
