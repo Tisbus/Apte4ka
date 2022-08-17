@@ -48,6 +48,6 @@ fun getCountDayToEnd(text: TextView, endDate: String) {
     }else{
         text.setTextColor(Color.GRAY)
     }
-    val countDay = "${days.toInt()} Дней"
+    val countDay = "${days.toInt()} Д."
     text.text = countDay
 }

@@ -165,5 +165,4 @@ class ListAidKitFragment : Fragment() {
     companion object {
         const val AID_KIT_ID = "aid_id"
     }
-
 }
