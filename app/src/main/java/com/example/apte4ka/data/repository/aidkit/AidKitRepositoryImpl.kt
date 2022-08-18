@@ -13,23 +13,23 @@ class AidKitRepositoryImpl(application : Application) : AidKitRepository {
 
     override fun getAidKitList(): LiveData<MutableList<AidKit>> = db.getAidKitList()
 
-    override fun getAidKitItem(id: Int): AidKit {
+    override suspend fun getAidKitItem(id: Int): AidKit {
         return db.getAidKitItem(id)
     }
 
-    override fun addAidKitItem(item: AidKit) {
+    override suspend fun addAidKitItem(item: AidKit) {
         db.addAidKitItem(item)
     }
 
-    override fun editAidKitItem(item: AidKit) {
+    override suspend fun editAidKitItem(item: AidKit) {
         db.addAidKitItem(item)
     }
 
-    override fun deleteAidKitItem(id: Int) {
+    override suspend fun deleteAidKitItem(id: Int) {
         db.deleteAidKitItem(id)
     }
 
-    override fun deleteAidKitAll() {
+    override suspend fun deleteAidKitAll() {
         db.deleteAidKitAll()
     }
 }

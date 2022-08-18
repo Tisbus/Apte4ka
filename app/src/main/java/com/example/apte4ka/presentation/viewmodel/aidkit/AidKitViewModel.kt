@@ -4,9 +4,11 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.apte4ka.data.repository.aidkit.AidKitRepositoryImpl
 import com.example.apte4ka.domain.entity.aidkit.AidKit
 import com.example.apte4ka.domain.usecase.aidkit.*
+import kotlinx.coroutines.launch
 
 class AidKitViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = AidKitRepositoryImpl(application)
@@ -27,29 +29,39 @@ class AidKitViewModel(application: Application) : AndroidViewModel(application) 
         name: String,
         description: String,
     ) {
-        addAidKitItemUseCase.addAidKitItem(AidKit(name, description))
+        viewModelScope.launch {
+            addAidKitItemUseCase.addAidKitItem(AidKit(name, description))
+        }
     }
 
     fun deleteAidKitItem(id: Int) {
-        deleteAidKitItemUseCase.deleteAidKitItem(id)
+        viewModelScope.launch {
+            deleteAidKitItemUseCase.deleteAidKitItem(id)
+        }
     }
 
     fun getAidKitItem(id: Int) {
-        val aidItem = getAidKitItemUseCase.getAidKitItem(id)
-        _aidKitLD.value = aidItem
+        viewModelScope.launch {
+            val aidItem = getAidKitItemUseCase.getAidKitItem(id)
+            _aidKitLD.value = aidItem
+        }
     }
 
     fun deleteAidKitAll() {
-        deleteAidKitAllUseCase.deleteAidKitAll()
+        viewModelScope.launch {
+            deleteAidKitAllUseCase.deleteAidKitAll()
+        }
     }
 
     fun editAidKitItem(name: String, description: String) {
         _aidKitLD.value?.let {
-            val item = it.copy(
-                name = name,
-                description = description
-            )
-            editAidKitItemUseCase.editAidKitItem(item)
+            viewModelScope.launch {
+                val item = it.copy(
+                    name = name,
+                    description = description
+                )
+                editAidKitItemUseCase.editAidKitItem(item)
+            }
         }
     }
 

@@ -29,7 +29,6 @@ abstract class AidKitDatabase : RoomDatabase() {
                     AidKitDatabase::class.java,
                     DB_NAME
                 )
-                    .allowMainThreadQueries()
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = db

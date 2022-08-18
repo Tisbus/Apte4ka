@@ -31,7 +31,7 @@ fun makeSymptomsText(text: TextView, list : List<Symptom>) {
     list.forEach {
         allSymptoms += " ${it.name},"
     }
-    text.text = allSymptoms.substring(0, allSymptoms.length-1)
+    text.text = allSymptoms.dropLast(1)
 }
 
 //for api max 26
