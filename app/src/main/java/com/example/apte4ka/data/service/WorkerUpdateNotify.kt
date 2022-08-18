@@ -21,10 +21,14 @@ class WorkerUpdateNotify(context: Context, workerParams: WorkerParameters) : Wor
     context,
     workerParams
 ) {
-    private val repository = PreparationRepositoryImpl(Application())
 
     override fun doWork(): Result {
+        //for normal work need inject repository with help dagger inject
+        Log.i("workCheck", "start work")
+        val repository = PreparationRepositoryImpl(Application())
+        Log.i("workCheck", repository.getPreparationList().value?.size.toString())
         repository.getPreparationList().value?.forEach { i ->
+            Log.i("workCheck", i.name)
             if (getCountDayToEnd(i.dateExp).toInt() <= 30) {
                 val goToDetail = setupIntentDetail(i)
                 val numberOfDays= getCountDayToEnd(i.dateExp).toInt()
@@ -65,7 +69,7 @@ class WorkerUpdateNotify(context: Context, workerParams: WorkerParameters) : Wor
             .setContentIntent(goToDetail)
             .setAutoCancel(true)
             .build()
-        NotificationManagerCompat.from(applicationContext).notify(NOTIFICATION_ID++, builder)
+        NotificationManagerCompat.from(applicationContext).notify(MainActivity.NOTIFICATION_ID++, builder)
     }
 
     //for api max 26
@@ -81,7 +85,6 @@ class WorkerUpdateNotify(context: Context, workerParams: WorkerParameters) : Wor
     }
 
     companion object {
-        var NOTIFICATION_ID = 1
         const val DETAIL_PREP_ID = "detail_prep_id"
     }
 }

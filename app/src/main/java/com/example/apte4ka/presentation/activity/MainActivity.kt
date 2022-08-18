@@ -16,8 +16,8 @@ import java.util.concurrent.TimeUnit
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         workerUpdateNotification()
+        setContentView(R.layout.activity_main)
         createNotificationChannel()
     }
 
@@ -38,8 +38,8 @@ class MainActivity : AppCompatActivity() {
         val currentDate = Calendar.getInstance()
         val dueDate = Calendar.getInstance()
         // Set Execution around 05:00:00 AM
-        dueDate.set(Calendar.HOUR_OF_DAY, 17)
-        dueDate.set(Calendar.MINUTE, 55)
+        dueDate.set(Calendar.HOUR_OF_DAY, 20)
+        dueDate.set(Calendar.MINUTE, 34)
         dueDate.set(Calendar.SECOND, 0)
         if (dueDate.before(currentDate)) {
             dueDate.add(Calendar.HOUR_OF_DAY, 24)
@@ -49,13 +49,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun workerUpdateNotification() {
         val dailyWorkRequest = OneTimeWorkRequestBuilder<WorkerUpdateNotify>()
-            .setInitialDelay(workerGetTime(), TimeUnit.MILLISECONDS)
+            .setInitialDelay(workerGetTime(), TimeUnit.SECONDS)
             .build()
         WorkManager.getInstance(applicationContext)
             .enqueue(dailyWorkRequest)
     }
 
     companion object {
+        var NOTIFICATION_ID = 1
         const val CHANNEL_ID = "1"
     }
 }
