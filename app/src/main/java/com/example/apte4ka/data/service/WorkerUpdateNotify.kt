@@ -12,7 +12,6 @@ import androidx.work.WorkerParameters
 import com.example.apte4ka.R
 import com.example.apte4ka.data.repository.preparation.PreparationRepositoryImpl
 import com.example.apte4ka.domain.entity.preparation.Preparation
-import com.example.apte4ka.presentation.activity.MainActivity
 import com.example.apte4ka.presentation.fragment.PreparationDetailFragment
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,7 +30,7 @@ class WorkerUpdateNotify(context: Context, workerParams: WorkerParameters) : Wor
             Log.i("workCheck", i.name)
             if (getCountDayToEnd(i.dateExp).toInt() <= 30) {
                 val goToDetail = setupIntentDetail(i)
-                val numberOfDays= getCountDayToEnd(i.dateExp).toInt()
+                val numberOfDays = getCountDayToEnd(i.dateExp).toInt()
                 val namePrep = i.name
                 val textExpDate = String.format(
                     "%s - срок годности заканчивается, осталось - %s д.",
@@ -59,9 +58,9 @@ class WorkerUpdateNotify(context: Context, workerParams: WorkerParameters) : Wor
 
     private fun setupNotificationBuilder(
         goToDetail: PendingIntent?,
-        textExpDate: String
+        textExpDate: String,
     ) {
-        val builder = NotificationCompat.Builder(applicationContext, MainActivity.CHANNEL_ID)
+        val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_baseline_notifications_24)
             .setContentTitle("Apte4ka")
             .setContentText(textExpDate)
@@ -69,7 +68,8 @@ class WorkerUpdateNotify(context: Context, workerParams: WorkerParameters) : Wor
             .setContentIntent(goToDetail)
             .setAutoCancel(true)
             .build()
-        NotificationManagerCompat.from(applicationContext).notify(MainActivity.NOTIFICATION_ID++, builder)
+        NotificationManagerCompat.from(applicationContext)
+            .notify(NOTIFICATION_ID++, builder)
     }
 
     //for api max 26
@@ -86,5 +86,7 @@ class WorkerUpdateNotify(context: Context, workerParams: WorkerParameters) : Wor
 
     companion object {
         const val DETAIL_PREP_ID = "detail_prep_id"
+        var NOTIFICATION_ID = 1
+        const val CHANNEL_ID = "1"
     }
 }

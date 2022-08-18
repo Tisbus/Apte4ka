@@ -1,5 +1,9 @@
 package com.example.apte4ka.presentation.fragment
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.core.os.bundleOf
@@ -8,11 +12,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.apte4ka.R
+import com.example.apte4ka.data.service.WorkerUpdateNotify
 import com.example.apte4ka.databinding.FragmentListAidKitBinding
 import com.example.apte4ka.domain.entity.aidkit.AidKit
 import com.example.apte4ka.presentation.adapter.aidkit.AidKitAdapter
 import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class ListAidKitFragment : Fragment() {
 
@@ -27,6 +36,8 @@ class ListAidKitFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        workerUpdateNotification()
+        createNotificationChannel()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -161,8 +172,44 @@ class ListAidKitFragment : Fragment() {
             findNavController().navigate(R.id.action_listAidKitFragment_to_aidKitAddFragment)
         }
     }
+    //notification and work_manager service
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Срок годности"
+            val descText = "Каннал уведомлений о сроках годности"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance)
+                .apply { description = descText }
+            val notificationManager =
+                requireActivity().getSystemService(Context.NOTIFICATION_SERVICE)
+                        as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun workerGetTime(): Long {
+        val currentDate = Calendar.getInstance()
+        val dueDate = Calendar.getInstance()
+        // Set Execution around 05:00:00 AM
+        dueDate.set(Calendar.HOUR_OF_DAY, 11)
+        dueDate.set(Calendar.MINUTE, 58)
+        dueDate.set(Calendar.SECOND, 0)
+        if (dueDate.before(currentDate)) {
+            dueDate.add(Calendar.HOUR_OF_DAY, 24)
+        }
+        return dueDate.timeInMillis.minus(currentDate.timeInMillis)
+    }
+
+    private fun workerUpdateNotification() {
+        val dailyWorkRequest = OneTimeWorkRequestBuilder<WorkerUpdateNotify>()
+            .setInitialDelay(workerGetTime(), TimeUnit.MILLISECONDS)
+            .build()
+        WorkManager.getInstance(requireContext())
+            .enqueue(dailyWorkRequest)
+    }
 
     companion object {
         const val AID_KIT_ID = "aid_id"
+        const val CHANNEL_ID = "1"
     }
 }
