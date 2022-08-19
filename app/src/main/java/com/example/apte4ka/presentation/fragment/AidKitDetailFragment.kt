@@ -1,5 +1,6 @@
 package com.example.apte4ka.presentation.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -10,12 +11,21 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.apte4ka.presentation.AidKitApp
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentAidKitDetailBinding
 import com.example.apte4ka.presentation.adapter.preparation.PreparationAdapter
+import com.example.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
 import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
+import javax.inject.Inject
 
 class AidKitDetailFragment : Fragment() {
+
+    @Inject
+    lateinit var viewModelFactory: AidKitViewModelFactory
+    private val component by lazy {
+        (requireActivity().application as AidKitApp).component
+    }
 
     private var aidKitId: Int? = null
 
@@ -33,17 +43,22 @@ class AidKitDetailFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
+    }
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.search_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.action_search -> findNavController().navigate(R.id.searchFragment)
             android.R.id.home -> findNavController().navigate(R.id.listAidKitFragment)
         }
         return true
     }
+
     private fun setupBackButton() {
         if (activity is AppCompatActivity) {
             (activity as AppCompatActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -65,7 +80,7 @@ class AidKitDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        prepModel = ViewModelProvider(this)[PreparationViewModel::class.java]
+        prepModel = ViewModelProvider(this, viewModelFactory)[PreparationViewModel::class.java]
         Log.i("check", aidKitId.toString())
         prepModel.listPreparation.observe(viewLifecycleOwner) {
             adapterPrep.submitList(it.filter { i -> i.aidKit == aidKitId })

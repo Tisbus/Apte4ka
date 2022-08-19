@@ -1,15 +1,12 @@
 package com.example.apte4ka.data.repository.aidkit
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import com.example.apte4ka.data.room.aidkit.AidKitDao
-import com.example.apte4ka.data.room.aidkit.AidKitDatabase
 import com.example.apte4ka.domain.entity.aidkit.AidKit
 import com.example.apte4ka.domain.repostitory.aidkit.AidKitRepository
+import javax.inject.Inject
 
-class AidKitRepositoryImpl(application : Application) : AidKitRepository {
-
-    private val db = AidKitDatabase.getInstance(application).aidKitDao()
+class AidKitRepositoryImpl @Inject constructor(private val db : AidKitDao) : AidKitRepository {
 
     override fun getAidKitList(): LiveData<MutableList<AidKit>> = db.getAidKitList()
 

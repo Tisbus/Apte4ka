@@ -1,9 +1,13 @@
 package com.example.apte4ka.presentation.fragment
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -17,18 +21,25 @@ import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentPreparationEditBinding
 import com.example.apte4ka.domain.entity.aidkit.AidKit
 import com.example.apte4ka.domain.entity.symptom.Symptom
+import com.example.apte4ka.presentation.AidKitApp
 import com.example.apte4ka.presentation.adapter.listaidkit.ListAidKitAdapter
 import com.example.apte4ka.presentation.adapter.symptom.SymptomAdapter
 import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
+import com.example.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
 import com.example.apte4ka.presentation.viewmodel.lists.ListsViewModel
 import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
 import com.squareup.picasso.Picasso
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 class PreparationEditFragment : Fragment() {
-
+    @Inject
+    lateinit var viewModelFactory: AidKitViewModelFactory
+    private val component by lazy {
+        (requireActivity().application as AidKitApp).component
+    }
     private var _bind: FragmentPreparationEditBinding? = null
     private val bind: FragmentPreparationEditBinding
         get() = _bind ?: throw RuntimeException("FragmentPreparationEditBinding == null")
@@ -51,8 +62,8 @@ class PreparationEditFragment : Fragment() {
     private var expDate: String = ""
     private var idPrep: Int? = null
 
-    private var listAidKit : MutableList<AidKit> = mutableListOf()
-    private var listSymptoms : List<Symptom> = listOf()
+    private var listAidKit: MutableList<AidKit> = mutableListOf()
+    private var listSymptoms: List<Symptom> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         parseArgs()
@@ -60,6 +71,10 @@ class PreparationEditFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
@@ -67,11 +82,13 @@ class PreparationEditFragment : Fragment() {
         }
         return true
     }
+
     private fun setupBackButton() {
         if (activity is AppCompatActivity) {
             (activity as AppCompatActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
     }
+
     private fun parseArgs() {
         arguments?.let {
             idPrep = it.getInt(DETAIL_PREP_ID)
@@ -91,15 +108,15 @@ class PreparationEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModelPrep = ViewModelProvider(this)[PreparationViewModel::class.java]
-        aidKitModel = ViewModelProvider(this)[AidKitViewModel::class.java]
-        listsModel = ViewModelProvider(this)[ListsViewModel::class.java]
+        viewModelPrep = ViewModelProvider(this, viewModelFactory)[PreparationViewModel::class.java]
+        aidKitModel = ViewModelProvider(this, viewModelFactory)[AidKitViewModel::class.java]
+        listsModel = ViewModelProvider(this, viewModelFactory)[ListsViewModel::class.java]
         recyclerSetupSymptom()
         setupSetDataLayout()
-        aidKitModel.listAidKit.observe(viewLifecycleOwner){
+        aidKitModel.listAidKit.observe(viewLifecycleOwner) {
             listAidKit = it
             recyclerSetup()
-            listAidKit[aidId-1].status = true
+            listAidKit[aidId - 1].status = true
             adapterListAidKit.itemSelect = {
                 _aidId = it.id
             }
@@ -116,11 +133,11 @@ class PreparationEditFragment : Fragment() {
         }
     }
 
-    private fun recyclerSetupSymptom() : RecyclerView {
+    private fun recyclerSetupSymptom(): RecyclerView {
         val recyclerSymptoms = bind.rSetSymptoms
         listSymptoms = listsModel.listSymptom
         adapterSymptom = SymptomAdapter(listSymptoms)
-        with(recyclerSymptoms){
+        with(recyclerSymptoms) {
             layoutManager = GridLayoutManager(requireContext(), 3)
             adapter = adapterSymptom
         }
@@ -132,9 +149,9 @@ class PreparationEditFragment : Fragment() {
             with(bind) {
                 val name = etNamePreparation.text.toString()
                 imageUrl = urlImg.toString()
-                val symptom : MutableList<Symptom> = mutableListOf()
+                val symptom: MutableList<Symptom> = mutableListOf()
                 listSymptoms.forEach {
-                    if(it.status){
+                    if (it.status) {
                         symptom.add(it)
                     }
                 }
@@ -154,7 +171,7 @@ class PreparationEditFragment : Fragment() {
             }
             val bundle = bundleOf(AID_KIT_ID to aidId)
             findNavController().navigate(R.id.action_preparationEditFragment_to_aidKitDetailFragment,
-            bundle)
+                bundle)
         }
     }
 
@@ -219,17 +236,17 @@ class PreparationEditFragment : Fragment() {
     }
 
     private fun setupSetDataLayout() {
-        with(bind){
+        with(bind) {
             editPrep = viewModelPrep
             lifecycleOwner = viewLifecycleOwner
         }
-        idPrep?.let{
+        idPrep?.let {
             viewModelPrep.getPreparationItem(it)
             imageUrl = viewModelPrep.prepLD.value?.image.toString()
             urlImg = Uri.parse(imageUrl)
             viewModelPrep.prepLD.value?.symptoms?.forEach {
-                for (i in listSymptoms){
-                    if(it.name.contains(i.name)){
+                for (i in listSymptoms) {
+                    if (it.name.contains(i.name)) {
                         i.status = true
                         adapterSymptom.notifyDataSetChanged()
                     }

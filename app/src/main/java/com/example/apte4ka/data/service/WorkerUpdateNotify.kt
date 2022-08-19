@@ -1,6 +1,5 @@
 package com.example.apte4ka.data.service
 
-import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -10,7 +9,6 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.apte4ka.R
-import com.example.apte4ka.data.repository.preparation.PreparationRepositoryImpl
 import com.example.apte4ka.domain.entity.preparation.Preparation
 import com.example.apte4ka.presentation.fragment.PreparationDetailFragment
 import java.text.SimpleDateFormat
@@ -23,7 +21,7 @@ class WorkerUpdateNotify(context: Context, workerParams: WorkerParameters) : Wor
 
     override fun doWork(): Result {
         //for normal work need inject repository with help dagger inject
-        Log.i("workCheck", "start work")
+/*        Log.i("workCheck", "start work")
         val repository = PreparationRepositoryImpl(Application())
         Log.i("workCheck", repository.getPreparationList().value?.size.toString())
         repository.getPreparationList().value?.forEach { i ->
@@ -39,7 +37,7 @@ class WorkerUpdateNotify(context: Context, workerParams: WorkerParameters) : Wor
                 )
                 setupNotificationBuilder(goToDetail, textExpDate)
             }
-        }
+        }*/
         return Result.success()
     }
 

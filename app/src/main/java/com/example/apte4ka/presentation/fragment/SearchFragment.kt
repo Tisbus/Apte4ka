@@ -1,5 +1,6 @@
 package com.example.apte4ka.presentation.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -12,11 +13,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentSearchBinding
 import com.example.apte4ka.domain.entity.preparation.Preparation
+import com.example.apte4ka.presentation.AidKitApp
 import com.example.apte4ka.presentation.adapter.search.SearchAdapter
+import com.example.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
 import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
+import javax.inject.Inject
 
 class SearchFragment : Fragment() {
-
+    @Inject
+    lateinit var viewModelFactory: AidKitViewModelFactory
+    private val component by lazy {
+        (requireActivity().application as AidKitApp).component
+    }
     private var _bind: FragmentSearchBinding? = null
     private val bind: FragmentSearchBinding
         get() = _bind ?: throw RuntimeException("FragmentSearchBinding == null")
@@ -41,9 +49,15 @@ class SearchFragment : Fragment() {
         return bind.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModelPreparation = ViewModelProvider(this)[PreparationViewModel::class.java]
+        viewModelPreparation =
+            ViewModelProvider(this, viewModelFactory)[PreparationViewModel::class.java]
         viewModelPreparation.listPreparation.observe(viewLifecycleOwner) {
             listPrep = it
             setupRecyclerView()

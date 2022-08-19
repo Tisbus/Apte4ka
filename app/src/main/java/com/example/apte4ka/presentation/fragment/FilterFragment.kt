@@ -1,5 +1,6 @@
 package com.example.apte4ka.presentation.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,15 +18,23 @@ import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentFilterBinding
 import com.example.apte4ka.domain.entity.preparation.Preparation
 import com.example.apte4ka.domain.entity.symptom.Symptom
+import com.example.apte4ka.presentation.AidKitApp
 import com.example.apte4ka.presentation.adapter.preparation.PreparationAdapter
 import com.example.apte4ka.presentation.adapter.symptom.SymptomAdapter
+import com.example.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
 import com.example.apte4ka.presentation.viewmodel.lists.ListsViewModel
 import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 
 class FilterFragment : Fragment() {
+    @Inject
+    lateinit var viewModelFactory: AidKitViewModelFactory
+    private val component by lazy {
+        (requireActivity().application as AidKitApp).component
+    }
 
     private var _bind: FragmentFilterBinding? = null
     private val bind: FragmentFilterBinding
@@ -44,6 +53,11 @@ class FilterFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -59,8 +73,9 @@ class FilterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModelPreparation = ViewModelProvider(this)[PreparationViewModel::class.java]
-        listsModel = ViewModelProvider(this)[ListsViewModel::class.java]
+        viewModelPreparation =
+            ViewModelProvider(this, viewModelFactory)[PreparationViewModel::class.java]
+        listsModel = ViewModelProvider(this, viewModelFactory)[ListsViewModel::class.java]
         viewModelPreparation.listPreparation.observe(viewLifecycleOwner) {
             adapterPrep.submitList(it)
             enterFilter(adapterPrep.currentList)
@@ -121,17 +136,17 @@ class FilterFragment : Fragment() {
                     }
                 }
                 if (bind.cbCountEndDay.isChecked) {
-                    itemFilter.removeIf {i ->
+                    itemFilter.removeIf { i ->
                         getCountDayToEnd(i.dateExp).toInt() > 30
                     }
                 }
                 adapterPrep.submitList(itemFilter)
             }
             if (bind.cbCountEndDay.isChecked && !isNotEmptySymptom()) {
-                    itemFilter.addAll(item)
-                    itemFilter.removeIf{i ->
-                        getCountDayToEnd(i.dateExp).toInt() > 30
-                    }
+                itemFilter.addAll(item)
+                itemFilter.removeIf { i ->
+                    getCountDayToEnd(i.dateExp).toInt() > 30
+                }
                 adapterPrep.submitList(itemFilter)
             }
         }

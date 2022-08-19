@@ -14,16 +14,25 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.example.apte4ka.presentation.AidKitApp
 import com.example.apte4ka.R
 import com.example.apte4ka.data.service.WorkerUpdateNotify
 import com.example.apte4ka.databinding.FragmentListAidKitBinding
 import com.example.apte4ka.domain.entity.aidkit.AidKit
 import com.example.apte4ka.presentation.adapter.aidkit.AidKitAdapter
 import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
+import com.example.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
 import java.util.*
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 class ListAidKitFragment : Fragment() {
+
+    @Inject
+    lateinit var viewModelFactory: AidKitViewModelFactory
+    private val component by lazy {
+        (requireActivity().application as AidKitApp).component
+    }
 
     private var _bind: FragmentListAidKitBinding? = null
     private val bind: FragmentListAidKitBinding
@@ -38,6 +47,11 @@ class ListAidKitFragment : Fragment() {
         setHasOptionsMenu(true)
         workerUpdateNotification()
         createNotificationChannel()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -61,7 +75,7 @@ class ListAidKitFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[AidKitViewModel::class.java]
+        viewModel = ViewModelProvider(this, viewModelFactory)[AidKitViewModel::class.java]
         addNewAidKit()
         addNewPrep()
         viewModel.listAidKit.observe(viewLifecycleOwner) {
@@ -172,6 +186,7 @@ class ListAidKitFragment : Fragment() {
             findNavController().navigate(R.id.action_listAidKitFragment_to_aidKitAddFragment)
         }
     }
+
     //notification and work_manager service
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

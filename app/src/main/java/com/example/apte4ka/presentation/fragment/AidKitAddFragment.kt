@@ -1,28 +1,42 @@
 package com.example.apte4ka.presentation.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.apte4ka.presentation.AidKitApp
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentAidKitAddBinding
 import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
+import com.example.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
+import javax.inject.Inject
 
 class AidKitAddFragment : Fragment() {
 
-    private var _bind : FragmentAidKitAddBinding? = null
-    private val bind : FragmentAidKitAddBinding
-    get() = _bind ?: throw RuntimeException("FragmentAidKitAddBinding == null")
+    @Inject
+    lateinit var viewModelFactory: AidKitViewModelFactory
+    private val component by lazy {
+        (requireActivity().application as AidKitApp).component
+    }
+    private var _bind: FragmentAidKitAddBinding? = null
+    private val bind: FragmentAidKitAddBinding
+        get() = _bind ?: throw RuntimeException("FragmentAidKitAddBinding == null")
 
-    private val viewModel by lazy{
-        ViewModelProvider(this)[AidKitViewModel::class.java]
+    private val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[AidKitViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -35,6 +49,7 @@ class AidKitAddFragment : Fragment() {
         }
         return true
     }
+
     private fun setupBackButton() {
         if (activity is AppCompatActivity) {
             (activity as AppCompatActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)

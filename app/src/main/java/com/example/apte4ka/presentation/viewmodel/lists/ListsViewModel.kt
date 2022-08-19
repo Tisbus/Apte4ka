@@ -1,13 +1,11 @@
 package com.example.apte4ka.presentation.viewmodel.lists
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import com.example.apte4ka.data.repository.lists.ListsRepositoryImpl
+import androidx.lifecycle.ViewModel
 import com.example.apte4ka.domain.usecase.lists.GetSymptomListUseCase
+import javax.inject.Inject
 
-class ListsViewModel(application: Application)  :AndroidViewModel(application) {
-    private val repository = ListsRepositoryImpl()
-    private val getSymptomListUseCase = GetSymptomListUseCase(repository)
-
+class ListsViewModel @Inject constructor(
+    private val getSymptomListUseCase: GetSymptomListUseCase
+) : ViewModel() {
     val listSymptom = getSymptomListUseCase.getSymptomList()
 }

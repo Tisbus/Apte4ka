@@ -1,5 +1,6 @@
 package com.example.apte4ka.presentation.fragment
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -20,17 +21,25 @@ import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentPreparationCopyBinding
 import com.example.apte4ka.domain.entity.aidkit.AidKit
 import com.example.apte4ka.domain.entity.symptom.Symptom
+import com.example.apte4ka.presentation.AidKitApp
 import com.example.apte4ka.presentation.adapter.listaidkit.ListAidKitAdapter
 import com.example.apte4ka.presentation.adapter.symptom.SymptomAdapter
 import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
+import com.example.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
 import com.example.apte4ka.presentation.viewmodel.lists.ListsViewModel
 import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
 import com.squareup.picasso.Picasso
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 class PreparationCopyFragment : Fragment() {
+    @Inject
+    lateinit var viewModelFactory: AidKitViewModelFactory
+    private val component by lazy {
+        (requireActivity().application as AidKitApp).component
+    }
 
     private var _bind: FragmentPreparationCopyBinding? = null
     private val bind: FragmentPreparationCopyBinding
@@ -63,6 +72,10 @@ class PreparationCopyFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
@@ -96,15 +109,16 @@ class PreparationCopyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModelPrep = ViewModelProvider(this)[PreparationViewModel::class.java]
-        aidKitModel = ViewModelProvider(this)[AidKitViewModel::class.java]
-        listsModel = ViewModelProvider(this)[ListsViewModel::class.java]
+        viewModelPrep = ViewModelProvider(this, viewModelFactory)[PreparationViewModel::class.java]
+        aidKitModel = ViewModelProvider(this, viewModelFactory)[AidKitViewModel::class.java]
+        listsModel = ViewModelProvider(this, viewModelFactory)[ListsViewModel::class.java]
         recyclerSetupSymptom()
         setupSetDataLayout()
         aidKitModel.listAidKit.observe(viewLifecycleOwner) {
             listAidKit = it
             recyclerSetup()
-            listAidKit[aidId-1].status = true
+            //need fix index -1 down when copy is filter_fragment -> detail -> copy
+            listAidKit[aidId - 1].status = true
             adapterListAidKit.itemSelect = {
                 _aidId = it.id
             }

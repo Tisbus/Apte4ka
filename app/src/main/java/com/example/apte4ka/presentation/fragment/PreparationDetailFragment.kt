@@ -1,5 +1,6 @@
 package com.example.apte4ka.presentation.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -12,11 +13,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentPreparationDetailBinding
+import com.example.apte4ka.presentation.AidKitApp
+import com.example.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
 import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
+import javax.inject.Inject
 
 
 class PreparationDetailFragment : Fragment() {
-
+    @Inject
+    lateinit var viewModelFactory: AidKitViewModelFactory
+    private val component by lazy {
+        (requireActivity().application as AidKitApp).component
+    }
 
     private var idPrep: Int? = null
     private var aidKitId: Int? = null
@@ -34,6 +42,11 @@ class PreparationDetailFragment : Fragment() {
             aidKitId = arguments?.getInt(AID_KIT_ID)
         }
         setHasOptionsMenu(true)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -60,7 +73,7 @@ class PreparationDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModelPrep = ViewModelProvider(this)[PreparationViewModel::class.java]
+        viewModelPrep = ViewModelProvider(this, viewModelFactory)[PreparationViewModel::class.java]
         getData()
         bind.bCopyPrepDetail.setOnClickListener {
             val bundle = bundleOf(DETAIL_PREP_ID to idPrep,

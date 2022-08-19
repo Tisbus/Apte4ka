@@ -1,5 +1,6 @@
 package com.example.apte4ka.presentation.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -9,19 +10,29 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentAidKitEditBinding
+import com.example.apte4ka.presentation.AidKitApp
 import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
+import com.example.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
+import javax.inject.Inject
 
 
 class AidKitEditFragment : Fragment() {
-
+    @Inject
+    lateinit var viewModelFactory: AidKitViewModelFactory
+    private val component by lazy {
+        (requireActivity().application as AidKitApp).component
+    }
     private var aidKitId: Int? = null
 
     private var _bind: FragmentAidKitEditBinding? = null
     private val bind: FragmentAidKitEditBinding
         get() = _bind ?: throw RuntimeException("FragmentAidKitEditBinding == null")
 
-    private val viewModel by lazy {
-        ViewModelProvider(this)[AidKitViewModel::class.java]
+    private lateinit var viewModel : AidKitViewModel
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,6 +75,7 @@ class AidKitEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this, viewModelFactory)[AidKitViewModel::class.java]
         Log.i("check", aidKitId.toString())
         getData()
         saveEditForm()

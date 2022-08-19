@@ -1,23 +1,22 @@
 package com.example.apte4ka.presentation.viewmodel.preparation
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.apte4ka.data.repository.preparation.PreparationRepositoryImpl
+import androidx.lifecycle.ViewModel
 import com.example.apte4ka.domain.entity.preparation.Preparation
 import com.example.apte4ka.domain.entity.symptom.Symptom
 import com.example.apte4ka.domain.usecase.preparation.*
+import javax.inject.Inject
 
-class PreparationViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository = PreparationRepositoryImpl(application)
-    private val addPreparationItemUseCase = AddPreparationItemUseCase(repository)
-    private val deletePreparationItemUseCase = DeletePreparationItemUseCase(repository)
-    private val deletePreparationAllUseCase = DeletePreparationAllUseCase(repository)
-    private val editPreparationItemUseCase = EditPreparationItemUseCase(repository)
-    private val getPreparationItemUseCase = GetPreparationItemUseCase(repository)
-    private val getPreparationListUseCase = GetPreparationListUseCase(repository)
-    private val copyPreparationItemUseCase = CopyPreparationItemUseCase(repository)
+class PreparationViewModel @Inject constructor(
+    private val addPreparationItemUseCase: AddPreparationItemUseCase,
+    private val deletePreparationItemUseCase: DeletePreparationItemUseCase,
+    private val deletePreparationAllUseCase: DeletePreparationAllUseCase,
+    private val editPreparationItemUseCase: EditPreparationItemUseCase,
+    private val getPreparationItemUseCase: GetPreparationItemUseCase,
+    private val getPreparationListUseCase: GetPreparationListUseCase,
+    private val copyPreparationItemUseCase: CopyPreparationItemUseCase,
+) : ViewModel() {
 
     val listPreparation = getPreparationListUseCase.getPreparationList()
 
@@ -48,7 +47,8 @@ class PreparationViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     fun getPreparationItem(id: Int) {
-        _prepLD.value = getPreparationItemUseCase.getPreparationItem(id)
+        val item = getPreparationItemUseCase.getPreparationItem(id)
+        _prepLD.value = item
     }
 
     fun deletePreparationAll() {
@@ -69,7 +69,7 @@ class PreparationViewModel(application: Application) : AndroidViewModel(applicat
         dateCreate: String,
         dateExp: String,
     ) {
-        _prepLD.value?.let{
+        _prepLD.value?.let {
             val item = it.copy(
                 aidKit = aidKitId,
                 name = name,
@@ -94,7 +94,7 @@ class PreparationViewModel(application: Application) : AndroidViewModel(applicat
         dateCreate: String,
         dateExp: String,
     ) {
-        _prepLD.value?.let{
+        _prepLD.value?.let {
             val item = it.copy(
                 aidKit = aidKitId,
                 name = name,

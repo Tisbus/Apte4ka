@@ -1,10 +1,13 @@
 package com.example.apte4ka.presentation.fragment
 
-import android.graphics.drawable.GradientDrawable
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -15,22 +18,29 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentPreparationAddBinding
 import com.example.apte4ka.domain.entity.aidkit.AidKit
 import com.example.apte4ka.domain.entity.symptom.Symptom
+import com.example.apte4ka.presentation.AidKitApp
 import com.example.apte4ka.presentation.adapter.listaidkit.ListAidKitAdapter
 import com.example.apte4ka.presentation.adapter.symptom.SymptomAdapter
 import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
+import com.example.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
 import com.example.apte4ka.presentation.viewmodel.lists.ListsViewModel
 import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
 import com.squareup.picasso.Picasso
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 class PreparationAddFragment : Fragment() {
+    @Inject
+    lateinit var viewModelFactory: AidKitViewModelFactory
+    private val component by lazy {
+        (requireActivity().application as AidKitApp).component
+    }
 
     private var _bind: FragmentPreparationAddBinding? = null
     private val bind: FragmentPreparationAddBinding
@@ -53,12 +63,17 @@ class PreparationAddFragment : Fragment() {
     private var currentDate: String = ""
     private var expDate: String = ""
 
-    private var listAidKit : MutableList<AidKit> = mutableListOf()
-    private var listSymptoms : List<Symptom> = listOf()
+    private var listAidKit: MutableList<AidKit> = mutableListOf()
+    private var listSymptoms: List<Symptom> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -67,6 +82,7 @@ class PreparationAddFragment : Fragment() {
         }
         return true
     }
+
     private fun setupBackButton() {
         if (activity is AppCompatActivity) {
             (activity as AppCompatActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -89,9 +105,9 @@ class PreparationAddFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        aidKitModel = ViewModelProvider(this)[AidKitViewModel::class.java]
-        prepModel = ViewModelProvider(this)[PreparationViewModel::class.java]
-        listsModel = ViewModelProvider(this)[ListsViewModel::class.java]
+        aidKitModel = ViewModelProvider(this, viewModelFactory)[AidKitViewModel::class.java]
+        prepModel = ViewModelProvider(this, viewModelFactory)[PreparationViewModel::class.java]
+        listsModel = ViewModelProvider(this, viewModelFactory)[ListsViewModel::class.java]
         aidKitModel.listAidKit.observe(viewLifecycleOwner) {
             listAidKit = it
             recyclerSetup()
@@ -113,11 +129,11 @@ class PreparationAddFragment : Fragment() {
         }
     }
 
-    private fun recyclerSetupSymptom() : RecyclerView {
+    private fun recyclerSetupSymptom(): RecyclerView {
         val recyclerSymptoms = bind.rSetSymptoms
         listSymptoms = listsModel.listSymptom
         adapterSymptom = SymptomAdapter(listSymptoms)
-        with(recyclerSymptoms){
+        with(recyclerSymptoms) {
             layoutManager = GridLayoutManager(requireContext(), 3)
             adapter = adapterSymptom
         }
@@ -180,9 +196,9 @@ class PreparationAddFragment : Fragment() {
             with(bind) {
                 val name = etNamePreparation.text.toString()
                 val image = urlImg.toString()
-                val symptom : MutableList<Symptom> = mutableListOf()
+                val symptom: MutableList<Symptom> = mutableListOf()
                 listSymptoms.forEach {
-                    if(it.status){
+                    if (it.status) {
                         symptom.add(it)
                     }
                 }
