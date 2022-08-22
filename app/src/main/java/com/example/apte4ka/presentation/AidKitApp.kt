@@ -1,10 +1,28 @@
 package com.example.apte4ka.presentation
 
 import android.app.Application
+import androidx.work.Configuration
+import com.example.apte4ka.data.worker.WorkerNotifyFactory
 import com.example.apte4ka.di.DaggerApplicationComponent
+import javax.inject.Inject
 
-class AidKitApp : Application() {
+class AidKitApp : Application(), Configuration.Provider {
+
+    @Inject
+    lateinit var workerFactory: WorkerNotifyFactory
+
     val component by lazy {
         DaggerApplicationComponent.factory().create(this)
+    }
+
+    override fun onCreate() {
+        component.inject(this)
+        super.onCreate()
+    }
+
+    override fun getWorkManagerConfiguration(): Configuration {
+        return Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
     }
 }

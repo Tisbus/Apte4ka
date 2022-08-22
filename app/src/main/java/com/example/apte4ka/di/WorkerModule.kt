@@ -14,7 +14,4 @@ interface WorkerModule {
     @IntoMap
     @WorkerKey(WorkerUpdateNotify::class)
     fun bindWorkerUpdateNotify(factory: WorkerUpdateNotify.Factory): ChildWorkerFactory
-
-    @Binds
-    fun bindWorkerFactory(factory: WorkerNotifyFactory): WorkerFactory
 }

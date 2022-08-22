@@ -6,16 +6,15 @@ import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.work.CoroutineWorker
-import androidx.work.ListenableWorker
-import androidx.work.Worker
-import androidx.work.WorkerParameters
+import androidx.work.*
 import com.example.apte4ka.R
+import com.example.apte4ka.data.room.preparation.PreparationDao
 import com.example.apte4ka.domain.entity.preparation.Preparation
 import com.example.apte4ka.domain.repostitory.preparation.PreparationRepository
 import com.example.apte4ka.presentation.fragment.PreparationDetailFragment
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -23,7 +22,7 @@ import javax.inject.Provider
 class WorkerUpdateNotify(
     context: Context,
     workerParams: WorkerParameters,
-    val repository: PreparationRepository,
+    private val prepDao: PreparationDao,
 ) : CoroutineWorker(
     context,
     workerParams
@@ -31,11 +30,11 @@ class WorkerUpdateNotify(
 
 
     override suspend fun doWork(): Result {
-        val list = repository.getPreparationList().value
+/*        val list = prepDao.getPreparationList().value
         //for normal work need inject repository with help dagger inject
         Log.i("workCheck", "start work")
         Log.i("workCheck", list?.size.toString())
-        repository.getPreparationList().value?.forEach { i ->
+        prepDao.getPreparationList().value?.forEach { i ->
             Log.i("workCheck", i.name)
             if (getCountDayToEnd(i.dateExp).toInt() <= 30) {
                 val goToDetail = setupIntentDetail(i)
@@ -48,18 +47,27 @@ class WorkerUpdateNotify(
                 )
                 setupNotificationBuilder(goToDetail, textExpDate)
             }
-        }
+        }*/
+        val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+            .setContentTitle("Apte4ka")
+            .setContentText("textExpDate")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setAutoCancel(true)
+            .build()
+        NotificationManagerCompat.from(applicationContext)
+            .notify(NOTIFICATION_ID++, builder)
         return Result.success()
     }
 
     class Factory @Inject constructor(
-        val repository: Provider<PreparationRepository>,
+        private val prepDao: PreparationDao
     ) : ChildWorkerFactory {
         override fun create(appContext: Context, params: WorkerParameters): ListenableWorker {
             return WorkerUpdateNotify(
                 appContext,
                 params,
-                repository.get()
+                prepDao
             )
         }
     }
@@ -109,5 +117,26 @@ class WorkerUpdateNotify(
         const val DETAIL_PREP_ID = "detail_prep_id"
         var NOTIFICATION_ID = 1
         const val CHANNEL_ID = "1"
+
+        const val NAME_WORKER = "WorkerUpdateNotify"
+
+        fun makeRequest(): OneTimeWorkRequest {
+            return OneTimeWorkRequestBuilder<WorkerUpdateNotify>()
+                .setInitialDelay(workerGetTime(), TimeUnit.MILLISECONDS)
+                .build()
+        }
+
+        private fun workerGetTime(): Long {
+            val currentDate = Calendar.getInstance()
+            val dueDate = Calendar.getInstance()
+            // Set Execution around 05:00:00 AM
+            dueDate.set(Calendar.HOUR_OF_DAY, 15)
+            dueDate.set(Calendar.MINUTE, 3)
+            dueDate.set(Calendar.SECOND, 0)
+            if (dueDate.before(currentDate)) {
+                dueDate.add(Calendar.HOUR_OF_DAY, 24)
+            }
+            return dueDate.timeInMillis.minus(currentDate.timeInMillis)
+        }
     }
 }

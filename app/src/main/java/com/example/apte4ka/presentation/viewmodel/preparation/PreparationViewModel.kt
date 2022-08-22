@@ -16,6 +16,7 @@ class PreparationViewModel @Inject constructor(
     private val getPreparationItemUseCase: GetPreparationItemUseCase,
     private val getPreparationListUseCase: GetPreparationListUseCase,
     private val copyPreparationItemUseCase: CopyPreparationItemUseCase,
+    private val updateNotificationUseCase: UpdateNotificationUseCase
 ) : ViewModel() {
 
     val listPreparation = getPreparationListUseCase.getPreparationList()
@@ -23,6 +24,10 @@ class PreparationViewModel @Inject constructor(
     private var _prepLD = MutableLiveData<Preparation>()
     val prepLD: LiveData<Preparation>
         get() = _prepLD
+
+    init {
+        updateNotificationUseCase()
+    }
 
     fun addPreparationItem(
         aidKitId: Int,

@@ -11,4 +11,5 @@ interface PreparationRepository {
     fun copyPreparationItem(item : Preparation)
     fun deletePreparationItem(id : Int)
     fun deletePreparationAll()
+    fun updateNotify()
 }

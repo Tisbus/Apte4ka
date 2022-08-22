@@ -1,13 +1,19 @@
 package com.example.apte4ka.data.room.preparation
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.example.apte4ka.domain.entity.preparation.Preparation
 
 @Dao
 interface PreparationDao {
     @Query("SELECT * FROM preparation")
     fun getPreparationList(): LiveData<MutableList<Preparation>>
+
+    @Query("SELECT * FROM preparation")
+    fun getPreparationL(): MutableList<Preparation>
 
     @Query("SELECT * FROM preparation WHERE id = :id LIMIT 1")
     fun getPreparationItem(id: Int): Preparation

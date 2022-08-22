@@ -30,14 +30,14 @@ interface DataModule {
     fun bindPreparationRepository(impl: PreparationRepositoryImpl): PreparationRepository
 
     companion object {
-        @ApplicationScope
         @Provides
+        @ApplicationScope
         fun provideAidKitDao(application: Application): AidKitDao {
             return AidKitDatabase.getInstance(application).aidKitDao()
         }
 
-        @ApplicationScope
         @Provides
+        @ApplicationScope
         fun providePreparationDao(application: Application): PreparationDao {
             return PreparationDatabase.getInstance(application).preparationDao()
         }

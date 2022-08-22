@@ -23,6 +23,7 @@ import com.example.apte4ka.presentation.AidKitApp
 import com.example.apte4ka.presentation.adapter.aidkit.AidKitAdapter
 import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 import com.example.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
+import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -31,13 +32,12 @@ class ListAidKitFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: AidKitViewModelFactory
-    @Inject
-    lateinit var workerFactory: WorkerFactory
 
     private val component by lazy {
         (requireActivity().application as AidKitApp).component
     }
 
+    private lateinit var viewModelPrep : PreparationViewModel
     private var _bind: FragmentListAidKitBinding? = null
     private val bind: FragmentListAidKitBinding
         get() = _bind ?: throw RuntimeException("FragmentListAidKitBinding == null")
@@ -49,7 +49,6 @@ class ListAidKitFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        workerUpdateNotification()
         createNotificationChannel()
     }
 
@@ -80,6 +79,7 @@ class ListAidKitFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this, viewModelFactory)[AidKitViewModel::class.java]
+        viewModelPrep = ViewModelProvider(this, viewModelFactory)[PreparationViewModel::class.java]
         addNewAidKit()
         addNewPrep()
         viewModel.listAidKit.observe(viewLifecycleOwner) {
@@ -191,7 +191,7 @@ class ListAidKitFragment : Fragment() {
         }
     }
 
-    //notification and work_manager service
+    //notification
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "Срок годности"
@@ -204,27 +204,6 @@ class ListAidKitFragment : Fragment() {
                         as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
-    }
-
-    private fun workerGetTime(): Long {
-        val currentDate = Calendar.getInstance()
-        val dueDate = Calendar.getInstance()
-        // Set Execution around 05:00:00 AM
-        dueDate.set(Calendar.HOUR_OF_DAY, 17)
-        dueDate.set(Calendar.MINUTE, 27)
-        dueDate.set(Calendar.SECOND, 0)
-        if (dueDate.before(currentDate)) {
-            dueDate.add(Calendar.HOUR_OF_DAY, 24)
-        }
-        return dueDate.timeInMillis.minus(currentDate.timeInMillis)
-    }
-
-    private fun workerUpdateNotification() {
-        val dailyWorkRequest = OneTimeWorkRequestBuilder<WorkerUpdateNotify>()
-            .setInitialDelay(workerGetTime(), TimeUnit.MILLISECONDS)
-            .build()
-        WorkManager.getInstance(requireContext())
-            .enqueue(dailyWorkRequest)
     }
 
     companion object {

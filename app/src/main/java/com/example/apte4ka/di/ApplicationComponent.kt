@@ -1,6 +1,7 @@
 package com.example.apte4ka.di
 
 import android.app.Application
+import com.example.apte4ka.presentation.AidKitApp
 import com.example.apte4ka.presentation.fragment.*
 import dagger.BindsInstance
 import dagger.Component
@@ -18,6 +19,7 @@ interface ApplicationComponent {
     fun inject(frag : PreparationCopyFragment)
     fun inject(frag : PreparationAddFragment)
     fun inject(frag : PreparationEditFragment)
+    fun inject(app : AidKitApp)
 
     @Component.Factory
     interface Factory{
