@@ -6,17 +6,16 @@ import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.lifecycle.LifecycleOwner
 import androidx.work.*
 import com.example.apte4ka.R
 import com.example.apte4ka.data.room.preparation.PreparationDao
 import com.example.apte4ka.domain.entity.preparation.Preparation
-import com.example.apte4ka.domain.repostitory.preparation.PreparationRepository
 import com.example.apte4ka.presentation.fragment.PreparationDetailFragment
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import javax.inject.Provider
 
 
 class WorkerUpdateNotify(
@@ -30,38 +29,58 @@ class WorkerUpdateNotify(
 
 
     override suspend fun doWork(): Result {
-/*        val list = prepDao.getPreparationList().value
-        //for normal work need inject repository with help dagger inject
-        Log.i("workCheck", "start work")
-        Log.i("workCheck", list?.size.toString())
-        prepDao.getPreparationList().value?.forEach { i ->
-            Log.i("workCheck", i.name)
-            if (getCountDayToEnd(i.dateExp).toInt() <= 30) {
-                val goToDetail = setupIntentDetail(i)
-                val numberOfDays = getCountDayToEnd(i.dateExp).toInt()
-                val namePrep = i.name
-                val textExpDate = String.format(
-                    "%s - срок годности заканчивается, осталось - %s д.",
-                    namePrep,
-                    numberOfDays.toString()
-                )
-                setupNotificationBuilder(goToDetail, textExpDate)
+        try {
+            val list = prepDao.getPreparationL()
+            //for normal work need inject repository with help dagger inject
+            Log.i("workCheck", "start work")
+            Log.i("workCheck", list.size.toString())
+            list.forEach { i ->
+                Log.i("workCheck", i.name)
+                if (getCountDayToEnd(i.dateExp).toInt() <= 30) {
+                    val goToDetail = setupIntentDetail(i)
+                    val numberOfDays = getCountDayToEnd(i.dateExp).toInt()
+                    val namePrep = i.name
+                    val textExpDate = String.format(
+                        "%s - срок годности заканчивается, осталось - %s д.",
+                        namePrep,
+                        numberOfDays.toString()
+                    )
+                    setupNotificationBuilder(goToDetail, textExpDate)
+                }
             }
-        }*/
-        val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-            .setContentTitle("Apte4ka")
-            .setContentText("textExpDate")
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setAutoCancel(true)
-            .build()
-        NotificationManagerCompat.from(applicationContext)
-            .notify(NOTIFICATION_ID++, builder)
+        } catch (e: Exception) {}
         return Result.success()
     }
 
+    companion object {
+        const val DETAIL_PREP_ID = "detail_prep_id"
+        var NOTIFICATION_ID = 1
+        const val CHANNEL_ID = "1"
+
+        const val NAME_WORKER = "WorkerUpdateNotify"
+
+        fun makeRequest(): OneTimeWorkRequest {
+            return OneTimeWorkRequestBuilder<WorkerUpdateNotify>()
+                .setInitialDelay(workerGetTime(), TimeUnit.MILLISECONDS)
+                .build()
+        }
+
+        private fun workerGetTime(): Long {
+            val currentDate = Calendar.getInstance()
+            val dueDate = Calendar.getInstance()
+            // Set Execution around 05:00:00 AM
+            dueDate.set(Calendar.HOUR_OF_DAY, 17)
+            dueDate.set(Calendar.MINUTE, 15)
+            dueDate.set(Calendar.SECOND, 0)
+            if (dueDate.before(currentDate)) {
+                dueDate.add(Calendar.HOUR_OF_DAY, 24)
+            }
+            return dueDate.timeInMillis.minus(currentDate.timeInMillis)
+        }
+    }
+
     class Factory @Inject constructor(
-        private val prepDao: PreparationDao
+        private val prepDao: PreparationDao,
     ) : ChildWorkerFactory {
         override fun create(appContext: Context, params: WorkerParameters): ListenableWorker {
             return WorkerUpdateNotify(
@@ -77,6 +96,7 @@ class WorkerUpdateNotify(
             Intent(applicationContext, PreparationDetailFragment::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }.putExtra(DETAIL_PREP_ID, i.id)
+        Log.i("workCheck", i.id.toString())
         return PendingIntent.getActivity(
             applicationContext,
             0,
@@ -111,32 +131,5 @@ class WorkerUpdateNotify(
             .div(24)
         Log.i("Time", days.toString())
         return days
-    }
-
-    companion object {
-        const val DETAIL_PREP_ID = "detail_prep_id"
-        var NOTIFICATION_ID = 1
-        const val CHANNEL_ID = "1"
-
-        const val NAME_WORKER = "WorkerUpdateNotify"
-
-        fun makeRequest(): OneTimeWorkRequest {
-            return OneTimeWorkRequestBuilder<WorkerUpdateNotify>()
-                .setInitialDelay(workerGetTime(), TimeUnit.MILLISECONDS)
-                .build()
-        }
-
-        private fun workerGetTime(): Long {
-            val currentDate = Calendar.getInstance()
-            val dueDate = Calendar.getInstance()
-            // Set Execution around 05:00:00 AM
-            dueDate.set(Calendar.HOUR_OF_DAY, 15)
-            dueDate.set(Calendar.MINUTE, 3)
-            dueDate.set(Calendar.SECOND, 0)
-            if (dueDate.before(currentDate)) {
-                dueDate.add(Calendar.HOUR_OF_DAY, 24)
-            }
-            return dueDate.timeInMillis.minus(currentDate.timeInMillis)
-        }
     }
 }
