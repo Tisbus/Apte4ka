@@ -14,11 +14,12 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import com.example.apte4ka.presentation.AidKitApp
+import androidx.work.WorkerFactory
 import com.example.apte4ka.R
-import com.example.apte4ka.data.service.WorkerUpdateNotify
+import com.example.apte4ka.data.worker.WorkerUpdateNotify
 import com.example.apte4ka.databinding.FragmentListAidKitBinding
 import com.example.apte4ka.domain.entity.aidkit.AidKit
+import com.example.apte4ka.presentation.AidKitApp
 import com.example.apte4ka.presentation.adapter.aidkit.AidKitAdapter
 import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 import com.example.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
@@ -30,6 +31,9 @@ class ListAidKitFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: AidKitViewModelFactory
+    @Inject
+    lateinit var workerFactory: WorkerFactory
+
     private val component by lazy {
         (requireActivity().application as AidKitApp).component
     }
@@ -206,8 +210,8 @@ class ListAidKitFragment : Fragment() {
         val currentDate = Calendar.getInstance()
         val dueDate = Calendar.getInstance()
         // Set Execution around 05:00:00 AM
-        dueDate.set(Calendar.HOUR_OF_DAY, 11)
-        dueDate.set(Calendar.MINUTE, 58)
+        dueDate.set(Calendar.HOUR_OF_DAY, 17)
+        dueDate.set(Calendar.MINUTE, 27)
         dueDate.set(Calendar.SECOND, 0)
         if (dueDate.before(currentDate)) {
             dueDate.add(Calendar.HOUR_OF_DAY, 24)

@@ -1,4 +1,4 @@
-package com.example.apte4ka.data.service
+package com.example.apte4ka.data.worker
 
 import android.app.PendingIntent
 import android.content.Context
@@ -6,24 +6,35 @@ import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.work.CoroutineWorker
+import androidx.work.ListenableWorker
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.apte4ka.R
 import com.example.apte4ka.domain.entity.preparation.Preparation
+import com.example.apte4ka.domain.repostitory.preparation.PreparationRepository
 import com.example.apte4ka.presentation.fragment.PreparationDetailFragment
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Provider
 
-class WorkerUpdateNotify(context: Context, workerParams: WorkerParameters) : Worker(
+
+class WorkerUpdateNotify(
+    context: Context,
+    workerParams: WorkerParameters,
+    val repository: PreparationRepository,
+) : CoroutineWorker(
     context,
     workerParams
 ) {
 
-    override fun doWork(): Result {
+
+    override suspend fun doWork(): Result {
+        val list = repository.getPreparationList().value
         //for normal work need inject repository with help dagger inject
-/*        Log.i("workCheck", "start work")
-        val repository = PreparationRepositoryImpl(Application())
-        Log.i("workCheck", repository.getPreparationList().value?.size.toString())
+        Log.i("workCheck", "start work")
+        Log.i("workCheck", list?.size.toString())
         repository.getPreparationList().value?.forEach { i ->
             Log.i("workCheck", i.name)
             if (getCountDayToEnd(i.dateExp).toInt() <= 30) {
@@ -37,8 +48,20 @@ class WorkerUpdateNotify(context: Context, workerParams: WorkerParameters) : Wor
                 )
                 setupNotificationBuilder(goToDetail, textExpDate)
             }
-        }*/
+        }
         return Result.success()
+    }
+
+    class Factory @Inject constructor(
+        val repository: Provider<PreparationRepository>,
+    ) : ChildWorkerFactory {
+        override fun create(appContext: Context, params: WorkerParameters): ListenableWorker {
+            return WorkerUpdateNotify(
+                appContext,
+                params,
+                repository.get()
+            )
+        }
     }
 
     private fun setupIntentDetail(i: Preparation): PendingIntent? {
