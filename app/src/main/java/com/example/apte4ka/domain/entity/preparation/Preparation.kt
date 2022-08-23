@@ -2,6 +2,7 @@ package com.example.apte4ka.domain.entity.preparation
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.apte4ka.domain.entity.packaging.Packaging
 import com.example.apte4ka.domain.entity.symptom.Symptom
 
 @Entity(tableName = "preparation")

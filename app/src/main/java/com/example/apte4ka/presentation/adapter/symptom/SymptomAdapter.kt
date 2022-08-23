@@ -9,9 +9,9 @@ import com.example.apte4ka.R
 import com.example.apte4ka.databinding.SymptomItemBinding
 import com.example.apte4ka.domain.entity.symptom.Symptom
 
-class SymptomAdapter(val listSymptom : List<Symptom>) : RecyclerView.Adapter<SymptomViewHolder>() {
+class SymptomAdapter(val listSymptom: List<Symptom>) : RecyclerView.Adapter<SymptomViewHolder>() {
 
-    var itemSelect : ((Symptom) -> Unit)? = null
+    var itemSelect: ((Symptom) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SymptomViewHolder {
         val bindView = DataBindingUtil.inflate<SymptomItemBinding>(
@@ -27,9 +27,9 @@ class SymptomAdapter(val listSymptom : List<Symptom>) : RecyclerView.Adapter<Sym
         val itemSymptom = listSymptom[position]
         val bind = holder.bind
         bind.symptom = itemSymptom
-        if(itemSymptom.status){
+        if (itemSymptom.status) {
             bind.cvSymptom.background.setTint(Color.RED)
-        }else{
+        } else {
             bind.cvSymptom.background.setTint(Color.WHITE)
         }
         bind.root.setOnClickListener {

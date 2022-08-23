@@ -23,6 +23,7 @@ import com.example.apte4ka.domain.entity.aidkit.AidKit
 import com.example.apte4ka.domain.entity.symptom.Symptom
 import com.example.apte4ka.presentation.AidKitApp
 import com.example.apte4ka.presentation.adapter.listaidkit.ListAidKitAdapter
+import com.example.apte4ka.presentation.adapter.packaging.PackagingAdapter
 import com.example.apte4ka.presentation.adapter.symptom.SymptomAdapter
 import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 import com.example.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
