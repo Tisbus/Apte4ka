@@ -14,6 +14,8 @@ data class Preparation(
     val description: String,
     val dataCreate: String,
     val dateExp: String,
+    val customStatus : Boolean = false,
+    val oneDayStatus : Boolean = false,
     @PrimaryKey(autoGenerate = true)
     val id: Int = UNDEFINED_ID
 ){

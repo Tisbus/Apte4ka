@@ -32,31 +32,47 @@ class WorkerUpdateNotify(
     override suspend fun doWork(): Result {
         try {
             val list = prepDao.getPreparationL()
-            //for normal work need inject repository with help dagger inject
-            Log.i("workCheck", "start work")
-            Log.i("workCheck", list.size.toString())
             list.forEach { i ->
-                Log.i("workCheck", i.name)
-                if (getCountDayToEnd(i.dateExp).toInt() <= 30) {
-                    val goToDetail = setupIntentDetail(i)
-                    val numberOfDays = getCountDayToEnd(i.dateExp).toInt()
-                    val namePrep = i.name
-                    val textExpDate = String.format(
-                        "%s - срок годности заканчивается, осталось - %s д.",
-                        namePrep,
-                        numberOfDays.toString()
-                    )
-                    setupNotificationBuilder(goToDetail, textExpDate)
+                if (getCountDayToEnd(i.dateExp).toInt() <= 30 && !i.customStatus) {
+                    setupCustomExpDate(i, STATUS_NAME_CUSTOM)
+                }
+                if (getCountDayToEnd(i.dateExp).toInt() <= 1 && !i.oneDayStatus) {
+                    setupCustomExpDate(i, STATUS_NAME_ONE_DAY)
                 }
             }
         } catch (e: Exception) {}
         return Result.success()
     }
 
+    private fun setupCustomExpDate(i: Preparation, status : String) {
+        val goToDetail = setupIntentDetail(i)
+        val numberOfDays = getCountDayToEnd(i.dateExp).toInt()
+        val namePrep = i.name
+        val text = when(status){
+            STATUS_NAME_CUSTOM -> "%s - срок годности заканчивается, осталось - %s д."
+            STATUS_NAME_ONE_DAY -> "%s - срок годности заканчился - %s д."
+            else-> "%s - срок годности заканчивается, осталось - %s д."
+        }
+        val textExpDate = String.format(
+            text,
+            namePrep,
+            numberOfDays.toString()
+        )
+        setupNotificationBuilder(goToDetail, textExpDate)
+        val item = when(status){
+            STATUS_NAME_CUSTOM -> i.copy(customStatus = true)
+            STATUS_NAME_ONE_DAY -> i.copy(oneDayStatus = true)
+            else-> i.copy(customStatus = true)
+        }
+        prepDao.addPreparationItem(item)
+    }
+
     companion object {
         const val DETAIL_PREP_ID = "detail_prep_id"
         var NOTIFICATION_ID = 1
         const val CHANNEL_ID = "1"
+        const val STATUS_NAME_CUSTOM = "custom"
+        const val STATUS_NAME_ONE_DAY = "oneDay"
 
         const val NAME_WORKER = "WorkerUpdateNotify"
 
@@ -69,9 +85,8 @@ class WorkerUpdateNotify(
         private fun workerGetTime(): Long {
             val currentDate = Calendar.getInstance()
             val dueDate = Calendar.getInstance()
-            // Set Execution around 05:00:00 AM
-            dueDate.set(Calendar.HOUR_OF_DAY, 12)
-            dueDate.set(Calendar.MINUTE, 57)
+            dueDate.set(Calendar.HOUR_OF_DAY, 14)
+            dueDate.set(Calendar.MINUTE, 27)
             dueDate.set(Calendar.SECOND, 30)
             if (dueDate.before(currentDate)) {
                 dueDate.add(Calendar.HOUR_OF_DAY, 24)
