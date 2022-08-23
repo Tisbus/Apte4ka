@@ -2,11 +2,12 @@ package com.example.apte4ka.data.worker
 
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.lifecycle.LifecycleOwner
+import androidx.core.os.bundleOf
+import androidx.navigation.NavDeepLinkBuilder
+import androidx.navigation.Navigation
 import androidx.work.*
 import com.example.apte4ka.R
 import com.example.apte4ka.data.room.preparation.PreparationDao
@@ -69,9 +70,9 @@ class WorkerUpdateNotify(
             val currentDate = Calendar.getInstance()
             val dueDate = Calendar.getInstance()
             // Set Execution around 05:00:00 AM
-            dueDate.set(Calendar.HOUR_OF_DAY, 17)
-            dueDate.set(Calendar.MINUTE, 15)
-            dueDate.set(Calendar.SECOND, 0)
+            dueDate.set(Calendar.HOUR_OF_DAY, 12)
+            dueDate.set(Calendar.MINUTE, 57)
+            dueDate.set(Calendar.SECOND, 30)
             if (dueDate.before(currentDate)) {
                 dueDate.add(Calendar.HOUR_OF_DAY, 24)
             }
@@ -91,18 +92,13 @@ class WorkerUpdateNotify(
         }
     }
 
-    private fun setupIntentDetail(i: Preparation): PendingIntent? {
-        val intent =
-            Intent(applicationContext, PreparationDetailFragment::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }.putExtra(DETAIL_PREP_ID, i.id)
-        Log.i("workCheck", i.id.toString())
-        return PendingIntent.getActivity(
-            applicationContext,
-            0,
-            intent,
-            PendingIntent.FLAG_IMMUTABLE
-        )
+    private fun setupIntentDetail(i: Preparation): PendingIntent {
+        val bundle = bundleOf(DETAIL_PREP_ID to i.id)
+        return NavDeepLinkBuilder(applicationContext)
+            .setGraph(R.navigation.main_navigation)
+            .setDestination(R.id.preparationDetailFragment)
+            .setArguments(bundle)
+            .createPendingIntent()
     }
 
     private fun setupNotificationBuilder(
