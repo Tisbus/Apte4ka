@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentPreparationAddBinding
@@ -148,7 +149,6 @@ class PreparationAddFragment : Fragment() {
         listPackaging = listsModel.listPackaging
         adapterPackaging = PackagingAdapter(listPackaging)
         with(recyclerPackaging) {
-            layoutManager = GridLayoutManager(requireContext(), 3)
             adapter = adapterPackaging
         }
         return recyclerPackaging
@@ -159,7 +159,6 @@ class PreparationAddFragment : Fragment() {
         listSymptoms = listsModel.listSymptom
         adapterSymptom = SymptomAdapter(listSymptoms)
         with(recyclerSymptoms) {
-            layoutManager = GridLayoutManager(requireContext(), 3)
             adapter = adapterSymptom
         }
         return recyclerSymptoms
@@ -195,7 +194,7 @@ class PreparationAddFragment : Fragment() {
         val takeImages =
             registerForActivityResult(ActivityResultContracts.TakePicture()) { success: Boolean ->
                 if (success) {
-                    Picasso.get().load(urlImg).into(bind.ivAddPhotoPreparation)
+                    Picasso.get().load(urlImg).rotate(90F).into(bind.ivAddPhotoPreparation)
                 }
             }
 

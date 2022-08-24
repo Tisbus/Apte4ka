@@ -152,7 +152,6 @@ class PreparationEditFragment : Fragment() {
         listPackaging = listsModel.listPackaging
         adapterPackaging = PackagingAdapter(listPackaging)
         with(recyclerPackaging) {
-            layoutManager = GridLayoutManager(requireContext(), 3)
             adapter = adapterPackaging
         }
         return recyclerPackaging
@@ -163,7 +162,6 @@ class PreparationEditFragment : Fragment() {
         listSymptoms = listsModel.listSymptom
         adapterSymptom = SymptomAdapter(listSymptoms)
         with(recyclerSymptoms) {
-            layoutManager = GridLayoutManager(requireContext(), 3)
             adapter = adapterSymptom
         }
         return recyclerSymptoms
@@ -230,7 +228,7 @@ class PreparationEditFragment : Fragment() {
         val takeImages =
             registerForActivityResult(ActivityResultContracts.TakePicture()) { success: Boolean ->
                 if (success) {
-                    Picasso.get().load(urlImg).into(bind.ivAddPhotoPreparation)
+                    Picasso.get().load(urlImg).rotate(90F).into(bind.ivAddPhotoPreparation)
                 }
             }
 
@@ -292,6 +290,7 @@ class PreparationEditFragment : Fragment() {
         listPackaging.forEach {
             it.status = it.name == namePackaging
         }
+        adapterPackaging.notifyDataSetChanged()
     }
 
     companion object {

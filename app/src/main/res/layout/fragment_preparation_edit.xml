@@ -128,8 +128,8 @@ xmlns:tools="http://schemas.android.com/tools">
 
         <ScrollView
             android:id="@+id/svPackaging"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTextPackagePreparation">
@@ -140,10 +140,11 @@ xmlns:tools="http://schemas.android.com/tools">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rPackagePreparation"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:orientation="horizontal"
                     android:padding="4dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -167,8 +168,8 @@ xmlns:tools="http://schemas.android.com/tools">
 
         <ScrollView
             android:id="@+id/svSymptoms"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTextPreparationSymptoms">
@@ -179,10 +180,11 @@ xmlns:tools="http://schemas.android.com/tools">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rSetSymptoms"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:orientation="horizontal"
                     android:padding="4dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
