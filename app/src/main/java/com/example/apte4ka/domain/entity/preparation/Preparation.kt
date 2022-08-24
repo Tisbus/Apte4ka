@@ -11,7 +11,7 @@ data class Preparation(
     val name: String,
     val image : String,
     val symptoms: MutableList<Symptom>,
-    val packing: String,
+    val packaging: String,
     val description: String,
     val dataCreate: String,
     val dateExp: String,

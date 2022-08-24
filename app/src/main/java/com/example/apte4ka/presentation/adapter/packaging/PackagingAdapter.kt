@@ -30,6 +30,7 @@ class PackagingAdapter(val listPackaging: List<Packaging>) :
         bind.packaging = itemPackaging
         if (itemPackaging.status) {
             bind.cvPackaging.background.setTint(Color.RED)
+            itemPackaging.status = false
         } else {
             bind.cvPackaging.background.setTint(Color.WHITE)
         }

@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.example.apte4ka.data.converter.Converter
 import com.example.apte4ka.domain.entity.preparation.Preparation
 
-@Database(entities = [Preparation::class], version = 2, exportSchema = false)
+@Database(entities = [Preparation::class], version = 1, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class PreparationDatabase : RoomDatabase() {
 

@@ -21,9 +21,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentPreparationAddBinding
 import com.example.apte4ka.domain.entity.aidkit.AidKit
+import com.example.apte4ka.domain.entity.packaging.Packaging
 import com.example.apte4ka.domain.entity.symptom.Symptom
 import com.example.apte4ka.presentation.AidKitApp
 import com.example.apte4ka.presentation.adapter.listaidkit.ListAidKitAdapter
+import com.example.apte4ka.presentation.adapter.packaging.PackagingAdapter
 import com.example.apte4ka.presentation.adapter.symptom.SymptomAdapter
 import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 import com.example.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
@@ -48,6 +50,7 @@ class PreparationAddFragment : Fragment() {
 
     private lateinit var adapterListAidKit: ListAidKitAdapter
     private lateinit var adapterSymptom: SymptomAdapter
+    private lateinit var adapterPackaging: PackagingAdapter
 
     private lateinit var aidKitModel: AidKitViewModel
 
@@ -62,9 +65,11 @@ class PreparationAddFragment : Fragment() {
 
     private var currentDate: String = ""
     private var expDate: String = ""
+    private var namePackaging: String = ""
 
     private var listAidKit: MutableList<AidKit> = mutableListOf()
     private var listSymptoms: List<Symptom> = listOf()
+    private var listPackaging: List<Packaging> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,6 +121,8 @@ class PreparationAddFragment : Fragment() {
                 Log.i("itemId", aidId.toString())
             }
         }
+        recyclerSetupPackaging()
+        selectPackaging()
         recyclerSetupSymptom()
         selectSymptoms()
         addNewPreparation()
@@ -123,10 +130,28 @@ class PreparationAddFragment : Fragment() {
         setupDate()
     }
 
+    private fun selectPackaging() {
+        adapterPackaging.itemSelect = {
+            it.status = true
+            namePackaging = it.name
+        }
+    }
+
     private fun selectSymptoms() {
         adapterSymptom.itemSelect = {
             it.status = !it.status
         }
+    }
+
+    private fun recyclerSetupPackaging(): RecyclerView {
+        val recyclerPackaging = bind.rPackagePreparation
+        listPackaging = listsModel.listPackaging
+        adapterPackaging = PackagingAdapter(listPackaging)
+        with(recyclerPackaging) {
+            layoutManager = GridLayoutManager(requireContext(), 3)
+            adapter = adapterPackaging
+        }
+        return recyclerPackaging
     }
 
     private fun recyclerSetupSymptom(): RecyclerView {
@@ -202,7 +227,7 @@ class PreparationAddFragment : Fragment() {
                         symptom.add(it)
                     }
                 }
-                val packing = etPackagePreparation.text.toString()
+                val packing = namePackaging
                 val description = etDescriptionPreparation.text.toString()
                 val dateCreate = currentDate
                 val dateExp = expDate

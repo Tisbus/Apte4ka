@@ -1,7 +1,6 @@
 package com.example.apte4ka.presentation.adapter.preparation
 
 import android.graphics.Color
-import android.util.Log
 import android.widget.CalendarView
 import android.widget.ImageView
 import android.widget.TextView
@@ -26,7 +25,7 @@ fun getCalendarDate(calendarView: CalendarView, startDate: String?) {
 }
 
 @BindingAdapter("makeSymptomsText")
-fun makeSymptomsText(text: TextView, list : List<Symptom>) {
+fun makeSymptomsText(text: TextView, list: List<Symptom>) {
     var allSymptoms = ""
     list.forEach {
         allSymptoms += " ${it.name},"
@@ -43,9 +42,9 @@ fun getCountDayToEnd(text: TextView, endDate: String) {
     val milliseconds = eDate?.time?.minus(toDay.time)
     val days = (milliseconds?.div(1000) ?: throw RuntimeException("div to zero")).div(3600)
         .div(24)
-    if(days.toInt() <= 30){
+    if (days.toInt() <= 30) {
         text.setTextColor(Color.RED)
-    }else{
+    } else {
         text.setTextColor(Color.GRAY)
     }
     val countDay = "${days.toInt()} Д."

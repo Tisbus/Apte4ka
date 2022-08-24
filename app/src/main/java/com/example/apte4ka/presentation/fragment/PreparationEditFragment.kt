@@ -20,9 +20,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentPreparationEditBinding
 import com.example.apte4ka.domain.entity.aidkit.AidKit
+import com.example.apte4ka.domain.entity.packaging.Packaging
 import com.example.apte4ka.domain.entity.symptom.Symptom
 import com.example.apte4ka.presentation.AidKitApp
 import com.example.apte4ka.presentation.adapter.listaidkit.ListAidKitAdapter
+import com.example.apte4ka.presentation.adapter.packaging.PackagingAdapter
 import com.example.apte4ka.presentation.adapter.symptom.SymptomAdapter
 import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 import com.example.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
@@ -46,6 +48,7 @@ class PreparationEditFragment : Fragment() {
 
     private lateinit var adapterListAidKit: ListAidKitAdapter
     private lateinit var adapterSymptom: SymptomAdapter
+    private lateinit var adapterPackaging: PackagingAdapter
 
     private lateinit var viewModelPrep: PreparationViewModel
     private lateinit var aidKitModel: AidKitViewModel
@@ -60,10 +63,12 @@ class PreparationEditFragment : Fragment() {
 
     private var currentDate: String = ""
     private var expDate: String = ""
+    private var namePackaging: String = ""
     private var idPrep: Int? = null
 
     private var listAidKit: MutableList<AidKit> = mutableListOf()
     private var listSymptoms: List<Symptom> = listOf()
+    private var listPackaging: List<Packaging> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         parseArgs()
@@ -111,6 +116,7 @@ class PreparationEditFragment : Fragment() {
         viewModelPrep = ViewModelProvider(this, viewModelFactory)[PreparationViewModel::class.java]
         aidKitModel = ViewModelProvider(this, viewModelFactory)[AidKitViewModel::class.java]
         listsModel = ViewModelProvider(this, viewModelFactory)[ListsViewModel::class.java]
+        recyclerSetupPackaging()
         recyclerSetupSymptom()
         setupSetDataLayout()
         aidKitModel.listAidKit.observe(viewLifecycleOwner) {
@@ -121,16 +127,35 @@ class PreparationEditFragment : Fragment() {
                 _aidId = it.id
             }
         }
+        selectPackaging()
         selectSymptoms()
         setupSetImages()
         setupDate()
         editPrep()
     }
 
+    private fun selectPackaging() {
+        adapterPackaging.itemSelect = {
+            it.status = true
+            namePackaging = it.name
+        }
+    }
+
     private fun selectSymptoms() {
         adapterSymptom.itemSelect = {
             it.status = !it.status
         }
+    }
+
+    private fun recyclerSetupPackaging(): RecyclerView {
+        val recyclerPackaging = bind.rPackagePreparation
+        listPackaging = listsModel.listPackaging
+        adapterPackaging = PackagingAdapter(listPackaging)
+        with(recyclerPackaging) {
+            layoutManager = GridLayoutManager(requireContext(), 3)
+            adapter = adapterPackaging
+        }
+        return recyclerPackaging
     }
 
     private fun recyclerSetupSymptom(): RecyclerView {
@@ -155,7 +180,7 @@ class PreparationEditFragment : Fragment() {
                         symptom.add(it)
                     }
                 }
-                val packing = etPackagePreparation.text.toString()
+                val packing = namePackaging
                 val description = etDescriptionPreparation.text.toString()
                 val dateCreate = currentDate
                 val dateExp = expDate
@@ -244,16 +269,28 @@ class PreparationEditFragment : Fragment() {
             viewModelPrep.getPreparationItem(it)
             imageUrl = viewModelPrep.prepLD.value?.image.toString()
             urlImg = Uri.parse(imageUrl)
-            viewModelPrep.prepLD.value?.symptoms?.forEach {
-                for (i in listSymptoms) {
-                    if (it.name.contains(i.name)) {
-                        i.status = true
-                        adapterSymptom.notifyDataSetChanged()
-                    }
-                }
-            }
+            getDataPackaging()
+            getDataSymptom()
             currentDate = viewModelPrep.prepLD.value?.dataCreate.toString()
             expDate = viewModelPrep.prepLD.value?.dateExp.toString()
+        }
+    }
+
+    private fun getDataSymptom() {
+        viewModelPrep.prepLD.value?.symptoms?.forEach {
+            for (i in listSymptoms) {
+                if (it.name.contains(i.name)) {
+                    i.status = true
+                    adapterSymptom.notifyDataSetChanged()
+                }
+            }
+        }
+    }
+
+    private fun getDataPackaging() {
+        namePackaging = viewModelPrep.prepLD.value?.packaging.toString()
+        listPackaging.forEach {
+            it.status = it.name == namePackaging
         }
     }
 

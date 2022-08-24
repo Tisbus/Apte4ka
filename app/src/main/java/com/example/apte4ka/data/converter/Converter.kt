@@ -9,14 +9,14 @@ class Converter {
     private val gson = Gson()
 
     @TypeConverter
-    fun subjectToJson(subject: List<Symptom>?): String? {
+    fun subjectSymptomToJson(subject: List<Symptom>?): String? {
         return gson.toJson(subject)?.let {
             return it
         }
     }
 
     @TypeConverter
-    fun jsonToSubject(json: String?): List<Symptom> {
+    fun jsonSymptomToSubject(json: String?): List<Symptom> {
         return if (json.isNullOrEmpty()) {
             listOf()
         } else {

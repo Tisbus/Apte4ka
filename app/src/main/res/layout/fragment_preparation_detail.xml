@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:gravity="start"
             android:padding="8dp"
-            android:text="@{detailPrep.prepLD.packing}"
+            android:text="@{detailPrep.prepLD.packaging}"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/tvTitleDetPrep"

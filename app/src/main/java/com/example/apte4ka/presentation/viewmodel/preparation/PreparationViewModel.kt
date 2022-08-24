@@ -16,7 +16,7 @@ class PreparationViewModel @Inject constructor(
     private val getPreparationItemUseCase: GetPreparationItemUseCase,
     private val getPreparationListUseCase: GetPreparationListUseCase,
     private val copyPreparationItemUseCase: CopyPreparationItemUseCase,
-    private val updateNotificationUseCase: UpdateNotificationUseCase
+    private val updateNotificationUseCase: UpdateNotificationUseCase,
 ) : ViewModel() {
 
     val listPreparation = getPreparationListUseCase.getPreparationList()
@@ -34,7 +34,7 @@ class PreparationViewModel @Inject constructor(
         name: String,
         image: String,
         symptoms: MutableList<Symptom>,
-        packing: String,
+        packaging: String,
         description: String,
         dateCreate: String,
         dateExp: String,
@@ -44,7 +44,7 @@ class PreparationViewModel @Inject constructor(
             name,
             image,
             symptoms,
-            packing,
+            packaging,
             description,
             dateCreate,
             dateExp)
@@ -69,7 +69,7 @@ class PreparationViewModel @Inject constructor(
         name: String,
         image: String,
         symptoms: MutableList<Symptom>,
-        packing: String,
+        packaging: String,
         description: String,
         dateCreate: String,
         dateExp: String,
@@ -80,7 +80,7 @@ class PreparationViewModel @Inject constructor(
                 name = name,
                 image = image,
                 symptoms = symptoms,
-                packing = packing,
+                packaging = packaging,
                 description = description,
                 dataCreate = dateCreate,
                 dateExp = dateExp
@@ -94,7 +94,7 @@ class PreparationViewModel @Inject constructor(
         name: String,
         image: String,
         symptoms: MutableList<Symptom>,
-        packing: String,
+        packaging: String,
         description: String,
         dateCreate: String,
         dateExp: String,
@@ -105,7 +105,7 @@ class PreparationViewModel @Inject constructor(
                 name = name,
                 image = image,
                 symptoms = symptoms,
-                packing = packing,
+                packaging = packaging,
                 description = description,
                 dataCreate = dateCreate,
                 dateExp = dateExp,
