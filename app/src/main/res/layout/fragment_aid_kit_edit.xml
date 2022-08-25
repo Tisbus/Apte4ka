@@ -10,27 +10,41 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".presentation.fragment.AidKitEditFragment">
     <TextView
         android:id="@+id/tvName"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:textAlignment="center"
         android:textStyle="bold"
-        android:textSize="16sp"
-        android:padding="4dp"
+        android:textSize="18sp"
+        android:paddingTop="18dp"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:textAllCaps="true"
         android:text="@string/aid_kit_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/ivAidKitNameIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="#019E58"
+        app:layout_constraintBottom_toTopOf="@+id/tvDescription"
+        app:layout_constraintEnd_toStartOf="@+id/tilNamePreparation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvName"
+        app:srcCompat="@drawable/ic_aid_kit_white" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilNamePreparation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivAidKitNameIcon"
         app:layout_constraintTop_toBottomOf="@+id/tvName">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -38,8 +52,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/enter_name_aid_kit"
-            android:text="@{aidEdit.aidKitLD.name}"
             android:textColorHint="#616161"
+            android:text="@{aidEdit.aidKitLD.name}"
             android:textSize="14sp"
             android:maxLength="16"
             tools:ignore="TextContrastCheck" />
@@ -47,23 +61,36 @@
     <TextView
         android:id="@+id/tvDescription"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:textAlignment="center"
         android:textStyle="bold"
-        android:textSize="16sp"
-        android:padding="4dp"
+        android:textSize="18sp"
+        android:paddingTop="18dp"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:textAllCaps="true"
         android:text="@string/description_aid_kit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tilNamePreparation" />
 
+    <ImageView
+        android:id="@+id/ivAidKitDescriptionIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:background="#019E58"
+        app:layout_constraintBottom_toBottomOf="@+id/tilDescription"
+        app:layout_constraintEnd_toStartOf="@+id/tilDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDescription"
+        app:srcCompat="@drawable/ic_aid_kit_description_white" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilDescription"
         android:layout_width="0dp"
         android:layout_height="150dp"
-        android:layout_margin="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivAidKitDescriptionIcon"
         app:layout_constraintTop_toBottomOf="@+id/tvDescription">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -71,10 +98,10 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:hint="@string/enter_description_aid_kit"
+            android:maxLength="75"
             android:text="@{aidEdit.aidKitLD.description}"
             android:textColorHint="#616161"
             android:textSize="14sp"
-            android:maxLength="75"
             tools:ignore="TextContrastCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -84,7 +111,10 @@
         android:layout_height="60dp"
         android:layout_marginTop="35dp"
         android:text="@string/button_add"
-        android:backgroundTint="#2D61D0"
+        android:backgroundTint="#00ba67"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tilDescription" />

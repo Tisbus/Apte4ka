@@ -51,4 +51,5 @@
     <string name="text_end_day">Осталось дней:</string>
     <string name="days_left">Осталось:</string>
     <string name="copy_prep">Скопировать Лекарство</string>
+    <string name="splash_image">splash image</string>
 </resources>
