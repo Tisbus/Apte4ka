@@ -157,7 +157,6 @@ class FilterFragment : Fragment() {
         listSymptoms = listsModel.listSymptom
         adapterSymptom = SymptomAdapter(listSymptoms)
         with(recyclerSymptoms) {
-            layoutManager = GridLayoutManager(requireContext(), 3)
             adapter = adapterSymptom
         }
         return recyclerSymptoms

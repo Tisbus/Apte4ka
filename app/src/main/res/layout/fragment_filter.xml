@@ -20,8 +20,7 @@
             <ScrollView
                 android:id="@+id/svSymptomsFilter"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:fillViewport="true"
+                android:layout_height="90dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -33,9 +32,10 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rSetSymptoms"
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:orientation="vertical"
+                        android:layout_height="90dp"
+                        android:orientation="horizontal"
                         android:padding="4dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
