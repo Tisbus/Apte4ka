@@ -10,6 +10,7 @@ interface PreparationRepository {
     fun editPreparationItem(item : Preparation)
     fun copyPreparationItem(item : Preparation)
     fun deletePreparationItem(id : Int)
+    fun deletePrepItemAidId(id : Int)
     fun deletePreparationAll()
     fun updateNotify()
 }

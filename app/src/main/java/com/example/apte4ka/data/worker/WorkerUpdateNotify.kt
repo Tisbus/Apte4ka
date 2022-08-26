@@ -7,12 +7,10 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.os.bundleOf
 import androidx.navigation.NavDeepLinkBuilder
-import androidx.navigation.Navigation
 import androidx.work.*
 import com.example.apte4ka.R
 import com.example.apte4ka.data.room.preparation.PreparationDao
 import com.example.apte4ka.domain.entity.preparation.Preparation
-import com.example.apte4ka.presentation.fragment.PreparationDetailFragment
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -84,14 +82,14 @@ class WorkerUpdateNotify(
 
         private fun workerGetTime(): Long {
             val currentDate = Calendar.getInstance()
-            val dueDate = Calendar.getInstance()
-            dueDate.set(Calendar.HOUR_OF_DAY, 14)
-            dueDate.set(Calendar.MINUTE, 27)
-            dueDate.set(Calendar.SECOND, 30)
-            if (dueDate.before(currentDate)) {
-                dueDate.add(Calendar.HOUR_OF_DAY, 24)
+            val dieDate = Calendar.getInstance()
+            dieDate.set(Calendar.HOUR_OF_DAY, 14)
+            dieDate.set(Calendar.MINUTE, 27)
+            dieDate.set(Calendar.SECOND, 30)
+            if (dieDate.before(currentDate)) {
+                dieDate.add(Calendar.HOUR_OF_DAY, 24)
             }
-            return dueDate.timeInMillis.minus(currentDate.timeInMillis)
+            return dieDate.timeInMillis.minus(currentDate.timeInMillis)
         }
     }
 

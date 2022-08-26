@@ -26,4 +26,7 @@ interface PreparationDao {
 
     @Query("DELETE FROM preparation")
     fun deletePreparationAll()
+
+    @Query("DELETE FROM preparation WHERE aidKit =:id")
+    fun deletePrepItemAidId(id : Int)
 }

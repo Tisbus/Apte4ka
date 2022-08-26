@@ -1,5 +1,6 @@
 package com.example.apte4ka.presentation.fragment
 
+import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -12,11 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.WorkerFactory
 import com.example.apte4ka.R
-import com.example.apte4ka.data.worker.WorkerUpdateNotify
 import com.example.apte4ka.databinding.FragmentListAidKitBinding
 import com.example.apte4ka.domain.entity.aidkit.AidKit
 import com.example.apte4ka.presentation.AidKitApp
@@ -24,8 +21,6 @@ import com.example.apte4ka.presentation.adapter.aidkit.AidKitAdapter
 import com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 import com.example.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
 import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
-import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ListAidKitFragment : Fragment() {
@@ -136,13 +131,30 @@ class ListAidKitFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 when (direction) {
                     ItemTouchHelper.LEFT -> {
-                        viewModel.deleteAidKitItem(adapterAidKit.currentList[viewHolder.adapterPosition].id)
+                        showNewDeleteDialog(viewHolder)
                     }
                 }
             }
         }
         val itemTHDelete = ItemTouchHelper(itemTHDeleteCallback)
         itemTHDelete.attachToRecyclerView(setupRecyclerView())
+    }
+    //AlertDialog delete aid_kit and prep
+    private fun showNewDeleteDialog(viewHolder: RecyclerView.ViewHolder) {
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+        dialogBuilder.setTitle("Удаление препарата")
+        dialogBuilder.setMessage("Хотите удалить аптечку и препараты которые в ней находятся?")
+        dialogBuilder.setPositiveButton("Да") { dialog, id ->
+            val aidItem = adapterAidKit.currentList[viewHolder.adapterPosition].id
+            viewModelPrep.deletePrepItemAidId(aidItem)
+            viewModel.deleteAidKitItem(aidItem)
+            findNavController().navigate(R.id.listAidKitFragment)
+        }
+        dialogBuilder.setNegativeButton("Нет") { dialog, id ->
+            findNavController().navigate(R.id.listAidKitFragment)
+        }
+        val b = dialogBuilder.create()
+        b.show()
     }
 
     private fun goToDetailAidKit() {

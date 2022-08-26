@@ -17,6 +17,7 @@ class PreparationViewModel @Inject constructor(
     private val getPreparationListUseCase: GetPreparationListUseCase,
     private val copyPreparationItemUseCase: CopyPreparationItemUseCase,
     private val updateNotificationUseCase: UpdateNotificationUseCase,
+    private val deletePrepItemAidIdUseCase: DeletePrepItemAidIdUseCase
 ) : ViewModel() {
 
     val listPreparation = getPreparationListUseCase.getPreparationList()
@@ -27,6 +28,10 @@ class PreparationViewModel @Inject constructor(
 
     init {
         updateNotificationUseCase()
+    }
+
+    fun deletePrepItemAidId(id  :Int){
+        deletePrepItemAidIdUseCase.deletePrepItemAidId(id)
     }
 
     fun addPreparationItem(

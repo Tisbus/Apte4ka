@@ -37,6 +37,10 @@ class PreparationRepositoryImpl @Inject constructor(
         db.deletePreparationItem(id)
     }
 
+    override fun deletePrepItemAidId(id: Int) {
+        db.deletePrepItemAidId(id)
+    }
+
     override fun deletePreparationAll() {
         db.deletePreparationAll()
     }
