@@ -1,5 +1,6 @@
 package com.example.apte4ka.presentation.fragment
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -130,13 +131,29 @@ class AidKitDetailFragment : Fragment() {
                 ): Boolean {
                     return false
                 }
-
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    prepModel.deletePreparationItem(adapterPrep.currentList[viewHolder.adapterPosition].id)
+                    showNewDeleteDialog(viewHolder)
                 }
             }
         ItemTouchHelper(itemTHDeleteCallback)
             .attachToRecyclerView(recyclerSetup())
+    }
+
+    private fun showNewDeleteDialog(viewHolder: RecyclerView.ViewHolder) {
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+        dialogBuilder.setTitle("Удаление препарата")
+        dialogBuilder.setMessage("Хотите удалить препарат?")
+        val bundle = bundleOf(AID_KIT_ID to aidKitId)
+        dialogBuilder.setPositiveButton("Да") { dialog, id ->
+            val aidItem = adapterPrep.currentList[viewHolder.adapterPosition].id
+            prepModel.deletePreparationItem(aidItem)
+            findNavController().navigate(R.id.aidKitDetailFragment, bundle)
+        }
+        dialogBuilder.setNegativeButton("Нет") { dialog, id ->
+            findNavController().navigate(R.id.aidKitDetailFragment, bundle)
+        }
+        val b = dialogBuilder.create()
+        b.show()
     }
 
     private fun recyclerSetup(): RecyclerView {

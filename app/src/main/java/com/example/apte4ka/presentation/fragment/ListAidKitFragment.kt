@@ -142,7 +142,7 @@ class ListAidKitFragment : Fragment() {
     //AlertDialog delete aid_kit and prep
     private fun showNewDeleteDialog(viewHolder: RecyclerView.ViewHolder) {
         val dialogBuilder = AlertDialog.Builder(requireContext())
-        dialogBuilder.setTitle("Удаление препарата")
+        dialogBuilder.setTitle("Удаление аптечки")
         dialogBuilder.setMessage("Хотите удалить аптечку и препараты которые в ней находятся?")
         dialogBuilder.setPositiveButton("Да") { dialog, id ->
             val aidItem = adapterAidKit.currentList[viewHolder.adapterPosition].id
