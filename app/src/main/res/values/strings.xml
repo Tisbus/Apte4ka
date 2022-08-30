@@ -29,7 +29,14 @@
     <string name="button_edit">кнопка изменить</string>
     <string name="prep_img">картинка препарата</string>
     <string name="text_package">Фасовка:</string>
+    <string name="packaging_list">Фасовка</string>
     <string name="symptoms">Симптомы:</string>
+    <string name="symptoms_list">Симптомы</string>
+    <string name="settings">Настройки</string>
+    <string name="notify">Уведомления</string>
+    <string name="restore_backup">Резерв / Бекап</string>
+    <string name="restore">Резервная копия</string>
+    <string name="backup">Восстановить</string>
     <string name="date_create">Дата создания:</string>
     <string name="date_exp">Срок годности:</string>
     <string name="name_preparation">Название препарата</string>
@@ -53,4 +60,5 @@
     <string name="copy_prep">Скопировать Лекарство</string>
     <string name="splash_image">splash image</string>
     <string name="image_avatar_on_drawer">image avatar on drawer</string>
+    <string name="handbook">Справочники</string>
 </resources>

@@ -3,18 +3,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_baseline_search"
-            android:title="@string/symptoms" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_baseline_search"
-            android:title="@string/symptoms" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_baseline_search"
-            android:title="@string/symptoms" />
-    </group>
+    <item android:title="@string/settings">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_settings"
+                    android:icon="@drawable/ic_baseline_settings_24"
+                    android:title="@string/settings" />
+                <item
+                    android:id="@+id/nav_notify"
+                    android:icon="@drawable/ic_baseline_notifications_24"
+                    android:title="@string/notify" />
+            </group>
+        </menu>
+    </item>
+    <item android:title="@string/handbook">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_symptoms"
+                    android:icon="@drawable/ic_baseline_symptom_24"
+                    android:title="@string/symptoms_list" />
+                <item
+                    android:id="@+id/nav_packaging"
+                    android:icon="@drawable/ic_baseline_packaging_24"
+                    android:title="@string/packaging_list" />
+            </group>
+        </menu>
+    </item>
+    <item android:title="@string/restore_backup">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_restore"
+                    android:icon="@drawable/ic_baseline_restore_24"
+                    android:title="@string/restore" />
+                <item
+                    android:id="@+id/nav_backup"
+                    android:icon="@drawable/ic_baseline_backup_24"
+                    android:title="@string/backup" />
+            </group>
+        </menu>
+    </item>
+
 </menu>
