@@ -5,14 +5,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.fragment.SplashFragment">
+    tools:context=".presentation.activity.SplashActivity">
 
     <ImageView
         android:id="@+id/imageSplash"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scaleType="centerCrop"
         android:contentDescription="@string/splash_image"
+        android:scaleType="fitCenter"
         android:src="@drawable/splash_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

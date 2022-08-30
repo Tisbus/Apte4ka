@@ -2,8 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_navigation"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/listAidKitFragment"
+    android:id="@+id/main_navigation">
 
     <fragment
         android:id="@+id/aidKitDetailFragment"
@@ -105,16 +105,6 @@
         <action
             android:id="@+id/action_searchFragment_to_filterFragment"
             app:destination="@id/filterFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/splashFragment"
-        tools:layout="@layout/fragment_splash"
-        android:name="com.example.apte4ka.presentation.fragment.SplashFragment"
-        android:label="SplashFragment" >
-        <action
-            android:id="@+id/action_splashFragment_to_listAidKitFragment"
-            app:destination="@id/listAidKitFragment"
-            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_aid_kit_add"

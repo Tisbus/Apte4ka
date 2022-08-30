@@ -18,13 +18,18 @@
         android:name=".presentation.AidKitApp"
         tools:targetApi="31">
         <activity
-            android:name="com.example.apte4ka.presentation.activity.MainActivity"
+            android:name="com.example.apte4ka.presentation.activity.SplashActivity"
+            android:theme="@style/Theme.Apte4ka.NoActionBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.apte4ka.presentation.activity.MainActivity"
+            android:theme="@style/Theme.Apte4ka.NoActionBar"
+            android:exported="true">
         </activity>
         <provider
             android:authorities="com.example.apte4ka"

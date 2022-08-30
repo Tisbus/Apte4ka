@@ -6,7 +6,9 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -32,7 +34,7 @@ class ListAidKitFragment : Fragment() {
         (requireActivity().application as AidKitApp).component
     }
 
-    private lateinit var viewModelPrep : PreparationViewModel
+    private lateinit var viewModelPrep: PreparationViewModel
     private var _bind: FragmentListAidKitBinding? = null
     private val bind: FragmentListAidKitBinding
         get() = _bind ?: throw RuntimeException("FragmentListAidKitBinding == null")
@@ -43,24 +45,12 @@ class ListAidKitFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
         createNotificationChannel()
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         component.inject(this)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.search_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_search) {
-            findNavController().navigate(R.id.searchFragment)
-        }
-        return true
     }
 
     override fun onCreateView(
@@ -139,6 +129,7 @@ class ListAidKitFragment : Fragment() {
         val itemTHDelete = ItemTouchHelper(itemTHDeleteCallback)
         itemTHDelete.attachToRecyclerView(setupRecyclerView())
     }
+
     //AlertDialog delete aid_kit and prep
     private fun showNewDeleteDialog(viewHolder: RecyclerView.ViewHolder) {
         val dialogBuilder = AlertDialog.Builder(requireContext())
