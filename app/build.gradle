@@ -10,7 +10,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.apte4ka"
+        applicationId "com.tisbus.apte4ka"
         minSdk 24
         targetSdk 32
         versionCode 1
@@ -35,7 +35,7 @@ android {
     buildFeatures{
         dataBinding true
     }
-    namespace="com.example.apte4ka"
+    namespace="com.tisbus.apte4ka"
 }
 
 dependencies {

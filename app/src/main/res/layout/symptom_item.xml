@@ -7,7 +7,7 @@
 
         <variable
             name="symptom"
-            type="com.example.apte4ka.domain.entity.symptom.Symptom" />
+            type="com.tisbus.apte4ka.domain.entity.symptom.Symptom" />
     </data>
 
     <androidx.cardview.widget.CardView

@@ -7,7 +7,7 @@
 
         <variable
             name="detailPrep"
-            type="com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel" />
+            type="com.tisbus.apte4ka.presentation.viewmodel.preparation.PreparationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

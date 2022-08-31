@@ -5,7 +5,7 @@
     <data>
         <variable
             name="preparation"
-            type="com.example.apte4ka.domain.entity.preparation.Preparation" />
+            type="com.tisbus.apte4ka.domain.entity.preparation.Preparation" />
     </data>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

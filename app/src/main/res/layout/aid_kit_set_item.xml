@@ -5,7 +5,7 @@
 <data>
     <variable
         name="list_aid_kit"
-        type="com.example.apte4ka.domain.entity.aidkit.AidKit" />
+        type="com.tisbus.apte4ka.domain.entity.aidkit.AidKit" />
 </data>
 
     <androidx.cardview.widget.CardView

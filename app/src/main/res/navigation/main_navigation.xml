@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/aidKitDetailFragment"
         tools:layout="@layout/fragment_aid_kit_detail"
-        android:name="com.example.apte4ka.presentation.fragment.aidkit.AidKitDetailFragment"
+        android:name="com.tisbus.apte4ka.presentation.fragment.aidkit.AidKitDetailFragment"
         android:label="AidKitDetailFragment" >
         <action
             android:id="@+id/action_aidKitDetailFragment_to_preparationEditFragment"
@@ -28,8 +28,8 @@
     <fragment
         android:id="@+id/listAidKitFragment"
         tools:layout="@layout/fragment_list_aid_kit"
-        android:name="com.example.apte4ka.presentation.fragment.main.ListAidKitFragment"
-        android:label="ListAidKitFragment" >
+        android:name="com.tisbus.apte4ka.presentation.fragment.main.ListAidKitFragment"
+        android:label="Apte4ka" >
         <action
             android:id="@+id/action_listAidKitFragment_to_aidKitDetailFragment"
             app:destination="@id/aidKitDetailFragment" />
@@ -52,7 +52,7 @@
     <fragment
         tools:layout="@layout/fragment_preparation_add"
         android:id="@+id/preparationAddFragment"
-        android:name="com.example.apte4ka.presentation.fragment.preparation.PreparationAddFragment"
+        android:name="com.tisbus.apte4ka.presentation.fragment.preparation.PreparationAddFragment"
         android:label="PreparationAddFragment" >
         <action
             android:id="@+id/action_preparationAddFragment_to_aidKitDetailFragment2"
@@ -63,7 +63,7 @@
     <fragment
         tools:layout="@layout/fragment_preparation_detail"
         android:id="@+id/preparationDetailFragment"
-        android:name="com.example.apte4ka.presentation.fragment.preparation.PreparationDetailFragment"
+        android:name="com.tisbus.apte4ka.presentation.fragment.preparation.PreparationDetailFragment"
         android:label="PreparationDetailFragment" >
         <action
             android:id="@+id/action_preparationDetailFragment_to_aidKitDetailFragment"
@@ -79,7 +79,7 @@
     <fragment
         tools:layout="@layout/fragment_preparation_edit"
         android:id="@+id/preparationEditFragment"
-        android:name="com.example.apte4ka.presentation.fragment.preparation.PreparationEditFragment"
+        android:name="com.tisbus.apte4ka.presentation.fragment.preparation.PreparationEditFragment"
         android:label="PreparationEditFragment" >
         <action
             android:id="@+id/action_preparationEditFragment_to_aidKitDetailFragment"
@@ -90,7 +90,7 @@
     <fragment
         tools:layout="@layout/fragment_search"
         android:id="@+id/searchFragment"
-        android:name="com.example.apte4ka.presentation.fragment.search.SearchFragment"
+        android:name="com.tisbus.apte4ka.presentation.fragment.search.SearchFragment"
         android:label="SearchFragment" >
         <action
             android:id="@+id/action_searchFragment_to_listAidKitFragment"
@@ -109,7 +109,7 @@
     <fragment
         tools:layout="@layout/fragment_aid_kit_add"
         android:id="@+id/aidKitAddFragment"
-        android:name="com.example.apte4ka.presentation.fragment.aidkit.AidKitAddFragment"
+        android:name="com.tisbus.apte4ka.presentation.fragment.aidkit.AidKitAddFragment"
         android:label="AidKitAddFragment" >
         <action
             android:id="@+id/action_aidKitAddFragment_to_listAidKitFragment"
@@ -120,7 +120,7 @@
     <fragment
         tools:layout="@layout/fragment_aid_kit_edit"
         android:id="@+id/aidKitEditFragment"
-        android:name="com.example.apte4ka.presentation.fragment.aidkit.AidKitEditFragment"
+        android:name="com.tisbus.apte4ka.presentation.fragment.aidkit.AidKitEditFragment"
         android:label="AidKitEditFragment" >
         <action
             android:id="@+id/action_aidKitEditFragment_to_listAidKitFragment"
@@ -131,7 +131,7 @@
     <fragment
         tools:layout="@layout/fragment_filter"
         android:id="@+id/filterFragment"
-        android:name="com.example.apte4ka.presentation.fragment.filter.FilterFragment"
+        android:name="com.tisbus.apte4ka.presentation.fragment.filter.FilterFragment"
         android:label="FilterFragment" >
         <action
             android:id="@+id/action_filterFragment_to_searchFragment"
@@ -147,10 +147,64 @@
     <fragment
         android:id="@+id/preparationCopyFragment"
         tools:layout="@layout/fragment_preparation_copy"
-        android:name="com.example.apte4ka.presentation.fragment.preparation.PreparationCopyFragment"
+        android:name="com.tisbus.apte4ka.presentation.fragment.preparation.PreparationCopyFragment"
         android:label="PreparationCopyFragment" >
         <action
             android:id="@+id/action_preparationCopyFragment_to_aidKitDetailFragment"
             app:destination="@id/aidKitDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/backupFragment"
+        android:name="com.tisbus.apte4ka.presentation.fragment.pagemenu.backup.BackupFragment"
+        android:label="fragment_backup"
+        tools:layout="@layout/fragment_backup" >
+        <action
+            android:id="@+id/action_backupFragment_to_listAidKitFragment"
+            app:destination="@id/listAidKitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/notifyFragment"
+        android:name="com.tisbus.apte4ka.presentation.fragment.pagemenu.notify.NotifyFragment"
+        android:label="fragment_notify"
+        tools:layout="@layout/fragment_notify" >
+        <action
+            android:id="@+id/action_notifyFragment_to_listAidKitFragment"
+            app:destination="@id/listAidKitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/packagingFragment"
+        android:name="com.tisbus.apte4ka.presentation.fragment.pagemenu.packaging.PackagingFragment"
+        android:label="fragment_packaging"
+        tools:layout="@layout/fragment_packaging" >
+        <action
+            android:id="@+id/action_packagingFragment_to_listAidKitFragment"
+            app:destination="@id/listAidKitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/restoreFragment"
+        android:name="com.tisbus.apte4ka.presentation.fragment.pagemenu.restore.RestoreFragment"
+        android:label="fragment_restore"
+        tools:layout="@layout/fragment_restore" >
+        <action
+            android:id="@+id/action_restoreFragment_to_listAidKitFragment"
+            app:destination="@id/listAidKitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.tisbus.apte4ka.presentation.fragment.pagemenu.setting.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_listAidKitFragment"
+            app:destination="@id/listAidKitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/symptomFragment"
+        android:name="com.tisbus.apte4ka.presentation.fragment.pagemenu.symptom.SymptomFragment"
+        android:label="fragment_symptom"
+        tools:layout="@layout/fragment_symptom" >
+        <action
+            android:id="@+id/action_symptomFragment_to_listAidKitFragment"
+            app:destination="@id/listAidKitFragment" />
     </fragment>
 </navigation>

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="aidEdit"
-            type="com.example.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel" />
+            type="com.tisbus.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"

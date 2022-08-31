@@ -5,7 +5,7 @@ xmlns:tools="http://schemas.android.com/tools">
 <data>
     <variable
         name="editPrep"
-        type="com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel" />
+        type="com.tisbus.apte4ka.presentation.viewmodel.preparation.PreparationViewModel" />
 </data>
 <ScrollView
     android:layout_width="match_parent"
