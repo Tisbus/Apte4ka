@@ -1,4 +1,4 @@
-package com.example.apte4ka.presentation.fragment
+package com.example.apte4ka.presentation.fragment.filter
 
 import android.content.Context
 import android.os.Bundle
@@ -12,7 +12,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.FragmentFilterBinding
@@ -21,6 +20,7 @@ import com.example.apte4ka.domain.entity.symptom.Symptom
 import com.example.apte4ka.presentation.AidKitApp
 import com.example.apte4ka.presentation.adapter.preparation.PreparationAdapter
 import com.example.apte4ka.presentation.adapter.symptom.SymptomAdapter
+import com.example.apte4ka.presentation.fragment.search.SearchFragment
 import com.example.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
 import com.example.apte4ka.presentation.viewmodel.lists.ListsViewModel
 import com.example.apte4ka.presentation.viewmodel.preparation.PreparationViewModel

@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/aidKitDetailFragment"
         tools:layout="@layout/fragment_aid_kit_detail"
-        android:name="com.example.apte4ka.presentation.fragment.AidKitDetailFragment"
+        android:name="com.example.apte4ka.presentation.fragment.aidkit.AidKitDetailFragment"
         android:label="AidKitDetailFragment" >
         <action
             android:id="@+id/action_aidKitDetailFragment_to_preparationEditFragment"
@@ -28,7 +28,7 @@
     <fragment
         android:id="@+id/listAidKitFragment"
         tools:layout="@layout/fragment_list_aid_kit"
-        android:name="com.example.apte4ka.presentation.fragment.ListAidKitFragment"
+        android:name="com.example.apte4ka.presentation.fragment.main.ListAidKitFragment"
         android:label="ListAidKitFragment" >
         <action
             android:id="@+id/action_listAidKitFragment_to_aidKitDetailFragment"
@@ -52,7 +52,7 @@
     <fragment
         tools:layout="@layout/fragment_preparation_add"
         android:id="@+id/preparationAddFragment"
-        android:name="com.example.apte4ka.presentation.fragment.PreparationAddFragment"
+        android:name="com.example.apte4ka.presentation.fragment.preparation.PreparationAddFragment"
         android:label="PreparationAddFragment" >
         <action
             android:id="@+id/action_preparationAddFragment_to_aidKitDetailFragment2"
@@ -63,7 +63,7 @@
     <fragment
         tools:layout="@layout/fragment_preparation_detail"
         android:id="@+id/preparationDetailFragment"
-        android:name="com.example.apte4ka.presentation.fragment.PreparationDetailFragment"
+        android:name="com.example.apte4ka.presentation.fragment.preparation.PreparationDetailFragment"
         android:label="PreparationDetailFragment" >
         <action
             android:id="@+id/action_preparationDetailFragment_to_aidKitDetailFragment"
@@ -79,7 +79,7 @@
     <fragment
         tools:layout="@layout/fragment_preparation_edit"
         android:id="@+id/preparationEditFragment"
-        android:name="com.example.apte4ka.presentation.fragment.PreparationEditFragment"
+        android:name="com.example.apte4ka.presentation.fragment.preparation.PreparationEditFragment"
         android:label="PreparationEditFragment" >
         <action
             android:id="@+id/action_preparationEditFragment_to_aidKitDetailFragment"
@@ -90,7 +90,7 @@
     <fragment
         tools:layout="@layout/fragment_search"
         android:id="@+id/searchFragment"
-        android:name="com.example.apte4ka.presentation.fragment.SearchFragment"
+        android:name="com.example.apte4ka.presentation.fragment.search.SearchFragment"
         android:label="SearchFragment" >
         <action
             android:id="@+id/action_searchFragment_to_listAidKitFragment"
@@ -109,7 +109,7 @@
     <fragment
         tools:layout="@layout/fragment_aid_kit_add"
         android:id="@+id/aidKitAddFragment"
-        android:name="com.example.apte4ka.presentation.fragment.AidKitAddFragment"
+        android:name="com.example.apte4ka.presentation.fragment.aidkit.AidKitAddFragment"
         android:label="AidKitAddFragment" >
         <action
             android:id="@+id/action_aidKitAddFragment_to_listAidKitFragment"
@@ -120,7 +120,7 @@
     <fragment
         tools:layout="@layout/fragment_aid_kit_edit"
         android:id="@+id/aidKitEditFragment"
-        android:name="com.example.apte4ka.presentation.fragment.AidKitEditFragment"
+        android:name="com.example.apte4ka.presentation.fragment.aidkit.AidKitEditFragment"
         android:label="AidKitEditFragment" >
         <action
             android:id="@+id/action_aidKitEditFragment_to_listAidKitFragment"
@@ -131,7 +131,7 @@
     <fragment
         tools:layout="@layout/fragment_filter"
         android:id="@+id/filterFragment"
-        android:name="com.example.apte4ka.presentation.fragment.FilterFragment"
+        android:name="com.example.apte4ka.presentation.fragment.filter.FilterFragment"
         android:label="FilterFragment" >
         <action
             android:id="@+id/action_filterFragment_to_searchFragment"
@@ -147,7 +147,7 @@
     <fragment
         android:id="@+id/preparationCopyFragment"
         tools:layout="@layout/fragment_preparation_copy"
-        android:name="com.example.apte4ka.presentation.fragment.PreparationCopyFragment"
+        android:name="com.example.apte4ka.presentation.fragment.preparation.PreparationCopyFragment"
         android:label="PreparationCopyFragment" >
         <action
             android:id="@+id/action_preparationCopyFragment_to_aidKitDetailFragment"

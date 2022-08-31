@@ -1,4 +1,4 @@
-package com.example.apte4ka.presentation.fragment
+package com.example.apte4ka.presentation.fragment.preparation
 
 import android.content.Context
 import android.net.Uri
@@ -15,10 +15,9 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apte4ka.R
-import com.example.apte4ka.databinding.FragmentPreparationCopyBinding
+import com.example.apte4ka.databinding.FragmentPreparationEditBinding
 import com.example.apte4ka.domain.entity.aidkit.AidKit
 import com.example.apte4ka.domain.entity.packaging.Packaging
 import com.example.apte4ka.domain.entity.symptom.Symptom
@@ -36,16 +35,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class PreparationCopyFragment : Fragment() {
+class PreparationEditFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: AidKitViewModelFactory
     private val component by lazy {
         (requireActivity().application as AidKitApp).component
     }
-
-    private var _bind: FragmentPreparationCopyBinding? = null
-    private val bind: FragmentPreparationCopyBinding
-        get() = _bind ?: throw RuntimeException("FragmentPreparationCopyBinding == null")
+    private var _bind: FragmentPreparationEditBinding? = null
+    private val bind: FragmentPreparationEditBinding
+        get() = _bind ?: throw RuntimeException("FragmentPreparationEditBinding == null")
 
     private lateinit var adapterListAidKit: ListAidKitAdapter
     private lateinit var adapterSymptom: SymptomAdapter
@@ -107,7 +105,7 @@ class PreparationCopyFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _bind = FragmentPreparationCopyBinding.inflate(inflater, container, false)
+        _bind = FragmentPreparationEditBinding.inflate(inflater, container, false)
         setupBackButton()
         return bind.root
     }
@@ -123,7 +121,6 @@ class PreparationCopyFragment : Fragment() {
         aidKitModel.listAidKit.observe(viewLifecycleOwner) {
             listAidKit = it
             recyclerSetup()
-            //need fix index -1 down when copy is filter_fragment -> detail -> copy
             listAidKit[aidId - 1].status = true
             adapterListAidKit.itemSelect = {
                 _aidId = it.id
@@ -133,7 +130,7 @@ class PreparationCopyFragment : Fragment() {
         selectSymptoms()
         setupSetImages()
         setupDate()
-        copyPrep()
+        editPrep()
     }
 
     private fun selectPackaging() {
@@ -169,8 +166,8 @@ class PreparationCopyFragment : Fragment() {
         return recyclerSymptoms
     }
 
-    private fun copyPrep() {
-        bind.bCopyPreparation.setOnClickListener {
+    private fun editPrep() {
+        bind.bEditPreparation.setOnClickListener {
             with(bind) {
                 val name = etNamePreparation.text.toString()
                 imageUrl = urlImg.toString()
@@ -184,7 +181,7 @@ class PreparationCopyFragment : Fragment() {
                 val description = etDescriptionPreparation.text.toString()
                 val dateCreate = currentDate
                 val dateExp = expDate
-                viewModelPrep.copyPreparationItem(
+                viewModelPrep.editPreparationItem(
                     aidId,
                     name,
                     imageUrl,
@@ -195,7 +192,7 @@ class PreparationCopyFragment : Fragment() {
                     dateExp)
             }
             val bundle = bundleOf(AID_KIT_ID to aidId)
-            findNavController().navigate(R.id.action_preparationCopyFragment_to_aidKitDetailFragment,
+            findNavController().navigate(R.id.action_preparationEditFragment_to_aidKitDetailFragment,
                 bundle)
         }
     }

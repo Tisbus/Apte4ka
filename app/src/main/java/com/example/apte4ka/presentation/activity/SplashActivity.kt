@@ -7,12 +7,10 @@ import android.os.Handler
 import android.os.Looper
 import android.view.WindowInsets
 import android.view.WindowManager
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.apte4ka.R
 import com.example.apte4ka.databinding.ActivitySplashBinding
-import com.example.apte4ka.presentation.fragment.SearchFragment
 
 class SplashActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.example.apte4ka.presentation.fragment
+package com.example.apte4ka.presentation.fragment.preparation
 
 import android.content.Context
 import android.net.Uri
@@ -12,15 +12,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.os.bundleOf
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apte4ka.R
-import com.example.apte4ka.databinding.FragmentPreparationAddBinding
+import com.example.apte4ka.databinding.FragmentPreparationCopyBinding
 import com.example.apte4ka.domain.entity.aidkit.AidKit
 import com.example.apte4ka.domain.entity.packaging.Packaging
 import com.example.apte4ka.domain.entity.symptom.Symptom
@@ -38,41 +35,43 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class PreparationAddFragment : Fragment() {
+class PreparationCopyFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: AidKitViewModelFactory
     private val component by lazy {
         (requireActivity().application as AidKitApp).component
     }
 
-    private var _bind: FragmentPreparationAddBinding? = null
-    private val bind: FragmentPreparationAddBinding
-        get() = _bind ?: throw RuntimeException("FragmentPreparationAddBinding == null")
+    private var _bind: FragmentPreparationCopyBinding? = null
+    private val bind: FragmentPreparationCopyBinding
+        get() = _bind ?: throw RuntimeException("FragmentPreparationCopyBinding == null")
 
     private lateinit var adapterListAidKit: ListAidKitAdapter
     private lateinit var adapterSymptom: SymptomAdapter
     private lateinit var adapterPackaging: PackagingAdapter
 
+    private lateinit var viewModelPrep: PreparationViewModel
     private lateinit var aidKitModel: AidKitViewModel
-
-    private lateinit var prepModel: PreparationViewModel
     private lateinit var listsModel: ListsViewModel
+
+    private var urlImg: Uri? = null
+    private var imageUrl: String = ""
 
     private var _aidId: Int? = null
     private val aidId: Int
         get() = _aidId ?: throw RuntimeException("aidId == null")
 
-    private var urlImg: Uri? = null
-
     private var currentDate: String = ""
     private var expDate: String = ""
     private var namePackaging: String = ""
+    private var idPrep: Int? = null
 
     private var listAidKit: MutableList<AidKit> = mutableListOf()
     private var listSymptoms: List<Symptom> = listOf()
     private var listPackaging: List<Packaging> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        parseArgs()
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
@@ -95,40 +94,45 @@ class PreparationAddFragment : Fragment() {
         }
     }
 
+    private fun parseArgs() {
+        arguments?.let {
+            idPrep = it.getInt(DETAIL_PREP_ID)
+            _aidId = it.getInt(AID_KIT_ID)
+        }
+        Log.i("Prep", idPrep.toString() + " " + _aidId.toString())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _bind = DataBindingUtil.inflate(
-            layoutInflater,
-            R.layout.fragment_preparation_add,
-            container,
-            false
-        )
+        _bind = FragmentPreparationCopyBinding.inflate(inflater, container, false)
         setupBackButton()
         return bind.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModelPrep = ViewModelProvider(this, viewModelFactory)[PreparationViewModel::class.java]
         aidKitModel = ViewModelProvider(this, viewModelFactory)[AidKitViewModel::class.java]
-        prepModel = ViewModelProvider(this, viewModelFactory)[PreparationViewModel::class.java]
         listsModel = ViewModelProvider(this, viewModelFactory)[ListsViewModel::class.java]
+        recyclerSetupPackaging()
+        recyclerSetupSymptom()
+        setupSetDataLayout()
         aidKitModel.listAidKit.observe(viewLifecycleOwner) {
             listAidKit = it
             recyclerSetup()
+            //need fix index -1 down when copy is filter_fragment -> detail -> copy
+            listAidKit[aidId - 1].status = true
             adapterListAidKit.itemSelect = {
                 _aidId = it.id
-                Log.i("itemId", aidId.toString())
             }
         }
-        recyclerSetupPackaging()
         selectPackaging()
-        recyclerSetupSymptom()
         selectSymptoms()
-        addNewPreparation()
         setupSetImages()
         setupDate()
+        copyPrep()
     }
 
     private fun selectPackaging() {
@@ -162,6 +166,37 @@ class PreparationAddFragment : Fragment() {
             adapter = adapterSymptom
         }
         return recyclerSymptoms
+    }
+
+    private fun copyPrep() {
+        bind.bCopyPreparation.setOnClickListener {
+            with(bind) {
+                val name = etNamePreparation.text.toString()
+                imageUrl = urlImg.toString()
+                val symptom: MutableList<Symptom> = mutableListOf()
+                listSymptoms.forEach {
+                    if (it.status) {
+                        symptom.add(it)
+                    }
+                }
+                val packing = namePackaging
+                val description = etDescriptionPreparation.text.toString()
+                val dateCreate = currentDate
+                val dateExp = expDate
+                viewModelPrep.copyPreparationItem(
+                    aidId,
+                    name,
+                    imageUrl,
+                    symptom,
+                    packing,
+                    description,
+                    dateCreate,
+                    dateExp)
+            }
+            val bundle = bundleOf(AID_KIT_ID to aidId)
+            findNavController().navigate(R.id.action_preparationCopyFragment_to_aidKitDetailFragment,
+                bundle)
+        }
     }
 
     private fun setupDate() {
@@ -215,36 +250,6 @@ class PreparationAddFragment : Fragment() {
         }
     }
 
-    private fun addNewPreparation() {
-        bind.bAddPreparation.setOnClickListener {
-            with(bind) {
-                val name = etNamePreparation.text.toString()
-                val image = urlImg.toString()
-                val symptom: MutableList<Symptom> = mutableListOf()
-                listSymptoms.forEach {
-                    if (it.status) {
-                        symptom.add(it)
-                    }
-                }
-                val packing = namePackaging
-                val description = etDescriptionPreparation.text.toString()
-                val dateCreate = currentDate
-                val dateExp = expDate
-                prepModel.addPreparationItem(aidId,
-                    name,
-                    image,
-                    symptom,
-                    packing,
-                    description,
-                    dateCreate,
-                    dateExp)
-            }
-            val bundle = bundleOf(AID_KIT_ID to aidId)
-            findNavController().navigate(R.id.action_preparationAddFragment_to_aidKitDetailFragment2,
-                bundle)
-        }
-    }
-
     private fun recyclerSetup(): RecyclerView {
         val recyclerView = bind.recyclerListSetAidKit
         with(recyclerView) {
@@ -254,7 +259,43 @@ class PreparationAddFragment : Fragment() {
         return recyclerView
     }
 
+    private fun setupSetDataLayout() {
+        with(bind) {
+            editPrep = viewModelPrep
+            lifecycleOwner = viewLifecycleOwner
+        }
+        idPrep?.let {
+            viewModelPrep.getPreparationItem(it)
+            imageUrl = viewModelPrep.prepLD.value?.image.toString()
+            urlImg = Uri.parse(imageUrl)
+            getDataPackaging()
+            getDataSymptom()
+            currentDate = viewModelPrep.prepLD.value?.dataCreate.toString()
+            expDate = viewModelPrep.prepLD.value?.dateExp.toString()
+        }
+    }
+
+    private fun getDataSymptom() {
+        viewModelPrep.prepLD.value?.symptoms?.forEach {
+            for (i in listSymptoms) {
+                if (it.name.contains(i.name)) {
+                    i.status = true
+                    adapterSymptom.notifyDataSetChanged()
+                }
+            }
+        }
+    }
+
+    private fun getDataPackaging() {
+        namePackaging = viewModelPrep.prepLD.value?.packaging.toString()
+        listPackaging.forEach {
+            it.status = it.name == namePackaging
+        }
+        adapterPackaging.notifyDataSetChanged()
+    }
+
     companion object {
         const val AID_KIT_ID = "aid_id"
+        const val DETAIL_PREP_ID = "detail_prep_id"
     }
 }

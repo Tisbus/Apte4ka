@@ -1,4 +1,4 @@
-package com.example.apte4ka.presentation.fragment
+package com.example.apte4ka.presentation.fragment.setting
 
 import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat

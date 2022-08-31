@@ -1,4 +1,4 @@
-package com.example.apte4ka.presentation.fragment
+package com.example.apte4ka.presentation.fragment.preparation
 
 import android.content.Context
 import android.os.Bundle

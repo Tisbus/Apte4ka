@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.fragment.ListAidKitFragment">
+        tools:context=".presentation.fragment.main.ListAidKitFragment">
 
         <ScrollView
             android:id="@+id/svAidList"

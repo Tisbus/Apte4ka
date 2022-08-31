@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            tools:context=".presentation.fragment.PreparationCopyFragment">
+            tools:context=".presentation.fragment.preparation.PreparationCopyFragment">
 
             <TextView
                 android:id="@+id/tvNameAddPreparation"

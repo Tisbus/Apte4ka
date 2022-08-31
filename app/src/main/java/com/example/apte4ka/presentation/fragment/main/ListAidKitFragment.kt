@@ -1,4 +1,4 @@
-package com.example.apte4ka.presentation.fragment
+package com.example.apte4ka.presentation.fragment.main
 
 import android.app.AlertDialog
 import android.app.NotificationChannel
