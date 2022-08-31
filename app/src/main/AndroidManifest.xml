@@ -18,8 +18,8 @@
         android:name=".presentation.AidKitApp"
         tools:targetApi="31">
         <activity
-            android:name="com.tisbus.apte4ka.presentation.activity.SplashActivity"
-            android:theme="@style/Theme.Apte4ka.NoActionBar"
+            android:name="com.tisbus.apte4ka.presentation.activity.LaunchActivity"
+            android:theme="@style/LaunchTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

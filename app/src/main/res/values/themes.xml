@@ -14,12 +14,16 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!-- For Drawer Menu -->
     <style name="Theme.Apte4ka.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
     <style name="Theme.Apte4ka.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="Theme.Apte4ka.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- Background to launch activity -->
+    <style name="LaunchTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
 </resources>

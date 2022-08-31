@@ -8,30 +8,27 @@ import android.os.Looper
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import com.tisbus.apte4ka.R
-import com.tisbus.apte4ka.databinding.ActivitySplashBinding
 
-class SplashActivity : AppCompatActivity() {
-
-    private lateinit var binding : ActivitySplashBinding
+class LaunchActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //hide status bar
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
         } else {
-            window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+            window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN)
         }
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
         splashScreenDelay()
     }
 
+    //Delay launch activity
     private fun splashScreenDelay() {
         Handler(Looper.getMainLooper()).postDelayed(
             {
                 startActivity(Intent(this, MainActivity::class.java))
+                //delete activity to backstack
                 finish()
             },
             2000
