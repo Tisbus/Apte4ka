@@ -26,4 +26,7 @@
     <style name="LaunchTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
+    <style name="PreferenceScreen" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:textColor">#FF0000</item>
+    </style>
 </resources>
