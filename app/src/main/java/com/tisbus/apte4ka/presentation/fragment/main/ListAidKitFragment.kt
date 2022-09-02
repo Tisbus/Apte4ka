@@ -13,6 +13,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.tisbus.apte4ka.R
@@ -74,7 +75,6 @@ class ListAidKitFragment : Fragment() {
         setupRecyclerView()
         setupItemTouch()
         goToDetailAidKit()
-
     }
 
     private fun setupItemTouch() {

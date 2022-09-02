@@ -240,7 +240,7 @@ class PreparationCopyFragment : Fragment() {
             val sdImageDirectoryPath = File(pathImg, fileName)
             urlImg = FileProvider.getUriForFile(
                 requireContext(),
-                "com.example.apte4ka",
+                "com.tisbus.apte4ka",
                 sdImageDirectoryPath
             )
             takeImages.launch(urlImg)

@@ -193,7 +193,7 @@
         android:id="@+id/settingsFragment"
         android:name="com.tisbus.apte4ka.presentation.fragment.pagemenu.setting.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" >
+        tools:layout="@xml/root_preferences" >
         <action
             android:id="@+id/action_settingsFragment_to_listAidKitFragment"
             app:destination="@id/listAidKitFragment" />

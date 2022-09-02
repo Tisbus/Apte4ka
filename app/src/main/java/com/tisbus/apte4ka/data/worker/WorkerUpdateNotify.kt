@@ -7,6 +7,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.os.bundleOf
 import androidx.navigation.NavDeepLinkBuilder
+import androidx.preference.PreferenceManager
 import androidx.work.*
 import com.tisbus.apte4ka.R
 import com.tisbus.apte4ka.data.room.preparation.PreparationDao
@@ -30,6 +31,7 @@ class WorkerUpdateNotify(
     override suspend fun doWork(): Result {
         try {
             val list = prepDao.getPreparationL()
+            val pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
             list.forEach { i ->
                 if (getCountDayToEnd(i.dateExp).toInt() <= 30 && !i.customStatus) {
                     setupCustomExpDate(i, STATUS_NAME_CUSTOM)
@@ -38,18 +40,19 @@ class WorkerUpdateNotify(
                     setupCustomExpDate(i, STATUS_NAME_ONE_DAY)
                 }
             }
-        } catch (e: Exception) {}
+        } catch (e: Exception) {
+        }
         return Result.success()
     }
 
-    private fun setupCustomExpDate(i: Preparation, status : String) {
+    private fun setupCustomExpDate(i: Preparation, status: String) {
         val goToDetail = setupIntentDetail(i)
         val numberOfDays = getCountDayToEnd(i.dateExp).toInt()
         val namePrep = i.name
-        val text = when(status){
+        val text = when (status) {
             STATUS_NAME_CUSTOM -> "%s - срок годности заканчивается, осталось - %s д."
             STATUS_NAME_ONE_DAY -> "%s - срок годности заканчился - %s д."
-            else-> "%s - срок годности заканчивается, осталось - %s д."
+            else -> "%s - срок годности заканчивается, осталось - %s д."
         }
         val textExpDate = String.format(
             text,
@@ -57,10 +60,10 @@ class WorkerUpdateNotify(
             numberOfDays.toString()
         )
         setupNotificationBuilder(goToDetail, textExpDate)
-        val item = when(status){
+        val item = when (status) {
             STATUS_NAME_CUSTOM -> i.copy(customStatus = true)
             STATUS_NAME_ONE_DAY -> i.copy(oneDayStatus = true)
-            else-> i.copy(customStatus = true)
+            else -> i.copy(customStatus = true)
         }
         prepDao.addPreparationItem(item)
     }
@@ -84,8 +87,8 @@ class WorkerUpdateNotify(
             val currentDate = Calendar.getInstance()
             val dieDate = Calendar.getInstance()
             dieDate.set(Calendar.HOUR_OF_DAY, 14)
-            dieDate.set(Calendar.MINUTE, 27)
-            dieDate.set(Calendar.SECOND, 30)
+            dieDate.set(Calendar.MINUTE, 0)
+            dieDate.set(Calendar.SECOND, 0)
             if (dieDate.before(currentDate)) {
                 dieDate.add(Calendar.HOUR_OF_DAY, 24)
             }

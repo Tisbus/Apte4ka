@@ -1,35 +1,26 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <PreferenceCategory app:title="@string/messages_header">
-
+    <PreferenceCategory app:title="Уведомления">
+        <SwitchPreferenceCompat
+            app:key="notify"
+            app:defaultValue="true"
+            app:summaryOn="уведомления включены"
+            app:summaryOff="уведомления выключены"
+            app:title="Присылать уведомления" />
         <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
+            app:defaultValue="30"
+            app:dependency="notify"
+            app:key="first_end_day"
+            app:dialogTitle="Введите за сколько до окончания срока"
+            app:dialogMessage="Должно прийти уведомление. Вводить строго как в примере - 30"
+            app:title="За сколько дней (до окончания срока)"
             app:useSimpleSummaryProvider="true" />
-
-        <ListPreference
-            app:defaultValue="reply"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="reply"
-            app:title="@string/reply_title"
+        <EditTextPreference
+            app:defaultValue="9"
+            app:dependency="notify"
+            app:key="notify_hour"
+            app:dialogTitle="Введите время когда придет уведомление"
+            app:dialogMessage="Вводить строго как в примере - 8:30"
+            app:title="Время (когда придет уведомление)"
             app:useSimpleSummaryProvider="true" />
-
     </PreferenceCategory>
-
-    <PreferenceCategory app:title="@string/sync_header">
-
-        <SwitchPreferenceCompat
-            app:key="sync"
-            app:title="@string/sync_title" />
-
-        <SwitchPreferenceCompat
-            app:dependency="sync"
-            app:key="attachment"
-            app:summaryOff="@string/attachment_summary_off"
-            app:summaryOn="@string/attachment_summary_on"
-            app:title="@string/attachment_title" />
-
-    </PreferenceCategory>
-
 </PreferenceScreen>
