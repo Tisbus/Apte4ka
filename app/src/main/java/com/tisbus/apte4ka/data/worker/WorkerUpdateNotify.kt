@@ -12,6 +12,7 @@ import androidx.work.*
 import com.tisbus.apte4ka.R
 import com.tisbus.apte4ka.data.room.preparation.PreparationDao
 import com.tisbus.apte4ka.domain.entity.preparation.Preparation
+import com.tisbus.apte4ka.presentation.activity.MainActivity
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -86,9 +87,9 @@ class WorkerUpdateNotify(
         private fun workerGetTime(): Long {
             val currentDate = Calendar.getInstance()
             val dieDate = Calendar.getInstance()
-            dieDate.set(Calendar.HOUR_OF_DAY, 9)
-            dieDate.set(Calendar.MINUTE, 38)
-            dieDate.set(Calendar.SECOND, 0)
+            dieDate.set(Calendar.HOUR_OF_DAY, 10)
+            dieDate.set(Calendar.MINUTE, 9)
+            dieDate.set(Calendar.SECOND, 20)
             if (dieDate.before(currentDate)) {
                 dieDate.add(Calendar.HOUR_OF_DAY, 24)
             }
@@ -113,6 +114,7 @@ class WorkerUpdateNotify(
         return NavDeepLinkBuilder(applicationContext)
             .setGraph(R.navigation.main_navigation)
             .setDestination(R.id.preparationDetailFragment)
+            .setComponentName(MainActivity::class.java)
             .setArguments(bundle)
             .createPendingIntent()
     }

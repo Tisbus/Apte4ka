@@ -22,7 +22,6 @@ class LaunchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         splashScreenDelay()
     }
-
     //Delay launch activity
     private fun splashScreenDelay() {
         Handler(Looper.getMainLooper()).postDelayed(
