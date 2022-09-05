@@ -8,21 +8,23 @@
         android:id="@android:id/icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_notifications_24"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@android:id/title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@android:id/title" />
 
     <TextView
         android:id="@android:id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:text="Уведомление"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@android:id/icon" />
+        android:textSize="16sp"
+        android:textColor="@color/green"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@android:id/icon"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@android:id/summary"
@@ -30,10 +32,17 @@
         android:layout_height="wrap_content"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:text="Уведомление"
-        android:textSize="16sp"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@android:id/icon"
+        app:layout_constraintTop_toBottomOf="@android:id/title" />
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        android:layout_margin="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBotomOf="@+id\title" />
-
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@android:id/summary"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

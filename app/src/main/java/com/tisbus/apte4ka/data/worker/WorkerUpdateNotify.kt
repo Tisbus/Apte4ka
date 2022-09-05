@@ -86,8 +86,8 @@ class WorkerUpdateNotify(
         private fun workerGetTime(): Long {
             val currentDate = Calendar.getInstance()
             val dieDate = Calendar.getInstance()
-            dieDate.set(Calendar.HOUR_OF_DAY, 14)
-            dieDate.set(Calendar.MINUTE, 0)
+            dieDate.set(Calendar.HOUR_OF_DAY, 9)
+            dieDate.set(Calendar.MINUTE, 38)
             dieDate.set(Calendar.SECOND, 0)
             if (dieDate.before(currentDate)) {
                 dieDate.add(Calendar.HOUR_OF_DAY, 24)
