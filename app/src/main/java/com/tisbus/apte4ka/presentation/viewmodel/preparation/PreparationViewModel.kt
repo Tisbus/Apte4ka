@@ -1,8 +1,13 @@
 package com.tisbus.apte4ka.presentation.viewmodel.preparation
 
+import android.app.Application
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.preference.PreferenceManager
+import androidx.work.WorkManager
+import com.tisbus.apte4ka.data.worker.WorkerUpdateNotify
 import com.tisbus.apte4ka.domain.entity.preparation.Preparation
 import com.tisbus.apte4ka.domain.entity.symptom.Symptom
 import com.tisbus.apte4ka.domain.usecase.preparation.*
@@ -17,7 +22,8 @@ class PreparationViewModel @Inject constructor(
     private val getPreparationListUseCase: GetPreparationListUseCase,
     private val copyPreparationItemUseCase: CopyPreparationItemUseCase,
     private val updateNotificationUseCase: UpdateNotificationUseCase,
-    private val deletePrepItemAidIdUseCase: DeletePrepItemAidIdUseCase
+    private val deletePrepItemAidIdUseCase: DeletePrepItemAidIdUseCase,
+    private val application: Application
 ) : ViewModel() {
 
     val listPreparation = getPreparationListUseCase.getPreparationList()
@@ -26,8 +32,16 @@ class PreparationViewModel @Inject constructor(
     val prepLD: LiveData<Preparation>
         get() = _prepLD
 
+
+
     init {
-        updateNotificationUseCase()
+        val sharedP = PreferenceManager.getDefaultSharedPreferences(application)
+        val isCheckStatus = sharedP.getBoolean("notify", true)
+        if(isCheckStatus){
+            updateNotificationUseCase()
+        }else{
+            WorkManager.getInstance(application).cancelUniqueWork(WorkerUpdateNotify.NAME_WORKER)
+        }
     }
 
     fun deletePrepItemAidId(id  :Int){

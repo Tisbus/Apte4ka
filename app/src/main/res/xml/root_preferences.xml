@@ -16,7 +16,7 @@
             app:dependency="notify"
             app:dialogMessage="Должно прийти уведомление. Вводить строго как в примере - 30"
             app:dialogTitle="Введите за сколько до окончания срока"
-            app:key="first_end_day"
+            app:key="first_end"
             app:layout="@layout/preference_edit"
             app:title="За сколько дней (до окончания срока)"
             app:useSimpleSummaryProvider="true" />
@@ -25,7 +25,7 @@
             app:dependency="notify"
             app:dialogMessage="Вводить строго как в примере - 8:30"
             app:dialogTitle="Введите время когда придет уведомление"
-            app:key="notify_hour"
+            app:key="notify_time"
             app:layout="@layout/preference_edit"
             app:title="Время (когда придет уведомление)"
             app:useSimpleSummaryProvider="true" />

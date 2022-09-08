@@ -3,7 +3,16 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
-
+    <View
+        android:id="@+id/lineTop"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        android:layout_margin="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
     <ImageView
         android:id="@android:id/icon"
         android:layout_width="wrap_content"
@@ -39,7 +48,7 @@
         app:layout_constraintStart_toEndOf="@android:id/icon"
         app:layout_constraintTop_toBottomOf="@android:id/title" />
     <View
-        android:id="@+id/line"
+        android:id="@+id/lineBottom"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/grey"

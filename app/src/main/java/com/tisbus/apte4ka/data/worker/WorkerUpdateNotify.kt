@@ -27,21 +27,20 @@ class WorkerUpdateNotify(
     context,
     workerParams
 ) {
-
-
     override suspend fun doWork(): Result {
         try {
-            val list = prepDao.getPreparationL()
-            val pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-            list.forEach { i ->
-                if (getCountDayToEnd(i.dateExp).toInt() <= 30 && !i.customStatus) {
-                    setupCustomExpDate(i, STATUS_NAME_CUSTOM)
+            val sharedP = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+            val dayCustom = sharedP.getString("first_end", "30")?.toInt()
+                val list = prepDao.getPreparationL()
+                list.forEach { i ->
+                    if (getCountDayToEnd(i.dateExp).toInt() <= dayCustom!! && !i.customStatus) {
+                        setupCustomExpDate(i, STATUS_NAME_CUSTOM)
+                    }
+                    if (getCountDayToEnd(i.dateExp).toInt() <= 1 && !i.oneDayStatus) {
+                        setupCustomExpDate(i, STATUS_NAME_ONE_DAY)
+                    }
                 }
-                if (getCountDayToEnd(i.dateExp).toInt() <= 1 && !i.oneDayStatus) {
-                    setupCustomExpDate(i, STATUS_NAME_ONE_DAY)
-                }
-            }
-        } catch (e: Exception) {
+        }catch (e: Exception) {
         }
         return Result.success()
     }
@@ -75,26 +74,32 @@ class WorkerUpdateNotify(
         const val CHANNEL_ID = "1"
         const val STATUS_NAME_CUSTOM = "custom"
         const val STATUS_NAME_ONE_DAY = "oneDay"
-
         const val NAME_WORKER = "WorkerUpdateNotify"
 
+        fun makeRequest(long: Long): OneTimeWorkRequest {
+            return OneTimeWorkRequestBuilder<WorkerUpdateNotify>()
+                .setInitialDelay(long, TimeUnit.MILLISECONDS)
+                .build()
+        }
+
+/*
         fun makeRequest(): OneTimeWorkRequest {
             return OneTimeWorkRequestBuilder<WorkerUpdateNotify>()
                 .setInitialDelay(workerGetTime(), TimeUnit.MILLISECONDS)
                 .build()
         }
 
-        private fun workerGetTime(): Long {
+       private fun workerGetTime(): Long {
             val currentDate = Calendar.getInstance()
             val dieDate = Calendar.getInstance()
             dieDate.set(Calendar.HOUR_OF_DAY, 10)
             dieDate.set(Calendar.MINUTE, 9)
-            dieDate.set(Calendar.SECOND, 20)
+            dieDate.set(Calendar.SECOND, 0)
             if (dieDate.before(currentDate)) {
                 dieDate.add(Calendar.HOUR_OF_DAY, 24)
             }
             return dieDate.timeInMillis.minus(currentDate.timeInMillis)
-        }
+        }*/
     }
 
     class Factory @Inject constructor(
