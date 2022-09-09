@@ -4,19 +4,19 @@ import com.tisbus.apte4ka.domain.entity.symptom.Symptom
 
 class ListSymptom {
     val listSymptoms : List<Symptom> = arrayListOf(
-        Symptom(1,"Кашель", "", false),
-        Symptom(2,"Насморк", "", false),
-        Symptom(3,"Температура", "", false),
-        Symptom(4,"Боль в груди", "", false),
-        Symptom(5,"Головная боль", "", false),
-        Symptom(6,"Боль в мышцах", "", false),
-        Symptom(7,"Боль в желудке", "", false),
-        Symptom(7,"Боль в кишечнике", "", false),
-        Symptom(8,"Боль в горле", "", false),
-        Symptom(9,"Боль в спине", "", false),
-        Symptom(10,"Боль в животе", "", false),
-        Symptom(11,"Аллергия", "", false),
-        Symptom(12,"Сыпь", "", false),
-        Symptom(13,"Запор", "", false),
+        Symptom("Кашель", "", false),
+        Symptom("Насморк", "", false),
+        Symptom("Температура", "", false),
+        Symptom("Боль в груди", "", false),
+        Symptom("Головная боль", "", false),
+        Symptom("Боль в мышцах", "", false),
+        Symptom("Боль в желудке", "", false),
+        Symptom("Боль в кишечнике", "", false),
+        Symptom("Боль в горле", "", false),
+        Symptom("Боль в спине", "", false),
+        Symptom("Боль в животе", "", false),
+        Symptom("Аллергия", "", false),
+        Symptom("Сыпь", "", false),
+        Symptom("Запор", "", false),
     )
 }

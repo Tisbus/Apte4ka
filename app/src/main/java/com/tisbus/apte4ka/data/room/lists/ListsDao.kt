@@ -19,7 +19,7 @@ interface ListsDao {
     suspend fun getSymptomItem(id: Int): Symptom
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addSymptomItem(id: Int)
+    suspend fun addSymptomItem(item: Symptom)
 
     @Query("DELETE FROM symptom WHERE id = :id")
     suspend fun deleteSymptomItem(id: Int)
@@ -35,7 +35,7 @@ interface ListsDao {
     suspend fun getPackagingItem(id: Int): Packaging
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addPackagingItem(id: Int)
+    suspend fun addPackagingItem(item: Packaging)
 
     @Query("DELETE FROM packaging WHERE id = :id")
     suspend fun deletePackagingItem(id: Int)
