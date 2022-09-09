@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.tisbus.apte4ka.R
+import com.tisbus.apte4ka.data.lists.symptom.ListSymptom
 import com.tisbus.apte4ka.databinding.FragmentFilterBinding
 import com.tisbus.apte4ka.domain.entity.preparation.Preparation
 import com.tisbus.apte4ka.domain.entity.symptom.Symptom
@@ -46,7 +47,7 @@ class FilterFragment : Fragment() {
     private lateinit var viewModelPreparation: PreparationViewModel
     private lateinit var listsModel: ListsViewModel
 
-    private var listSymptoms: List<Symptom> = listOf()
+    private var listSymptoms: MutableList<Symptom> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +77,10 @@ class FilterFragment : Fragment() {
         viewModelPreparation =
             ViewModelProvider(this, viewModelFactory)[PreparationViewModel::class.java]
         listsModel = ViewModelProvider(this, viewModelFactory)[ListsViewModel::class.java]
+        listsModel.listSymptom.observe(viewLifecycleOwner){
+            listSymptoms = it
+            getStartSymptomList()
+        }
         viewModelPreparation.listPreparation.observe(viewLifecycleOwner) {
             adapterPrep.submitList(it)
             enterFilter(adapterPrep.currentList)
@@ -83,6 +88,19 @@ class FilterFragment : Fragment() {
         }
         setupRecyclerView()
         dataSymptom()
+    }
+
+    private fun getStartSymptomList() {
+        if (listSymptoms.isEmpty()) {
+            val list = ListSymptom()
+            list.listSymptoms.forEach { i ->
+                listsModel.addSymptomItem(
+                    i.name,
+                    i.icon,
+                    i.status
+                )
+            }
+        }
     }
 
     //for api max 26
@@ -154,7 +172,6 @@ class FilterFragment : Fragment() {
 
     private fun recyclerSetupSymptom(): RecyclerView {
         val recyclerSymptoms = bind.rSetSymptoms
-        listSymptoms = listsModel.listSymptom
         adapterSymptom = SymptomAdapter(listSymptoms)
         with(recyclerSymptoms) {
             adapter = adapterSymptom

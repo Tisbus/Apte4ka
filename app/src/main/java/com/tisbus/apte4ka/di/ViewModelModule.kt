@@ -3,6 +3,7 @@ package com.tisbus.apte4ka.di
 import androidx.lifecycle.ViewModel
 import com.tisbus.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 import com.tisbus.apte4ka.presentation.viewmodel.lists.ListsViewModel
+import com.tisbus.apte4ka.presentation.viewmodel.notify.NotifyViewModel
 import com.tisbus.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
 import dagger.Binds
 import dagger.Module
@@ -22,4 +23,8 @@ interface ViewModelModule {
     @IntoMap
     @ModuleKey(ListsViewModel::class)
     fun bindListsViewModel(model : ListsViewModel) : ViewModel
+    @Binds
+    @IntoMap
+    @ModuleKey(NotifyViewModel::class)
+    fun bindNotifyViewModel(model : NotifyViewModel) : ViewModel
 }

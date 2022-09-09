@@ -31,6 +31,8 @@ import com.tisbus.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
 import com.tisbus.apte4ka.presentation.viewmodel.lists.ListsViewModel
 import com.tisbus.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
 import com.squareup.picasso.Picasso
+import com.tisbus.apte4ka.data.lists.packaging.ListPackaging
+import com.tisbus.apte4ka.data.lists.symptom.ListSymptom
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -67,8 +69,8 @@ class PreparationAddFragment : Fragment() {
     private var namePackaging: String = ""
 
     private var listAidKit: MutableList<AidKit> = mutableListOf()
-    private var listSymptoms: List<Symptom> = listOf()
-    private var listPackaging: List<Packaging> = listOf()
+    private var listSymptoms: MutableList<Symptom> = mutableListOf()
+    private var listPackaging: MutableList<Packaging> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,13 +122,47 @@ class PreparationAddFragment : Fragment() {
                 Log.i("itemId", aidId.toString())
             }
         }
-        recyclerSetupPackaging()
-        selectPackaging()
-        recyclerSetupSymptom()
-        selectSymptoms()
+        listsModel.listPackaging.observe(viewLifecycleOwner){
+            listPackaging = it
+            getStartPackagingList()
+            recyclerSetupPackaging()
+            selectPackaging()
+        }
+        listsModel.listSymptom.observe(viewLifecycleOwner){
+            listSymptoms = it
+            getStartSymptomList()
+            recyclerSetupSymptom()
+            selectSymptoms()
+        }
         addNewPreparation()
         setupSetImages()
         setupDate()
+    }
+
+    private fun getStartPackagingList() {
+        if (listPackaging.isEmpty()) {
+            val list = ListPackaging()
+            list.listPackaging.forEach { i ->
+                listsModel.addPackagingItem(
+                    i.name,
+                    i.icon,
+                    i.status
+                )
+            }
+        }
+    }
+
+    private fun getStartSymptomList() {
+        if (listSymptoms.isEmpty()) {
+            val list = ListSymptom()
+            list.listSymptoms.forEach { i ->
+                listsModel.addSymptomItem(
+                    i.name,
+                    i.icon,
+                    i.status
+                )
+            }
+        }
     }
 
     private fun selectPackaging() {
@@ -144,7 +180,6 @@ class PreparationAddFragment : Fragment() {
 
     private fun recyclerSetupPackaging(): RecyclerView {
         val recyclerPackaging = bind.rPackagePreparation
-        listPackaging = listsModel.listPackaging
         adapterPackaging = PackagingAdapter(listPackaging)
         with(recyclerPackaging) {
             adapter = adapterPackaging
@@ -154,7 +189,6 @@ class PreparationAddFragment : Fragment() {
 
     private fun recyclerSetupSymptom(): RecyclerView {
         val recyclerSymptoms = bind.rSetSymptoms
-        listSymptoms = listsModel.listSymptom
         adapterSymptom = SymptomAdapter(listSymptoms)
         with(recyclerSymptoms) {
             adapter = adapterSymptom
