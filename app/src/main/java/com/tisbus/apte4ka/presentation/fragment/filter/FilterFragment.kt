@@ -80,6 +80,7 @@ class FilterFragment : Fragment() {
         listsModel.listSymptom.observe(viewLifecycleOwner){
             listSymptoms = it
             getStartSymptomList()
+            dataSymptom()
         }
         viewModelPreparation.listPreparation.observe(viewLifecycleOwner) {
             adapterPrep.submitList(it)
@@ -87,7 +88,6 @@ class FilterFragment : Fragment() {
             clearFilter(it)
         }
         setupRecyclerView()
-        dataSymptom()
     }
 
     private fun getStartSymptomList() {

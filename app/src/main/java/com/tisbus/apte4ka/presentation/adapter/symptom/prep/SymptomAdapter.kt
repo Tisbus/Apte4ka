@@ -9,7 +9,7 @@ import com.tisbus.apte4ka.R
 import com.tisbus.apte4ka.databinding.SymptomItemBinding
 import com.tisbus.apte4ka.domain.entity.symptom.Symptom
 
-class SymptomAdapter(val listSymptom: List<Symptom>) : RecyclerView.Adapter<SymptomViewHolder>() {
+class SymptomAdapter(val listSymptom: MutableList<Symptom>) : RecyclerView.Adapter<SymptomViewHolder>() {
 
     var itemSelect: ((Symptom) -> Unit)? = null
 

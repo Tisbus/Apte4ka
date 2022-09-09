@@ -118,24 +118,26 @@ class PreparationCopyFragment : Fragment() {
         viewModelPrep = ViewModelProvider(this, viewModelFactory)[PreparationViewModel::class.java]
         aidKitModel = ViewModelProvider(this, viewModelFactory)[AidKitViewModel::class.java]
         listsModel = ViewModelProvider(this, viewModelFactory)[ListsViewModel::class.java]
-        listsModel.listPackaging.observe(viewLifecycleOwner){
-            listPackaging = it
-            getStartPackagingList()
-            recyclerSetupPackaging()
-            selectPackaging()
-        }
         listsModel.listSymptom.observe(viewLifecycleOwner){
             listSymptoms = it
             getStartSymptomList()
             recyclerSetupSymptom()
+            getDataSymptom()
             selectSymptoms()
+        }
+        listsModel.listPackaging.observe(viewLifecycleOwner){
+            listPackaging = it
+            getStartPackagingList()
+            recyclerSetupPackaging()
+            getDataPackaging()
+            selectPackaging()
         }
         setupSetDataLayout()
         aidKitModel.listAidKit.observe(viewLifecycleOwner) {
             listAidKit = it
             recyclerSetup()
             //need fix index -1 down when copy is filter_fragment -> detail -> copy
-            listAidKit[aidId - 1].status = true
+            listAidKit[aidId-1].status = true
             adapterListAidKit.itemSelect = {
                 _aidId = it.id
             }
@@ -302,8 +304,6 @@ class PreparationCopyFragment : Fragment() {
             viewModelPrep.getPreparationItem(it)
             imageUrl = viewModelPrep.prepLD.value?.image.toString()
             urlImg = Uri.parse(imageUrl)
-            getDataPackaging()
-            getDataSymptom()
             currentDate = viewModelPrep.prepLD.value?.dataCreate.toString()
             expDate = viewModelPrep.prepLD.value?.dateExp.toString()
         }

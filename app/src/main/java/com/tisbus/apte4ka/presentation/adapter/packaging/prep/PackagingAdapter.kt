@@ -9,7 +9,7 @@ import com.tisbus.apte4ka.R
 import com.tisbus.apte4ka.databinding.PackagingItemBinding
 import com.tisbus.apte4ka.domain.entity.packaging.Packaging
 
-class PackagingAdapter(val listPackaging: List<Packaging>) :
+class PackagingAdapter(val listPackaging: MutableList<Packaging>) :
     RecyclerView.Adapter<PackagingViewHolder>() {
 
     var itemSelect: ((Packaging) -> Unit)? = null

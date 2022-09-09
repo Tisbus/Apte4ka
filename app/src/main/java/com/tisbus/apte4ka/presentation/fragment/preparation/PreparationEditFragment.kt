@@ -117,17 +117,19 @@ class PreparationEditFragment : Fragment() {
         viewModelPrep = ViewModelProvider(this, viewModelFactory)[PreparationViewModel::class.java]
         aidKitModel = ViewModelProvider(this, viewModelFactory)[AidKitViewModel::class.java]
         listsModel = ViewModelProvider(this, viewModelFactory)[ListsViewModel::class.java]
-        listsModel.listPackaging.observe(viewLifecycleOwner){
-            listPackaging = it
-            getStartPackagingList()
-            recyclerSetupPackaging()
-            selectPackaging()
-        }
         listsModel.listSymptom.observe(viewLifecycleOwner){
             listSymptoms = it
             getStartSymptomList()
             recyclerSetupSymptom()
+            getDataSymptom()
             selectSymptoms()
+        }
+        listsModel.listPackaging.observe(viewLifecycleOwner){
+            listPackaging = it
+            getStartPackagingList()
+            recyclerSetupPackaging()
+            getDataPackaging()
+            selectPackaging()
         }
         setupSetDataLayout()
         aidKitModel.listAidKit.observe(viewLifecycleOwner) {
@@ -300,8 +302,6 @@ class PreparationEditFragment : Fragment() {
             viewModelPrep.getPreparationItem(it)
             imageUrl = viewModelPrep.prepLD.value?.image.toString()
             urlImg = Uri.parse(imageUrl)
-            getDataPackaging()
-            getDataSymptom()
             currentDate = viewModelPrep.prepLD.value?.dataCreate.toString()
             expDate = viewModelPrep.prepLD.value?.dateExp.toString()
         }
