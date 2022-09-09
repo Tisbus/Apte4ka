@@ -1,4 +1,4 @@
-package com.tisbus.apte4ka.presentation.adapter.symptom
+package com.tisbus.apte4ka.presentation.adapter.symptom.prep
 
 import androidx.recyclerview.widget.RecyclerView
 import com.tisbus.apte4ka.databinding.SymptomItemBinding

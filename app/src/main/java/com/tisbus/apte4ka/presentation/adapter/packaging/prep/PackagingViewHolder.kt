@@ -1,4 +1,4 @@
-package com.tisbus.apte4ka.presentation.adapter.packaging
+package com.tisbus.apte4ka.presentation.adapter.packaging.prep
 
 import androidx.recyclerview.widget.RecyclerView
 import com.tisbus.apte4ka.databinding.PackagingItemBinding

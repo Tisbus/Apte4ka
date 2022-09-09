@@ -1,4 +1,4 @@
-package com.tisbus.apte4ka.presentation.adapter.symptom
+package com.tisbus.apte4ka.presentation.adapter.symptom.prep
 
 import android.graphics.Color
 import android.view.LayoutInflater

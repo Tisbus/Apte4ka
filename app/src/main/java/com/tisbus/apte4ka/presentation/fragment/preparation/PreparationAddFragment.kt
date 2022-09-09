@@ -24,8 +24,8 @@ import com.tisbus.apte4ka.domain.entity.packaging.Packaging
 import com.tisbus.apte4ka.domain.entity.symptom.Symptom
 import com.tisbus.apte4ka.presentation.AidKitApp
 import com.tisbus.apte4ka.presentation.adapter.listaidkit.ListAidKitAdapter
-import com.tisbus.apte4ka.presentation.adapter.packaging.PackagingAdapter
-import com.tisbus.apte4ka.presentation.adapter.symptom.SymptomAdapter
+import com.tisbus.apte4ka.presentation.adapter.packaging.prep.PackagingAdapter
+import com.tisbus.apte4ka.presentation.adapter.symptom.prep.SymptomAdapter
 import com.tisbus.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 import com.tisbus.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
 import com.tisbus.apte4ka.presentation.viewmodel.lists.ListsViewModel

@@ -19,7 +19,7 @@ import com.tisbus.apte4ka.domain.entity.preparation.Preparation
 import com.tisbus.apte4ka.domain.entity.symptom.Symptom
 import com.tisbus.apte4ka.presentation.AidKitApp
 import com.tisbus.apte4ka.presentation.adapter.preparation.PreparationAdapter
-import com.tisbus.apte4ka.presentation.adapter.symptom.SymptomAdapter
+import com.tisbus.apte4ka.presentation.adapter.symptom.prep.SymptomAdapter
 import com.tisbus.apte4ka.presentation.fragment.search.SearchFragment
 import com.tisbus.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
 import com.tisbus.apte4ka.presentation.viewmodel.lists.ListsViewModel
