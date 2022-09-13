@@ -13,7 +13,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.tisbus.apte4ka.R
@@ -27,6 +26,7 @@ import com.tisbus.apte4ka.presentation.viewmodel.preparation.PreparationViewMode
 import javax.inject.Inject
 
 class ListAidKitFragment : Fragment() {
+
 
     @Inject
     lateinit var viewModelFactory: AidKitViewModelFactory
