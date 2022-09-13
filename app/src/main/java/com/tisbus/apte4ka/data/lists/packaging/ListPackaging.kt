@@ -16,6 +16,8 @@ class ListPackaging {
         Packaging("Аэрозоль", "", false),
         Packaging("Мазь", "", false),
         Packaging("Крем", "", false),
-        Packaging("Гель", "", false)
+        Packaging("Гель", "", false),
+        Packaging("Пена", "", false),
+        Packaging("Витамины", "", false),
     )
 }

@@ -7,6 +7,8 @@ import com.tisbus.apte4ka.presentation.fragment.aidkit.AidKitDetailFragment
 import com.tisbus.apte4ka.presentation.fragment.aidkit.AidKitEditFragment
 import com.tisbus.apte4ka.presentation.fragment.filter.FilterFragment
 import com.tisbus.apte4ka.presentation.fragment.main.ListAidKitFragment
+import com.tisbus.apte4ka.presentation.fragment.pagemenu.packaging.PackagingFragment
+import com.tisbus.apte4ka.presentation.fragment.pagemenu.symptom.SymptomFragment
 import com.tisbus.apte4ka.presentation.fragment.preparation.PreparationAddFragment
 import com.tisbus.apte4ka.presentation.fragment.preparation.PreparationCopyFragment
 import com.tisbus.apte4ka.presentation.fragment.preparation.PreparationDetailFragment
@@ -28,6 +30,8 @@ interface ApplicationComponent {
     fun inject(frag : PreparationCopyFragment)
     fun inject(frag : PreparationAddFragment)
     fun inject(frag : PreparationEditFragment)
+    fun inject(frag : SymptomFragment)
+    fun inject(frag : PackagingFragment)
     fun inject(app : AidKitApp)
 
     @Component.Factory

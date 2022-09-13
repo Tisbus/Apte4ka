@@ -46,4 +46,6 @@
     <string name="image_avatar_on_drawer">image avatar on drawer</string>
     <string name="handbook">Справочники</string>
     <string name="slogan">Всегда под рукой</string>
+    <string name="fab_add_symptom">fab_add_symptom</string>
+    <string name="fab_add_packaging">fab_add_packaging</string>
 </resources>

@@ -18,5 +18,7 @@ class ListSymptom {
         Symptom("Аллергия", "", false),
         Symptom("Сыпь", "", false),
         Symptom("Запор", "", false),
+        Symptom("Иммунитет", "", false),
+        Symptom("Уход за зубами", "", false),
     )
 }

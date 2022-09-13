@@ -265,7 +265,8 @@ class PreparationCopyFragment : Fragment() {
         val takeImages =
             registerForActivityResult(ActivityResultContracts.TakePicture()) { success: Boolean ->
                 if (success) {
-                    Picasso.get().load(urlImg).rotate(90F).into(bind.ivAddPhotoPreparation)
+                    Picasso.get().load(urlImg).into(bind.ivAddPhotoPreparation)
+/*                    Picasso.get().load(urlImg).rotate(90F).into(bind.ivAddPhotoPreparation)*/
                 }
             }
 

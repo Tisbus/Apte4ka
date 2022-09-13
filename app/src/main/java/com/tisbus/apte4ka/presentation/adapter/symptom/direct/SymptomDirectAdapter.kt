@@ -1,44 +1,34 @@
 package com.tisbus.apte4ka.presentation.adapter.symptom.direct
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 import com.tisbus.apte4ka.R
-import com.tisbus.apte4ka.databinding.SymptomItemBinding
+import com.tisbus.apte4ka.databinding.SymptomItemDirectBinding
 import com.tisbus.apte4ka.domain.entity.symptom.Symptom
+import com.tisbus.apte4ka.presentation.adapter.diffutil.symptom.SymptomItemDiffUtil
 
-class SymptomDirectAdapter(val listSymptom: List<Symptom>) : RecyclerView.Adapter<SymptomDirectViewHolder>() {
+class SymptomDirectAdapter : ListAdapter<Symptom, SymptomDirectViewHolder>(SymptomItemDiffUtil()) {
 
-    var itemSelect: ((Symptom) -> Unit)? = null
+    private val itemSelect: ((Symptom) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SymptomDirectViewHolder {
-        val bindView = DataBindingUtil.inflate<SymptomItemBinding>(
+        val viewBind = DataBindingUtil.inflate<SymptomItemDirectBinding>(
             LayoutInflater.from(parent.context),
-            R.layout.symptom_item,
+            R.layout.symptom_item_direct,
             parent,
             false
         )
-        return SymptomDirectViewHolder(bindView)
+        return SymptomDirectViewHolder(viewBind)
     }
 
     override fun onBindViewHolder(holder: SymptomDirectViewHolder, position: Int) {
-        val itemSymptom = listSymptom[position]
+        val itemSymptom = currentList[position]
         val bind = holder.bind
-        bind.symptom = itemSymptom
-        if (itemSymptom.status) {
-            bind.cvSymptom.background.setTint(Color.RED)
-        } else {
-            bind.cvSymptom.background.setTint(Color.WHITE)
-        }
+        bind.symptomDirect = itemSymptom
         bind.root.setOnClickListener {
             itemSelect?.invoke(itemSymptom)
-            notifyDataSetChanged()
         }
-    }
-
-    override fun getItemCount(): Int {
-        return listSymptom.size
     }
 }

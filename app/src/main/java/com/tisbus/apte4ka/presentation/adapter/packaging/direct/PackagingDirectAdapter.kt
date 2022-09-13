@@ -1,46 +1,34 @@
 package com.tisbus.apte4ka.presentation.adapter.packaging.direct
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 import com.tisbus.apte4ka.R
-import com.tisbus.apte4ka.databinding.PackagingItemBinding
+import com.tisbus.apte4ka.databinding.PackagingItemDirectBinding
 import com.tisbus.apte4ka.domain.entity.packaging.Packaging
+import com.tisbus.apte4ka.presentation.adapter.diffutil.packaging.PackagingItemDiffUtil
 
-class PackagingDirectAdapter(val listPackaging: List<Packaging>) :
-    RecyclerView.Adapter<PackagingDirectViewHolder>() {
+class PackagingDirectAdapter : ListAdapter<Packaging, PackagingDirectViewHolder>(PackagingItemDiffUtil()){
 
-    var itemSelect: ((Packaging) -> Unit)? = null
+    val itemSelect : ((Packaging) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PackagingDirectViewHolder {
-        val bindView = DataBindingUtil.inflate<PackagingItemBinding>(
+        val viewBind = DataBindingUtil.inflate<PackagingItemDirectBinding>(
             LayoutInflater.from(parent.context),
-            R.layout.packaging_item,
+            R.layout.packaging_item_direct,
             parent,
             false
         )
-        return PackagingDirectViewHolder(bindView)
+        return PackagingDirectViewHolder(viewBind)
     }
 
     override fun onBindViewHolder(holder: PackagingDirectViewHolder, position: Int) {
-        val itemPackaging = listPackaging[position]
+        val itemPackaging = currentList[position]
         val bind = holder.bind
-        bind.packaging = itemPackaging
-        if (itemPackaging.status) {
-            bind.cvPackaging.background.setTint(Color.RED)
-            itemPackaging.status = false
-        } else {
-            bind.cvPackaging.background.setTint(Color.WHITE)
-        }
+        bind.packagingDirect = itemPackaging
         bind.root.setOnClickListener {
             itemSelect?.invoke(itemPackaging)
-            notifyDataSetChanged()
         }
-    }
-
-    override fun getItemCount(): Int {
-        return listPackaging.size
     }
 }
