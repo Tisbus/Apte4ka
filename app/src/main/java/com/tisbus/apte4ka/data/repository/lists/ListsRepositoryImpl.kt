@@ -13,11 +13,6 @@ class ListsRepositoryImpl @Inject constructor(val db: ListsDao) : ListsRepositor
 
     override fun getListSymptoms(): LiveData<MutableList<Symptom>> = db.getListSymptoms()
 
-
-    override suspend fun getSymptomItem(id: Int): Symptom {
-        return db.getSymptomItem(id)
-    }
-
     override suspend fun addSymptomItem(item: Symptom) {
         db.addSymptomItem(item)
     }
@@ -37,10 +32,6 @@ class ListsRepositoryImpl @Inject constructor(val db: ListsDao) : ListsRepositor
     //Packaging
 
     override fun getListPackaging(): LiveData<MutableList<Packaging>> = db.getListPackaging()
-
-    override suspend fun getPackagingItem(id: Int): Packaging {
-        return db.getPackagingItem(id)
-    }
 
     override suspend fun addPackagingItem(item: Packaging) {
         db.addPackagingItem(item)

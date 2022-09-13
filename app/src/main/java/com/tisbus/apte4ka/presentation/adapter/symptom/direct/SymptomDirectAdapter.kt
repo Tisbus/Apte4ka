@@ -11,7 +11,7 @@ import com.tisbus.apte4ka.presentation.adapter.diffutil.symptom.SymptomItemDiffU
 
 class SymptomDirectAdapter : ListAdapter<Symptom, SymptomDirectViewHolder>(SymptomItemDiffUtil()) {
 
-    private val itemSelect: ((Symptom) -> Unit)? = null
+    var itemSelect: ((Symptom) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SymptomDirectViewHolder {
         val viewBind = DataBindingUtil.inflate<SymptomItemDirectBinding>(

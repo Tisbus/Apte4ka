@@ -15,9 +15,6 @@ interface ListsDao {
     @Query("SELECT * FROM symptom")
     fun getListSymptoms(): LiveData<MutableList<Symptom>>
 
-    @Query("SELECT * FROM symptom WHERE id = :id")
-    suspend fun getSymptomItem(id: Int): Symptom
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addSymptomItem(item: Symptom)
 
@@ -30,9 +27,6 @@ interface ListsDao {
     //Packaging
     @Query("SELECT * FROM packaging")
     fun getListPackaging(): LiveData<MutableList<Packaging>>
-
-    @Query("SELECT * FROM packaging WHERE id = :id")
-    suspend fun getPackagingItem(id: Int): Packaging
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addPackagingItem(item: Packaging)

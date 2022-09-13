@@ -11,7 +11,7 @@ import com.tisbus.apte4ka.presentation.adapter.diffutil.packaging.PackagingItemD
 
 class PackagingDirectAdapter : ListAdapter<Packaging, PackagingDirectViewHolder>(PackagingItemDiffUtil()){
 
-    val itemSelect : ((Packaging) -> Unit)? = null
+    var itemSelect : ((Packaging) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PackagingDirectViewHolder {
         val viewBind = DataBindingUtil.inflate<PackagingItemDirectBinding>(
