@@ -36,14 +36,16 @@ class NotifyViewModel @Inject constructor(
         name : String,
         description : String,
         icon : String,
-        status : Boolean
+        status : Boolean,
+        idPrep : Int
     ){
         viewModelScope.launch {
             addNotifyItemUseCase.addNotifyItem(Notify(
                 name,
                 description,
                 icon,
-                status
+                status,
+                idPrep
             ))
         }
     }

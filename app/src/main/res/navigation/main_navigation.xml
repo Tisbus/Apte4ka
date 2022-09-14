@@ -170,6 +170,11 @@
         <action
             android:id="@+id/action_notifyFragment_to_listAidKitFragment"
             app:destination="@id/listAidKitFragment" />
+        <action
+            android:id="@+id/action_notifyFragment_to_preparationDetailFragment"
+            app:destination="@id/preparationDetailFragment"
+            app:popUpTo="@id/notifyFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/packagingFragment"

@@ -9,11 +9,12 @@ data class Notify(
     val description : String,
     val icon : String,
     var status : Boolean = ACTIVE_STATUS,
+    var idPrep : Int,
     @PrimaryKey(autoGenerate = true)
     val id : Int = UNDEFINED_ID
 ){
     companion object{
         const val UNDEFINED_ID = 0
-        const val ACTIVE_STATUS = false
+        const val ACTIVE_STATUS = true
     }
 }
