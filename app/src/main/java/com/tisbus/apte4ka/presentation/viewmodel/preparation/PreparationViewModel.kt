@@ -32,8 +32,6 @@ class PreparationViewModel @Inject constructor(
     val prepLD: LiveData<Preparation>
         get() = _prepLD
 
-
-
     init {
         val sharedP = PreferenceManager.getDefaultSharedPreferences(application)
         val isCheckStatus = sharedP.getBoolean("notify", true)

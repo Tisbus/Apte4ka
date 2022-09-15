@@ -33,20 +33,10 @@ class NotifyViewModel @Inject constructor(
     }
 
     fun addNotifyItem(
-        name : String,
-        description : String,
-        icon : String,
-        status : Boolean,
-        idPrep : Int
+        item : Notify
     ){
         viewModelScope.launch {
-            addNotifyItemUseCase.addNotifyItem(Notify(
-                name,
-                description,
-                icon,
-                status,
-                idPrep
-            ))
+            addNotifyItemUseCase.addNotifyItem(item)
         }
     }
 

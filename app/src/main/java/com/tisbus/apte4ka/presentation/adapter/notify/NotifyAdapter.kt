@@ -1,6 +1,7 @@
 package com.tisbus.apte4ka.presentation.adapter.notify
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,12 @@ class NotifyAdapter(val listNotify : MutableList<Notify>) : RecyclerView.Adapter
     override fun onBindViewHolder(holder: NotifyViewHolder, position: Int) {
         val itemNotify = listNotify[position]
         val bind = holder.bind
+        with(bind){
+            when(itemNotify.status){
+                true -> {ivNeedReadNotify.visibility = View.VISIBLE}
+                false -> {ivNeedReadNotify.visibility = View.GONE}
+            }
+        }
         bind.notify = itemNotify
         bind.root.setOnClickListener {
             itemSelect?.invoke(itemNotify)

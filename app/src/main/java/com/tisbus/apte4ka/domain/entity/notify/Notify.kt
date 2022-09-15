@@ -8,8 +8,8 @@ data class Notify(
     val name : String,
     val description : String,
     val icon : String,
-    var status : Boolean = ACTIVE_STATUS,
     var idPrep : Int,
+    var status : Boolean = ACTIVE_STATUS,
     @PrimaryKey(autoGenerate = true)
     val id : Int = UNDEFINED_ID
 ){

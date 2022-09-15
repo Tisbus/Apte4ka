@@ -14,7 +14,9 @@ import androidx.navigation.NavDeepLinkBuilder
 import androidx.preference.PreferenceManager
 import androidx.work.*
 import com.tisbus.apte4ka.R
+import com.tisbus.apte4ka.data.room.notify.NotifyDao
 import com.tisbus.apte4ka.data.room.preparation.PreparationDao
+import com.tisbus.apte4ka.domain.entity.notify.Notify
 import com.tisbus.apte4ka.domain.entity.preparation.Preparation
 import com.tisbus.apte4ka.presentation.activity.MainActivity
 import java.text.SimpleDateFormat
@@ -27,6 +29,7 @@ class WorkerUpdateNotify(
     context: Context,
     workerParams: WorkerParameters,
     private val prepDao: PreparationDao,
+    private val notifyDao: NotifyDao,
 ) : CoroutineWorker(
     context,
     workerParams
@@ -49,7 +52,7 @@ class WorkerUpdateNotify(
         return Result.success()
     }
 
-    private fun setupCustomExpDate(i: Preparation, status: String) {
+    private suspend fun setupCustomExpDate(i: Preparation, status: String) {
         val goToDetail = setupIntentDetail(i)
         val numberOfDays = getCountDayToEnd(i.dateExp).toInt()
         val namePrep = i.name
@@ -58,9 +61,16 @@ class WorkerUpdateNotify(
             STATUS_NAME_ONE_DAY -> "%s - срок годности заканчился - %s д."
             else -> "%s - срок годности заканчивается, осталось - %s д."
         }
+        //for notify system
         val textExpDate = String.format(
             text,
             namePrep,
+            numberOfDays.toString()
+        )
+        //for notify page
+        val textExpDateForList = String.format(
+            text,
+            "",
             numberOfDays.toString()
         )
         val bitmap = getBitmap(applicationContext.contentResolver, Uri.parse(i.image))
@@ -71,6 +81,15 @@ class WorkerUpdateNotify(
             else -> i.copy(customStatus = true)
         }
         prepDao.addPreparationItem(item)
+        val itemNotify = Notify(
+            namePrep,
+            textExpDateForList,
+            i.image,
+            i.id
+        )
+        notifyDao.addNotifyItem(
+            itemNotify
+        )
     }
 
     companion object {
@@ -89,12 +108,14 @@ class WorkerUpdateNotify(
     }
     class Factory @Inject constructor(
         private val prepDao: PreparationDao,
+        private val notifyDao: NotifyDao,
     ) : ChildWorkerFactory {
         override fun create(appContext: Context, params: WorkerParameters): ListenableWorker {
             return WorkerUpdateNotify(
                 appContext,
                 params,
-                prepDao
+                prepDao,
+                notifyDao
             )
         }
     }

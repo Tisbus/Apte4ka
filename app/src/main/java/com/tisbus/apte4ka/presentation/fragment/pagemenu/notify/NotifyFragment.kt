@@ -1,6 +1,7 @@
 package com.tisbus.apte4ka.presentation.fragment.pagemenu.notify
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -38,6 +39,11 @@ class NotifyFragment : Fragment() {
 
     private var listNotify : MutableList<Notify> = mutableListOf()
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -47,8 +53,8 @@ class NotifyFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _bind = DataBindingUtil.inflate(
-            layoutInflater,
-            R.id.notifyFragment,
+            inflater,
+            R.layout.fragment_notify,
             container,
             false
         )
@@ -62,14 +68,17 @@ class NotifyFragment : Fragment() {
             listNotify = it
             setupRecycler()
             goToDetailPrep()
-            itemTouchDelete()
-            itemTouchCheck()
         }
+        itemTouchDelete()
+        itemTouchCheck()
     }
 
     private fun goToDetailPrep() {
         adapterNotify.itemSelect = {
-            it.status = false
+            val item = it.copy(
+                status = false
+            )
+            viewNotifyModel.addNotifyItem(item)
             val bundle = bundleOf(DETAIL_PREP_ID to it.idPrep)
             findNavController().navigate(
                 R.id.action_notifyFragment_to_preparationDetailFragment,
@@ -116,7 +125,10 @@ class NotifyFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 when (direction) {
                     ItemTouchHelper.RIGHT -> {
-                       listNotify[viewHolder.adapterPosition].status = false
+                        val item = listNotify[viewHolder.adapterPosition].copy(
+                            status = false
+                        )
+                        viewNotifyModel.addNotifyItem(item)
                     }
                 }
             }

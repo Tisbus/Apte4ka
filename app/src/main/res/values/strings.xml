@@ -49,4 +49,5 @@
     <string name="fab_add_symptom">fab_add_symptom</string>
     <string name="fab_add_packaging">fab_add_packaging</string>
     <string name="img_notify">img_notify</string>
+    <string name="read_notify_img">read_notify_img</string>
 </resources>
