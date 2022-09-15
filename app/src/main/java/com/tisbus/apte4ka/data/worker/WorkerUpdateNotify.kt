@@ -2,6 +2,10 @@ package com.tisbus.apte4ka.data.worker
 
 import android.app.PendingIntent
 import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
+import android.provider.MediaStore.Images.Media.getBitmap
+import android.provider.MediaStore.Images.Media.getContentUri
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -59,7 +63,8 @@ class WorkerUpdateNotify(
             namePrep,
             numberOfDays.toString()
         )
-        setupNotificationBuilder(goToDetail, textExpDate)
+        val bitmap = getBitmap(applicationContext.contentResolver, Uri.parse(i.image))
+        setupNotificationBuilder(goToDetail, textExpDate, bitmap)
         val item = when (status) {
             STATUS_NAME_CUSTOM -> i.copy(customStatus = true)
             STATUS_NAME_ONE_DAY -> i.copy(oneDayStatus = true)
@@ -81,27 +86,7 @@ class WorkerUpdateNotify(
                 .setInitialDelay(long, TimeUnit.MILLISECONDS)
                 .build()
         }
-
-/*
-        fun makeRequest(): OneTimeWorkRequest {
-            return OneTimeWorkRequestBuilder<WorkerUpdateNotify>()
-                .setInitialDelay(workerGetTime(), TimeUnit.MILLISECONDS)
-                .build()
-        }
-
-       private fun workerGetTime(): Long {
-            val currentDate = Calendar.getInstance()
-            val dieDate = Calendar.getInstance()
-            dieDate.set(Calendar.HOUR_OF_DAY, 10)
-            dieDate.set(Calendar.MINUTE, 9)
-            dieDate.set(Calendar.SECOND, 0)
-            if (dieDate.before(currentDate)) {
-                dieDate.add(Calendar.HOUR_OF_DAY, 24)
-            }
-            return dieDate.timeInMillis.minus(currentDate.timeInMillis)
-        }*/
     }
-
     class Factory @Inject constructor(
         private val prepDao: PreparationDao,
     ) : ChildWorkerFactory {
@@ -127,11 +112,13 @@ class WorkerUpdateNotify(
     private fun setupNotificationBuilder(
         goToDetail: PendingIntent?,
         textExpDate: String,
+        icon: Bitmap,
     ) {
         val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_baseline_notifications_24)
             .setContentTitle("Apte4ka")
             .setContentText(textExpDate)
+            .setLargeIcon(icon)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(goToDetail)
             .setAutoCancel(true)

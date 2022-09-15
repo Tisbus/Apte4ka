@@ -12,6 +12,9 @@ interface NotifyDao {
     @Query("SELECT * FROM notify")
     fun getNotifyList(): LiveData<MutableList<Notify>>
 
+    @Query("SELECT * FROM notify")
+    fun getMLNotifyList(): MutableList<Notify>
+
     @Query("SELECT * FROM notify WHERE id = :id")
     suspend fun getNotifyItem(id: Int): Notify
 
