@@ -50,4 +50,6 @@
     <string name="fab_add_packaging">fab_add_packaging</string>
     <string name="img_notify">img_notify</string>
     <string name="read_notify_img">read_notify_img</string>
+    <string name="save_db">Сохранить БД</string>
+    <string name="restore_db">Восстановить БД</string>
 </resources>

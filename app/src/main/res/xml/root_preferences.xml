@@ -5,7 +5,7 @@
         app:summary="Настройки уведомлений"
         app:title="Уведомления">
         <SwitchPreferenceCompat
-            app:defaultValue="true"
+            app:defaultValue="false"
             app:key="notify"
             app:layout="@layout/preference_switch"
             app:summaryOff="уведомления выключены"
@@ -21,7 +21,7 @@
             app:title="За сколько дней (до окончания срока)"
             app:useSimpleSummaryProvider="true" />
         <EditTextPreference
-            app:defaultValue="9"
+            app:defaultValue="9:30"
             app:dependency="notify"
             app:dialogMessage="Вводить строго как в примере - 8:30"
             app:dialogTitle="Введите время когда придет уведомление"
