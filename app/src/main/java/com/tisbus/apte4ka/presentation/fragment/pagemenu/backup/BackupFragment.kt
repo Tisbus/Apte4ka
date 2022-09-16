@@ -1,5 +1,6 @@
 package com.tisbus.apte4ka.presentation.fragment.pagemenu.backup
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -53,6 +54,7 @@ class BackupFragment : Fragment() {
                             "success: $success, message: $message, exitCode: $exitCode",
                             Toast.LENGTH_LONG
                         ).show()
+                        if (success) restartApp(Intent(bind.root.context, MainActivity::class.java))
                     }
                 }.backup()
         }
