@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,12 +17,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.tisbus.apte4ka.R
+import com.tisbus.apte4ka.data.lists.packaging.ListPackaging
+import com.tisbus.apte4ka.data.lists.symptom.ListSymptom
 import com.tisbus.apte4ka.databinding.FragmentListAidKitBinding
 import com.tisbus.apte4ka.domain.entity.aidkit.AidKit
+import com.tisbus.apte4ka.domain.entity.packaging.Packaging
+import com.tisbus.apte4ka.domain.entity.symptom.Symptom
 import com.tisbus.apte4ka.presentation.AidKitApp
 import com.tisbus.apte4ka.presentation.adapter.aidkit.AidKitAdapter
 import com.tisbus.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 import com.tisbus.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
+import com.tisbus.apte4ka.presentation.viewmodel.lists.ListsViewModel
 import com.tisbus.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
 import javax.inject.Inject
 
@@ -41,6 +47,10 @@ class ListAidKitFragment : Fragment() {
         get() = _bind ?: throw RuntimeException("FragmentListAidKitBinding == null")
 
     lateinit var viewModel: AidKitViewModel
+
+    private lateinit var listsModel: ListsViewModel
+    private var listSymptoms: MutableList<Symptom> = mutableListOf()
+    private var listPackaging: MutableList<Packaging> = mutableListOf()
 
     lateinit var adapterAidKit: AidKitAdapter
 
@@ -66,6 +76,15 @@ class ListAidKitFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this, viewModelFactory)[AidKitViewModel::class.java]
         viewModelPrep = ViewModelProvider(this, viewModelFactory)[PreparationViewModel::class.java]
+        listsModel = ViewModelProvider(this, viewModelFactory)[ListsViewModel::class.java]
+        listsModel.listPackaging.observe(viewLifecycleOwner){
+            listPackaging = it
+            getStartPackagingList()
+        }
+        listsModel.listSymptom.observe(viewLifecycleOwner){
+            listSymptoms = it
+            getStartSymptomList()
+        }
         addNewAidKit()
         addNewPrep()
         viewModel.listAidKit.observe(viewLifecycleOwner) {
@@ -75,6 +94,33 @@ class ListAidKitFragment : Fragment() {
         setupRecyclerView()
         setupItemTouch()
         goToDetailAidKit()
+
+    }
+
+    private fun getStartPackagingList() {
+        if (listPackaging.isEmpty()) {
+            val list = ListPackaging()
+            list.listPackaging.forEach { i ->
+                listsModel.addPackagingItem(
+                    i.name,
+                    i.icon,
+                    i.status
+                )
+            }
+        }
+    }
+
+    private fun getStartSymptomList() {
+        if (listSymptoms.isEmpty()) {
+            val list = ListSymptom()
+            list.listSymptoms.forEach { i ->
+                listsModel.addSymptomItem(
+                    i.name,
+                    i.icon,
+                    i.status
+                )
+            }
+        }
     }
 
     private fun setupItemTouch() {

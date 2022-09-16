@@ -124,45 +124,17 @@ class PreparationAddFragment : Fragment() {
         }
         listsModel.listPackaging.observe(viewLifecycleOwner){
             listPackaging = it
-            getStartPackagingList()
             recyclerSetupPackaging()
             selectPackaging()
         }
         listsModel.listSymptom.observe(viewLifecycleOwner){
             listSymptoms = it
-            getStartSymptomList()
             recyclerSetupSymptom()
             selectSymptoms()
         }
         addNewPreparation()
         setupSetImages()
         setupDate()
-    }
-
-    private fun getStartPackagingList() {
-        if (listPackaging.isEmpty()) {
-            val list = ListPackaging()
-            list.listPackaging.forEach { i ->
-                listsModel.addPackagingItem(
-                    i.name,
-                    i.icon,
-                    i.status
-                )
-            }
-        }
-    }
-
-    private fun getStartSymptomList() {
-        if (listSymptoms.isEmpty()) {
-            val list = ListSymptom()
-            list.listSymptoms.forEach { i ->
-                listsModel.addSymptomItem(
-                    i.name,
-                    i.icon,
-                    i.status
-                )
-            }
-        }
     }
 
     private fun selectPackaging() {
