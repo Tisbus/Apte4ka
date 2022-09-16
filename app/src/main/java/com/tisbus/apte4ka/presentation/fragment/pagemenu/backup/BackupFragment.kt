@@ -1,13 +1,18 @@
 package com.tisbus.apte4ka.presentation.fragment.pagemenu.backup
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.tisbus.apte4ka.R
+import com.tisbus.apte4ka.data.room.preparation.PreparationDatabase
 import com.tisbus.apte4ka.databinding.FragmentBackupBinding
+import com.tisbus.apte4ka.presentation.activity.MainActivity
+import de.raphaelebner.roomdatabasebackup.core.RoomBackup
 
 class BackupFragment : Fragment() {
 
@@ -24,7 +29,7 @@ class BackupFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _bind = DataBindingUtil.inflate(
-            layoutInflater,
+            inflater,
             R.layout.fragment_backup,
             container,
             false
@@ -34,10 +39,9 @@ class BackupFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-/*        val backup = RoomBackup(bind.root.context)
+        val backup = (activity as MainActivity).backup
         bind.bSaveDB.setOnClickListener {
-            backup.backupLocation(RoomBackup.BACKUP_FILE_LOCATION_CUSTOM_FILE)
-                .backupLocationCustomFile(File("${bind.root.context.filesDir}/databasebackup/aptBackup.sqlite3"))
+            backup.backupLocation(RoomBackup.BACKUP_FILE_LOCATION_CUSTOM_DIALOG)
                 .database(PreparationDatabase.getInstance(requireActivity().application))
                 .enableLogDebug(true)
                 .backupIsEncrypted(false)
@@ -49,11 +53,9 @@ class BackupFragment : Fragment() {
                             "success: $success, message: $message, exitCode: $exitCode",
                             Toast.LENGTH_LONG
                         ).show()
-                        if (success) restartApp(Intent(bind.root.context,
-                            BackupFragment::class.java))
                     }
                 }.backup()
-        }*/
+        }
     }
 
     companion object {

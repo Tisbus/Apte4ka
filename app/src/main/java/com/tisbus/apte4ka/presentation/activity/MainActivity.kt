@@ -1,6 +1,5 @@
 package com.tisbus.apte4ka.presentation.activity
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -10,14 +9,17 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.tisbus.apte4ka.R
 import com.tisbus.apte4ka.databinding.ActivityMainBinding
+import de.raphaelebner.roomdatabasebackup.core.RoomBackup
 
 class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var binding: ActivityMainBinding
+    lateinit var backup: RoomBackup
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        backup = RoomBackup(this)
         setSupportActionBar(binding.appBarMain.toolbar)
         drawerLayout = binding.drawerLayout
         val navView = binding.navView
