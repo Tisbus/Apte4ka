@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.tisbus.apte4ka.R
-import com.tisbus.apte4ka.data.room.preparation.PreparationDatabase
+import com.tisbus.apte4ka.data.room.database.AidKitDatabase
 import com.tisbus.apte4ka.databinding.FragmentBackupBinding
 import com.tisbus.apte4ka.presentation.activity.MainActivity
 import de.raphaelebner.roomdatabasebackup.core.RoomBackup
@@ -43,7 +43,7 @@ class BackupFragment : Fragment() {
         val backup = (activity as MainActivity).backup
         bind.bSaveDB.setOnClickListener {
             backup.backupLocation(RoomBackup.BACKUP_FILE_LOCATION_CUSTOM_DIALOG)
-                .database(PreparationDatabase.getInstance(requireActivity().application))
+                .database(AidKitDatabase.getInstance(requireActivity().application))
                 .enableLogDebug(true)
                 .backupIsEncrypted(false)
                 .maxFileCount(5).apply {

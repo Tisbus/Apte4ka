@@ -6,13 +6,11 @@ import com.tisbus.apte4ka.data.repository.lists.ListsRepositoryImpl
 import com.tisbus.apte4ka.data.repository.notify.NotifyRepositoryImpl
 import com.tisbus.apte4ka.data.repository.preparation.PreparationRepositoryImpl
 import com.tisbus.apte4ka.data.room.aidkit.AidKitDao
-import com.tisbus.apte4ka.data.room.aidkit.AidKitDatabase
+import com.tisbus.apte4ka.data.room.database.AidKitDatabase
 import com.tisbus.apte4ka.data.room.lists.ListsDao
-import com.tisbus.apte4ka.data.room.lists.ListsDatabase
 import com.tisbus.apte4ka.data.room.notify.NotifyDao
 import com.tisbus.apte4ka.data.room.notify.NotifyDatabase
 import com.tisbus.apte4ka.data.room.preparation.PreparationDao
-import com.tisbus.apte4ka.data.room.preparation.PreparationDatabase
 import com.tisbus.apte4ka.domain.repostitory.aidkit.AidKitRepository
 import com.tisbus.apte4ka.domain.repostitory.lists.ListsRepository
 import com.tisbus.apte4ka.domain.repostitory.notify.NotificationRepository
@@ -49,13 +47,13 @@ interface DataModule {
         @Provides
         @ApplicationScope
         fun providePreparationDao(application: Application): PreparationDao {
-            return PreparationDatabase.getInstance(application).preparationDao()
+            return AidKitDatabase.getInstance(application).preparationDao()
         }
 
         @Provides
         @ApplicationScope
         fun provideListDao(application: Application): ListsDao {
-            return ListsDatabase.getInstance(application).listsDao()
+            return AidKitDatabase.getInstance(application).listsDao()
         }
 
         @Provides
