@@ -1,7 +1,6 @@
 package com.tisbus.apte4ka.data.repository.preparation
 
 import android.app.Application
-import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.preference.PreferenceManager
 import androidx.work.ExistingWorkPolicy
@@ -15,36 +14,36 @@ import javax.inject.Inject
 
 class PreparationRepositoryImpl @Inject constructor(
     private val db: PreparationDao,
-    private val application: Application
+    private val application: Application,
 ) : PreparationRepository {
 
     override fun getPreparationList(): LiveData<MutableList<Preparation>> = db.getPreparationList()
 
-    override fun getPreparationItem(id: Int): Preparation {
+    override suspend fun getPreparationItem(id: Int): Preparation {
         return db.getPreparationItem(id)
     }
 
-    override fun addPreparationItem(item: Preparation) {
+    override suspend fun addPreparationItem(item: Preparation) {
         db.addPreparationItem(item)
     }
 
-    override fun editPreparationItem(item: Preparation) {
+    override suspend fun editPreparationItem(item: Preparation) {
         db.addPreparationItem(item)
     }
 
-    override fun copyPreparationItem(item: Preparation) {
+    override suspend fun copyPreparationItem(item: Preparation) {
         db.addPreparationItem(item)
     }
 
-    override fun deletePreparationItem(id: Int) {
+    override suspend fun deletePreparationItem(id: Int) {
         db.deletePreparationItem(id)
     }
 
-    override fun deletePrepItemAidId(id: Int) {
+    override suspend fun deletePrepItemAidId(id: Int) {
         db.deletePrepItemAidId(id)
     }
 
-    override fun deletePreparationAll() {
+    override suspend fun deletePreparationAll() {
         db.deletePreparationAll()
     }
 

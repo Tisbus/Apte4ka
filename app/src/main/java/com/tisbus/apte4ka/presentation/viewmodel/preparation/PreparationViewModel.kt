@@ -1,16 +1,18 @@
 package com.tisbus.apte4ka.presentation.viewmodel.preparation
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
 import androidx.work.WorkManager
 import com.tisbus.apte4ka.data.worker.WorkerUpdateNotify
 import com.tisbus.apte4ka.domain.entity.preparation.Preparation
 import com.tisbus.apte4ka.domain.entity.symptom.Symptom
 import com.tisbus.apte4ka.domain.usecase.preparation.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class PreparationViewModel @Inject constructor(
@@ -23,7 +25,7 @@ class PreparationViewModel @Inject constructor(
     private val copyPreparationItemUseCase: CopyPreparationItemUseCase,
     private val updateNotificationUseCase: UpdateNotificationUseCase,
     private val deletePrepItemAidIdUseCase: DeletePrepItemAidIdUseCase,
-    private val application: Application
+    private val application: Application,
 ) : ViewModel() {
 
     val listPreparation = getPreparationListUseCase.getPreparationList()
@@ -35,15 +37,17 @@ class PreparationViewModel @Inject constructor(
     init {
         val sharedP = PreferenceManager.getDefaultSharedPreferences(application)
         val isCheckStatus = sharedP.getBoolean("notify", true)
-        if(isCheckStatus){
+        if (isCheckStatus) {
             updateNotificationUseCase()
-        }else{
+        } else {
             WorkManager.getInstance(application).cancelUniqueWork(WorkerUpdateNotify.NAME_WORKER)
         }
     }
 
-    fun deletePrepItemAidId(id  :Int){
-        deletePrepItemAidIdUseCase.deletePrepItemAidId(id)
+    fun deletePrepItemAidId(id: Int) {
+        viewModelScope.launch{
+            deletePrepItemAidIdUseCase.deletePrepItemAidId(id)
+        }
     }
 
     fun addPreparationItem(
@@ -56,29 +60,38 @@ class PreparationViewModel @Inject constructor(
         dateCreate: String,
         dateExp: String,
     ) {
-        val itemPreparation = Preparation(
-            aidKitId,
-            name,
-            image,
-            symptoms,
-            packaging,
-            description,
-            dateCreate,
-            dateExp)
-        addPreparationItemUseCase.addPreparationItem(itemPreparation)
+        viewModelScope.launch {
+            addPreparationItemUseCase.addPreparationItem(
+                Preparation(
+                    aidKitId,
+                    name,
+                    image,
+                    symptoms,
+                    packaging,
+                    description,
+                    dateCreate,
+                    dateExp)
+            )
+        }
     }
 
     fun getPreparationItem(id: Int) {
-        val item = getPreparationItemUseCase.getPreparationItem(id)
-        _prepLD.value = item
+        viewModelScope.launch {
+            val item = getPreparationItemUseCase.getPreparationItem(id)
+            _prepLD.value = item
+        }
     }
 
     fun deletePreparationAll() {
-        deletePreparationAllUseCase.deletePreparationAll()
+        viewModelScope.launch {
+            deletePreparationAllUseCase.deletePreparationAll()
+        }
     }
 
     fun deletePreparationItem(id: Int) {
-        deletePreparationItemUseCase.deletePreparationItem(id)
+        viewModelScope.launch {
+            deletePreparationItemUseCase.deletePreparationItem(id)
+        }
     }
 
     fun editPreparationItem(
@@ -102,7 +115,9 @@ class PreparationViewModel @Inject constructor(
                 dataCreate = dateCreate,
                 dateExp = dateExp
             )
-            editPreparationItemUseCase.editPreparationItem(item)
+            viewModelScope.launch {
+                editPreparationItemUseCase.editPreparationItem(item)
+            }
         }
     }
 
@@ -128,7 +143,9 @@ class PreparationViewModel @Inject constructor(
                 dateExp = dateExp,
                 id = Preparation.UNDEFINED_ID
             )
-            copyPreparationItemUseCase.copyPreparationItem(item)
+            viewModelScope.launch {
+                copyPreparationItemUseCase.copyPreparationItem(item)
+            }
         }
     }
 }

@@ -13,20 +13,20 @@ interface PreparationDao {
     fun getPreparationList(): LiveData<MutableList<Preparation>>
 
     @Query("SELECT * FROM preparation")
-    fun getPreparationL(): MutableList<Preparation>
+    suspend fun getPreparationL(): MutableList<Preparation>
 
     @Query("SELECT * FROM preparation WHERE id = :id LIMIT 1")
-    fun getPreparationItem(id: Int): Preparation
+    suspend fun getPreparationItem(id: Int): Preparation
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addPreparationItem(item: Preparation)
+    suspend fun addPreparationItem(item: Preparation)
 
     @Query("DELETE FROM preparation WHERE id = :id")
-    fun deletePreparationItem(id: Int)
+    suspend fun deletePreparationItem(id: Int)
 
     @Query("DELETE FROM preparation")
-    fun deletePreparationAll()
+    suspend fun deletePreparationAll()
 
     @Query("DELETE FROM preparation WHERE aidKit =:id")
-    fun deletePrepItemAidId(id : Int)
+    suspend fun deletePrepItemAidId(id : Int)
 }

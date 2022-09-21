@@ -41,7 +41,6 @@ abstract class AidKitDatabase : RoomDatabase() {
                     DB_NAME
                 )
                     .fallbackToDestructiveMigration()
-                    .allowMainThreadQueries()
                     .build()
                 INSTANCE = db
                 return db

@@ -16,7 +16,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import com.tisbus.apte4ka.R
+import com.tisbus.apte4ka.data.lists.packaging.ListPackaging
+import com.tisbus.apte4ka.data.lists.symptom.ListSymptom
 import com.tisbus.apte4ka.databinding.FragmentPreparationCopyBinding
 import com.tisbus.apte4ka.domain.entity.aidkit.AidKit
 import com.tisbus.apte4ka.domain.entity.packaging.Packaging
@@ -29,9 +32,6 @@ import com.tisbus.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 import com.tisbus.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
 import com.tisbus.apte4ka.presentation.viewmodel.lists.ListsViewModel
 import com.tisbus.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
-import com.squareup.picasso.Picasso
-import com.tisbus.apte4ka.data.lists.packaging.ListPackaging
-import com.tisbus.apte4ka.data.lists.symptom.ListSymptom
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -118,28 +118,31 @@ class PreparationCopyFragment : Fragment() {
         viewModelPrep = ViewModelProvider(this, viewModelFactory)[PreparationViewModel::class.java]
         aidKitModel = ViewModelProvider(this, viewModelFactory)[AidKitViewModel::class.java]
         listsModel = ViewModelProvider(this, viewModelFactory)[ListsViewModel::class.java]
-        listsModel.listSymptom.observe(viewLifecycleOwner){
+        setupSetDataLayout()
+        listsModel.listSymptom.observe(viewLifecycleOwner) {
             listSymptoms = it
             getStartSymptomList()
             recyclerSetupSymptom()
             getDataSymptom()
             selectSymptoms()
         }
-        listsModel.listPackaging.observe(viewLifecycleOwner){
+        listsModel.listPackaging.observe(viewLifecycleOwner) {
             listPackaging = it
             getStartPackagingList()
             recyclerSetupPackaging()
             getDataPackaging()
             selectPackaging()
         }
-        setupSetDataLayout()
         aidKitModel.listAidKit.observe(viewLifecycleOwner) {
             listAidKit = it
             recyclerSetup()
-            //need fix index -1 down when copy is filter_fragment -> detail -> copy
-            listAidKit[aidId-1].status = true
-            adapterListAidKit.itemSelect = {
-                _aidId = it.id
+            listAidKit.forEach { i ->
+                if (i.id == aidId) {
+                    i.status = true
+                }
+            }
+            adapterListAidKit.itemSelect = { item ->
+                _aidId = item.id
             }
         }
         setupSetImages()
@@ -208,7 +211,11 @@ class PreparationCopyFragment : Fragment() {
         bind.bCopyPreparation.setOnClickListener {
             with(bind) {
                 val name = etNamePreparation.text.toString()
-                imageUrl = urlImg.toString()
+                imageUrl = if (urlImg == null) {
+                    viewModelPrep.prepLD.value?.image.toString()
+                } else {
+                    urlImg.toString()
+                }
                 val symptom: MutableList<Symptom> = mutableListOf()
                 listSymptoms.forEach {
                     if (it.status) {
@@ -217,8 +224,12 @@ class PreparationCopyFragment : Fragment() {
                 }
                 val packing = namePackaging
                 val description = etDescriptionPreparation.text.toString()
-                val dateCreate = currentDate
-                val dateExp = expDate
+                val dateCreate = currentDate.ifEmpty {
+                    viewModelPrep.prepLD.value?.dataCreate.toString()
+                }
+                val dateExp = expDate.ifEmpty {
+                    viewModelPrep.prepLD.value?.dateExp.toString()
+                }
                 viewModelPrep.copyPreparationItem(
                     aidId,
                     name,
@@ -303,10 +314,6 @@ class PreparationCopyFragment : Fragment() {
         }
         idPrep?.let {
             viewModelPrep.getPreparationItem(it)
-            imageUrl = viewModelPrep.prepLD.value?.image.toString()
-            urlImg = Uri.parse(imageUrl)
-            currentDate = viewModelPrep.prepLD.value?.dataCreate.toString()
-            expDate = viewModelPrep.prepLD.value?.dateExp.toString()
         }
     }
 

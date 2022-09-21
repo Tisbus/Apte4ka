@@ -5,12 +5,12 @@ import com.tisbus.apte4ka.domain.entity.preparation.Preparation
 
 interface PreparationRepository {
     fun getPreparationList() : LiveData<MutableList<Preparation>>
-    fun getPreparationItem(id : Int) : Preparation
-    fun addPreparationItem(item : Preparation)
-    fun editPreparationItem(item : Preparation)
-    fun copyPreparationItem(item : Preparation)
-    fun deletePreparationItem(id : Int)
-    fun deletePrepItemAidId(id : Int)
-    fun deletePreparationAll()
+    suspend fun getPreparationItem(id : Int) : Preparation
+    suspend fun addPreparationItem(item : Preparation)
+    suspend fun editPreparationItem(item : Preparation)
+    suspend fun copyPreparationItem(item : Preparation)
+    suspend fun deletePreparationItem(id : Int)
+    suspend fun deletePrepItemAidId(id : Int)
+    suspend fun deletePreparationAll()
     fun updateNotify()
 }

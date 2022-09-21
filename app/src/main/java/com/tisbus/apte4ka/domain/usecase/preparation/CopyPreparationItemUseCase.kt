@@ -5,7 +5,7 @@ import com.tisbus.apte4ka.domain.repostitory.preparation.PreparationRepository
 import javax.inject.Inject
 
 class CopyPreparationItemUseCase @Inject constructor(private val repository: PreparationRepository) {
-    fun copyPreparationItem(item : Preparation){
+    suspend fun copyPreparationItem(item : Preparation){
         repository.copyPreparationItem(item)
     }
 }

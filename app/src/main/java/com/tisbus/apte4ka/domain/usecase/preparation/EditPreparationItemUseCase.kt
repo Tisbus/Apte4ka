@@ -5,7 +5,7 @@ import com.tisbus.apte4ka.domain.repostitory.preparation.PreparationRepository
 import javax.inject.Inject
 
 class EditPreparationItemUseCase @Inject constructor(private val repository: PreparationRepository) {
-    fun editPreparationItem(item: Preparation) {
+    suspend fun editPreparationItem(item: Preparation) {
         repository.editPreparationItem(item)
     }
 }

@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @BindingAdapter("setImagePreparation")
-fun setImagePreparation(iv: ImageView, imgUrl: String) {
+fun setImagePreparation(iv: ImageView, imgUrl: String?) {
     Picasso.get().load(imgUrl).into(iv)
 /*    Picasso.get().load(imgUrl).rotate(90F).into(iv)*/
 }
@@ -20,15 +20,17 @@ fun setImagePreparation(iv: ImageView, imgUrl: String) {
 fun getCalendarDate(calendarView: CalendarView, startDate: String?) {
     val calendar: Calendar = GregorianCalendar()
     val startDateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
-    val formattedStartDate: Date = startDate?.let { startDateFormat.parse(it) } as Date
-    calendar.time = formattedStartDate
+    val formattedStartDate = startDate?.let { startDateFormat.parse(it) }
+    if (formattedStartDate != null) {
+        calendar.time = formattedStartDate
+    }
     calendarView.date = calendar.time.time
 }
 
 @BindingAdapter("makeSymptomsText")
-fun makeSymptomsText(text: TextView, list: List<Symptom>) {
+fun makeSymptomsText(text: TextView, list: List<Symptom>?) {
     var allSymptoms = ""
-    list.forEach {
+    list?.forEach {
         allSymptoms += " ${it.name},"
     }
     text.text = allSymptoms.dropLast(1)
@@ -36,10 +38,10 @@ fun makeSymptomsText(text: TextView, list: List<Symptom>) {
 
 //for api max 26
 @BindingAdapter("getCountDayToEnd")
-fun getCountDayToEnd(text: TextView, endDate: String) {
+fun getCountDayToEnd(text: TextView, endDate: String?) {
     val fmt = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
     val toDay = Date()
-    val eDate = fmt.parse(endDate)
+    val eDate = endDate?.let { fmt.parse(it) }
     val milliseconds = eDate?.time?.minus(toDay.time)
     val days = (milliseconds?.div(1000) ?: throw RuntimeException("div to zero")).div(3600)
         .div(24)
