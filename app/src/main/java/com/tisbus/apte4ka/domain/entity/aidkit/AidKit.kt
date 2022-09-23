@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 data class AidKit(
     val name : String,
     val description : String,
+    val icon : Int,
     var status : Boolean = ACTIVE_STATUS,
     @PrimaryKey(autoGenerate = true)
     val id : Int = UNDEFINED_ID

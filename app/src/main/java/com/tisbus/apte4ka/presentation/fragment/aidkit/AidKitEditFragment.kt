@@ -4,13 +4,18 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import com.tisbus.apte4ka.R
 import com.tisbus.apte4ka.databinding.FragmentAidKitEditBinding
 import com.tisbus.apte4ka.presentation.AidKitApp
+import com.tisbus.apte4ka.presentation.adapter.aidkit.list_icons.ListIconsAdapter
 import com.tisbus.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 import com.tisbus.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
 import javax.inject.Inject
@@ -24,21 +29,24 @@ class AidKitEditFragment : Fragment() {
     }
     private var aidKitId: Int? = null
 
+    private var iconId = ICON_DEFAULT
+
     private var _bind: FragmentAidKitEditBinding? = null
     private val bind: FragmentAidKitEditBinding
         get() = _bind ?: throw RuntimeException("FragmentAidKitEditBinding == null")
 
     private lateinit var viewModel : AidKitViewModel
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        component.inject(this)
-    }
+    private lateinit var adapterItem: ListIconsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         parseArgs()
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -76,10 +84,34 @@ class AidKitEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this, viewModelFactory)[AidKitViewModel::class.java]
-        Log.i("check", aidKitId.toString())
         getData()
+        chooseIcon()
         saveEditForm()
+    }
 
+    private fun chooseIcon() {
+        bind.ivIconAidKit.setOnClickListener {
+            showNewDeleteDialog()
+        }
+    }
+
+    //AlertDialog
+    private fun showNewDeleteDialog() {
+        val imageList = layoutInflater.inflate(R.layout.custom_aid_kit, null)
+        val recyclerView = imageList.findViewById<RecyclerView>(R.id.rvCustomAidIcon)
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+        adapterItem = ListIconsAdapter()
+        recyclerView.adapter = adapterItem
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+            .setTitle("Выберите иконку")
+            .setView(imageList)
+        val dialog = dialogBuilder.create()
+        dialog.show()
+        adapterItem.itemSelect = {
+            Picasso.get().load(it).into(bind.ivIconAidKit)
+            iconId = it
+            dialog.dismiss()
+        }
     }
 
     private fun saveEditForm() {
@@ -87,7 +119,8 @@ class AidKitEditFragment : Fragment() {
             bind.bConfirmAddAidKit.setOnClickListener {
                 viewModel.editAidKitItem(
                     etName.text.toString(),
-                    etDescription.text.toString()
+                    etDescription.text.toString(),
+                    iconId
                 )
                 findNavController().navigate(R.id.action_aidKitEditFragment_to_listAidKitFragment)
             }
@@ -95,16 +128,17 @@ class AidKitEditFragment : Fragment() {
     }
 
     private fun getData() {
-        aidKitId?.let {
-            viewModel.getAidKitItem(it)
-        }
         with(bind) {
             aidEdit = viewModel
             lifecycleOwner = viewLifecycleOwner
+        }
+        aidKitId?.let {
+            viewModel.getAidKitItem(it)
         }
     }
 
     companion object {
         const val AID_KIT_ID = "aid_id"
+        const val ICON_DEFAULT = R.drawable.aid_kit_in_list
     }
 }

@@ -6,7 +6,7 @@ import com.tisbus.apte4ka.domain.entity.aidkit.AidKit
 import com.tisbus.apte4ka.domain.repostitory.aidkit.AidKitRepository
 import javax.inject.Inject
 
-class AidKitRepositoryImpl @Inject constructor(private val db : AidKitDao) : AidKitRepository {
+class AidKitRepositoryImpl @Inject constructor(private val db: AidKitDao) : AidKitRepository {
 
     override fun getAidKitList(): LiveData<MutableList<AidKit>> = db.getAidKitList()
 

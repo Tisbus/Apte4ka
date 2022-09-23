@@ -1,5 +1,6 @@
 package com.tisbus.apte4ka.presentation.viewmodel.aidkit
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,7 +20,7 @@ class AidKitViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    private val _aidKitLD = MutableLiveData<AidKit>()
+    private var _aidKitLD = MutableLiveData<AidKit>()
     val aidKitLD: LiveData<AidKit>
         get() = _aidKitLD
 
@@ -28,9 +29,10 @@ class AidKitViewModel @Inject constructor(
     fun addAidKit(
         name: String,
         description: String,
+        icon : Int,
     ) {
         viewModelScope.launch {
-            addAidKitItemUseCase.addAidKitItem(AidKit(name, description))
+            addAidKitItemUseCase.addAidKitItem(AidKit(name, description, icon))
         }
     }
 
@@ -53,12 +55,13 @@ class AidKitViewModel @Inject constructor(
         }
     }
 
-    fun editAidKitItem(name: String, description: String) {
+    fun editAidKitItem(name: String, description: String, icon: Int) {
         _aidKitLD.value?.let {
             viewModelScope.launch {
                 val item = it.copy(
                     name = name,
-                    description = description
+                    description = description,
+                    icon = icon
                 )
                 editAidKitItemUseCase.editAidKitItem(item)
             }

@@ -38,6 +38,8 @@ class AidKitAddFragment : Fragment() {
     }
     private lateinit var adapterItem: ListIconsAdapter
 
+    private var iconId = ICON_DEFAULT
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -85,32 +87,34 @@ class AidKitAddFragment : Fragment() {
 
     //AlertDialog
     private fun showNewDeleteDialog() {
-
         val imageList = layoutInflater.inflate(R.layout.custom_aid_kit, null)
-
         val recyclerView = imageList.findViewById<RecyclerView>(R.id.rvCustomAidIcon)
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
         adapterItem = ListIconsAdapter()
         recyclerView.adapter = adapterItem
-        val dialogBuilder= AlertDialog.Builder(requireContext())
+        val dialogBuilder = AlertDialog.Builder(requireContext())
             .setTitle("Выберите иконку")
             .setView(imageList)
         val dialog = dialogBuilder.create()
         dialog.show()
         adapterItem.itemSelect = {
             Picasso.get().load(it).into(bind.ivIconAidKit)
+            iconId = it
             dialog.dismiss()
         }
-
-
     }
 
     private fun addAidKit() {
         with(bind) {
             viewModel.addAidKit(
                 etName.text.toString(),
-                etDescription.text.toString()
+                etDescription.text.toString(),
+                iconId
             )
         }
+    }
+
+    companion object {
+        const val ICON_DEFAULT = R.drawable.aid_kit_in_list
     }
 }

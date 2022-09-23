@@ -1,6 +1,7 @@
 package com.tisbus.apte4ka.presentation.adapter.preparation
 
 import android.graphics.Color
+import android.util.Log
 import android.widget.CalendarView
 import android.widget.ImageView
 import android.widget.TextView
@@ -14,6 +15,11 @@ import java.util.*
 fun setImagePreparation(iv: ImageView, imgUrl: String?) {
     Picasso.get().load(imgUrl).into(iv)
 /*    Picasso.get().load(imgUrl).rotate(90F).into(iv)*/
+}
+
+@BindingAdapter("setIconAidKit")
+fun setIconAidKit(iv: ImageView, rId: Int) {
+    Picasso.get().load(rId).into(iv)
 }
 
 @BindingAdapter("getCalendarDate")
