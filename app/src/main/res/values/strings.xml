@@ -52,4 +52,7 @@
     <string name="read_notify_img">read_notify_img</string>
     <string name="save_db">Сохранить БД</string>
     <string name="restore_db">Восстановить БД</string>
+    <string name="image_list_aid_kit">image_list_aid_kit</string>
+    <string name="icon_aid_kit">Иконка Аптечки</string>
+    <string name="press_button_icon_change">Нажмите на иконку чтобы заменить</string>
 </resources>
