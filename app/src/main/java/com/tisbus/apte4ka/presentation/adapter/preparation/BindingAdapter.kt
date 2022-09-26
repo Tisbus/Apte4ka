@@ -18,8 +18,10 @@ fun setImagePreparation(iv: ImageView, imgUrl: String?) {
 }
 
 @BindingAdapter("setIconAidKit")
-fun setIconAidKit(iv: ImageView, rId: Int) {
-    Picasso.get().load(rId).into(iv)
+fun setIconAidKit(iv: ImageView, rId: String?) {
+    if (rId != null) {
+        Picasso.get().load(rId.toInt()).into(iv)
+    }
 }
 
 @BindingAdapter("getCalendarDate")

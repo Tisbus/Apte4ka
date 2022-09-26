@@ -99,7 +99,7 @@ class AidKitAddFragment : Fragment() {
         dialog.show()
         adapterItem.itemSelect = {
             Picasso.get().load(it).into(bind.ivIconAidKit)
-            iconId = it
+            iconId = it.toString()
             dialog.dismiss()
         }
     }
@@ -115,6 +115,6 @@ class AidKitAddFragment : Fragment() {
     }
 
     companion object {
-        const val ICON_DEFAULT = R.drawable.aid_kit_in_list
+        const val ICON_DEFAULT = R.drawable.aid_kit_in_list.toString()
     }
 }

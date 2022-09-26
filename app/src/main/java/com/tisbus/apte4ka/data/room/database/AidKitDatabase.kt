@@ -14,7 +14,7 @@ import com.tisbus.apte4ka.domain.entity.packaging.Packaging
 import com.tisbus.apte4ka.domain.entity.preparation.Preparation
 import com.tisbus.apte4ka.domain.entity.symptom.Symptom
 
-@Database(entities = [AidKit::class, Preparation::class, Symptom::class, Packaging::class], version = 2, exportSchema = false)
+@Database(entities = [AidKit::class, Preparation::class, Symptom::class, Packaging::class], version = 1, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class AidKitDatabase : RoomDatabase() {
 
