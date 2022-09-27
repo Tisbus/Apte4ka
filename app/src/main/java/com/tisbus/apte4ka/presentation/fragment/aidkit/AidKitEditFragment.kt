@@ -29,7 +29,9 @@ class AidKitEditFragment : Fragment() {
     }
     private var aidKitId: Int? = null
 
-    private var iconId = ICON_DEFAULT
+    private var _iconId : String? = ""
+    private val iconId : String
+    get() = _iconId ?: throw RuntimeException("iconId == null")
 
     private var _bind: FragmentAidKitEditBinding? = null
     private val bind: FragmentAidKitEditBinding
@@ -109,7 +111,7 @@ class AidKitEditFragment : Fragment() {
         dialog.show()
         adapterItem.itemSelect = {
             Picasso.get().load(it).into(bind.ivIconAidKit)
-            iconId = it.toString()
+            _iconId = it.toString()
             dialog.dismiss()
         }
     }
@@ -117,6 +119,9 @@ class AidKitEditFragment : Fragment() {
     private fun saveEditForm() {
         with(bind) {
             bind.bConfirmAddAidKit.setOnClickListener {
+                if(iconId.isEmpty()){
+                    _iconId = viewModel.aidKitLD.value?.icon
+                }
                 viewModel.editAidKitItem(
                     etName.text.toString(),
                     etDescription.text.toString(),
@@ -139,6 +144,5 @@ class AidKitEditFragment : Fragment() {
 
     companion object {
         const val AID_KIT_ID = "aid_id"
-        const val ICON_DEFAULT = R.drawable.aid_kit_in_list.toString()
     }
 }
