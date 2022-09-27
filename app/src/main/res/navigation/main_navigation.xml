@@ -2,14 +2,13 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/listAidKitFragment"
-    android:id="@+id/main_navigation">
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/listAidKitFragment">
 
     <fragment
         android:id="@+id/aidKitDetailFragment"
-        tools:layout="@layout/fragment_aid_kit_detail"
         android:name="com.tisbus.apte4ka.presentation.fragment.aidkit.AidKitDetailFragment"
-        android:label="AidKitDetailFragment" >
+        tools:layout="@layout/fragment_aid_kit_detail">
         <action
             android:id="@+id/action_aidKitDetailFragment_to_preparationEditFragment"
             app:destination="@id/preparationEditFragment" />
@@ -27,9 +26,9 @@
     </fragment>
     <fragment
         android:id="@+id/listAidKitFragment"
-        tools:layout="@layout/fragment_list_aid_kit"
         android:name="com.tisbus.apte4ka.presentation.fragment.main.ListAidKitFragment"
-        android:label="Apte4ka" >
+        android:label="Список аптечек"
+        tools:layout="@layout/fragment_list_aid_kit">
         <action
             android:id="@+id/action_listAidKitFragment_to_aidKitDetailFragment"
             app:destination="@id/aidKitDetailFragment" />
@@ -50,10 +49,10 @@
             app:destination="@id/preparationAddFragment" />
     </fragment>
     <fragment
-        tools:layout="@layout/fragment_preparation_add"
         android:id="@+id/preparationAddFragment"
         android:name="com.tisbus.apte4ka.presentation.fragment.preparation.PreparationAddFragment"
-        android:label="PreparationAddFragment" >
+        android:label="Добавление препарата"
+        tools:layout="@layout/fragment_preparation_add">
         <action
             android:id="@+id/action_preparationAddFragment_to_aidKitDetailFragment2"
             app:destination="@id/aidKitDetailFragment"
@@ -61,10 +60,10 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        tools:layout="@layout/fragment_preparation_detail"
         android:id="@+id/preparationDetailFragment"
         android:name="com.tisbus.apte4ka.presentation.fragment.preparation.PreparationDetailFragment"
-        android:label="PreparationDetailFragment" >
+        android:label="Детальная страница"
+        tools:layout="@layout/fragment_preparation_detail">
         <action
             android:id="@+id/action_preparationDetailFragment_to_aidKitDetailFragment"
             app:destination="@id/aidKitDetailFragment"
@@ -77,10 +76,10 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        tools:layout="@layout/fragment_preparation_edit"
         android:id="@+id/preparationEditFragment"
         android:name="com.tisbus.apte4ka.presentation.fragment.preparation.PreparationEditFragment"
-        android:label="PreparationEditFragment" >
+        android:label="Изменение препарата"
+        tools:layout="@layout/fragment_preparation_edit">
         <action
             android:id="@+id/action_preparationEditFragment_to_aidKitDetailFragment"
             app:destination="@id/aidKitDetailFragment"
@@ -88,10 +87,10 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        tools:layout="@layout/fragment_search"
         android:id="@+id/searchFragment"
         android:name="com.tisbus.apte4ka.presentation.fragment.search.SearchFragment"
-        android:label="SearchFragment" >
+        android:label="Поиск"
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_searchFragment_to_listAidKitFragment"
             app:destination="@id/listAidKitFragment"
@@ -107,10 +106,10 @@
             app:destination="@id/filterFragment" />
     </fragment>
     <fragment
-        tools:layout="@layout/fragment_aid_kit_add"
         android:id="@+id/aidKitAddFragment"
         android:name="com.tisbus.apte4ka.presentation.fragment.aidkit.AidKitAddFragment"
-        android:label="AidKitAddFragment" >
+        android:label="Добавление аптечки"
+        tools:layout="@layout/fragment_aid_kit_add">
         <action
             android:id="@+id/action_aidKitAddFragment_to_listAidKitFragment"
             app:destination="@id/listAidKitFragment"
@@ -118,10 +117,10 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        tools:layout="@layout/fragment_aid_kit_edit"
         android:id="@+id/aidKitEditFragment"
         android:name="com.tisbus.apte4ka.presentation.fragment.aidkit.AidKitEditFragment"
-        android:label="AidKitEditFragment" >
+        android:label="Редактирование аптечки"
+        tools:layout="@layout/fragment_aid_kit_edit">
         <action
             android:id="@+id/action_aidKitEditFragment_to_listAidKitFragment"
             app:destination="@id/listAidKitFragment"
@@ -129,10 +128,10 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        tools:layout="@layout/fragment_filter"
         android:id="@+id/filterFragment"
         android:name="com.tisbus.apte4ka.presentation.fragment.filter.FilterFragment"
-        android:label="FilterFragment" >
+        android:label="Поиск по фильтру"
+        tools:layout="@layout/fragment_filter">
         <action
             android:id="@+id/action_filterFragment_to_searchFragment"
             app:destination="@id/searchFragment"
@@ -146,9 +145,9 @@
     </fragment>
     <fragment
         android:id="@+id/preparationCopyFragment"
-        tools:layout="@layout/fragment_preparation_copy"
         android:name="com.tisbus.apte4ka.presentation.fragment.preparation.PreparationCopyFragment"
-        android:label="PreparationCopyFragment" >
+        android:label="Копирование препарата"
+        tools:layout="@layout/fragment_preparation_copy">
         <action
             android:id="@+id/action_preparationCopyFragment_to_aidKitDetailFragment"
             app:destination="@id/aidKitDetailFragment" />
@@ -156,8 +155,8 @@
     <fragment
         android:id="@+id/backupFragment"
         android:name="com.tisbus.apte4ka.presentation.fragment.pagemenu.backup.BackupFragment"
-        android:label="fragment_backup"
-        tools:layout="@layout/fragment_backup" >
+        android:label="Создание бекапа"
+        tools:layout="@layout/fragment_backup">
         <action
             android:id="@+id/action_backupFragment_to_listAidKitFragment"
             app:destination="@id/listAidKitFragment" />
@@ -165,8 +164,8 @@
     <fragment
         android:id="@+id/notifyFragment"
         android:name="com.tisbus.apte4ka.presentation.fragment.pagemenu.notify.NotifyFragment"
-        android:label="fragment_notify"
-        tools:layout="@layout/fragment_notify" >
+        android:label="Уведомления"
+        tools:layout="@layout/fragment_notify">
         <action
             android:id="@+id/action_notifyFragment_to_listAidKitFragment"
             app:destination="@id/listAidKitFragment" />
@@ -179,8 +178,8 @@
     <fragment
         android:id="@+id/packagingFragment"
         android:name="com.tisbus.apte4ka.presentation.fragment.pagemenu.packaging.PackagingFragment"
-        android:label="fragment_packaging"
-        tools:layout="@layout/fragment_packaging" >
+        android:label="Фасовка"
+        tools:layout="@layout/fragment_packaging">
         <action
             android:id="@+id/action_packagingFragment_to_listAidKitFragment"
             app:destination="@id/listAidKitFragment" />
@@ -188,8 +187,8 @@
     <fragment
         android:id="@+id/restoreFragment"
         android:name="com.tisbus.apte4ka.presentation.fragment.pagemenu.restore.RestoreFragment"
-        android:label="fragment_restore"
-        tools:layout="@layout/fragment_restore" >
+        android:label="Страница восстановления"
+        tools:layout="@layout/fragment_restore">
         <action
             android:id="@+id/action_restoreFragment_to_listAidKitFragment"
             app:destination="@id/listAidKitFragment" />
@@ -197,8 +196,8 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.tisbus.apte4ka.presentation.fragment.pagemenu.setting.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@xml/root_preferences" >
+        android:label="Настройки"
+        tools:layout="@xml/root_preferences">
         <action
             android:id="@+id/action_settingsFragment_to_listAidKitFragment"
             app:destination="@id/listAidKitFragment" />
@@ -206,8 +205,8 @@
     <fragment
         android:id="@+id/symptomFragment"
         android:name="com.tisbus.apte4ka.presentation.fragment.pagemenu.symptom.SymptomFragment"
-        android:label="fragment_symptom"
-        tools:layout="@layout/fragment_symptom" >
+        android:label="Симптомы"
+        tools:layout="@layout/fragment_symptom">
         <action
             android:id="@+id/action_symptomFragment_to_listAidKitFragment"
             app:destination="@id/listAidKitFragment" />

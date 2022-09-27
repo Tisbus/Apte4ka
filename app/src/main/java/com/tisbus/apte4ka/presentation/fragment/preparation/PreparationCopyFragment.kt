@@ -63,6 +63,10 @@ class PreparationCopyFragment : Fragment() {
     private val aidId: Int
         get() = _aidId ?: throw RuntimeException("aidId == null")
 
+    private var _aidName: String? = null
+    private val aidName: String
+        get() = _aidName ?: throw RuntimeException("_aidName == null")
+
     private var currentDate: String = ""
     private var expDate: String = ""
     private var namePackaging: String = ""
@@ -143,6 +147,7 @@ class PreparationCopyFragment : Fragment() {
             }
             adapterListAidKit.itemSelect = { item ->
                 _aidId = item.id
+                _aidName = item.name
             }
         }
         setupSetImages()
@@ -240,7 +245,7 @@ class PreparationCopyFragment : Fragment() {
                     dateCreate,
                     dateExp)
             }
-            val bundle = bundleOf(AID_KIT_ID to aidId)
+            val bundle = bundleOf(AID_KIT_ID to aidId, AID_KIT_NAME to aidName)
             findNavController().navigate(R.id.action_preparationCopyFragment_to_aidKitDetailFragment,
                 bundle)
         }
@@ -338,6 +343,7 @@ class PreparationCopyFragment : Fragment() {
 
     companion object {
         const val AID_KIT_ID = "aid_id"
+        const val AID_KIT_NAME = "aid_name"
         const val DETAIL_PREP_ID = "detail_prep_id"
     }
 }

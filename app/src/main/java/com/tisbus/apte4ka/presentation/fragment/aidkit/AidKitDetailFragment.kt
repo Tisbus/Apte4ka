@@ -15,7 +15,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tisbus.apte4ka.presentation.AidKitApp
 import com.tisbus.apte4ka.R
 import com.tisbus.apte4ka.databinding.FragmentAidKitDetailBinding
+import com.tisbus.apte4ka.domain.entity.aidkit.AidKit
 import com.tisbus.apte4ka.presentation.adapter.preparation.PreparationAdapter
+import com.tisbus.apte4ka.presentation.fragment.main.ListAidKitFragment
+import com.tisbus.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 import com.tisbus.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
 import com.tisbus.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
 import javax.inject.Inject
@@ -29,6 +32,7 @@ class AidKitDetailFragment : Fragment() {
     }
 
     private var aidKitId: Int? = null
+    private var aidKitName: String? = "В аптечке лежит"
 
     private var _bind: FragmentAidKitDetailBinding? = null
     private val bind: FragmentAidKitDetailBinding
@@ -66,8 +70,15 @@ class AidKitDetailFragment : Fragment() {
         }
     }
 
+    private fun setupTitle() {
+        if (activity is AppCompatActivity) {
+            (activity as AppCompatActivity?)?.supportActionBar?.title = aidKitName
+        }
+    }
+
     private fun parseArgs() {
         aidKitId = arguments?.getInt(AID_KIT_ID)
+        aidKitName = arguments?.getString(AID_KIT_NAME)
     }
 
     override fun onCreateView(
@@ -76,6 +87,7 @@ class AidKitDetailFragment : Fragment() {
     ): View {
         _bind = FragmentAidKitDetailBinding.inflate(layoutInflater, container, false)
         setupBackButton()
+        setupTitle()
         return bind.root
     }
 
@@ -90,7 +102,6 @@ class AidKitDetailFragment : Fragment() {
         addPreparation()
         itemDelete()
         itemEdit()
-
     }
 
     private fun itemEdit() {
@@ -181,6 +192,7 @@ class AidKitDetailFragment : Fragment() {
 
     companion object {
         const val AID_KIT_ID = "aid_id"
+        const val AID_KIT_NAME = "aid_name"
         const val DETAIL_PREP_ID = "detail_prep_id"
     }
 }

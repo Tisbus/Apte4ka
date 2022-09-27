@@ -196,7 +196,7 @@ class ListAidKitFragment : Fragment() {
 
     private fun goToDetailAidKit() {
         adapterAidKit.onItemSelect = {
-            val bundle = bundleOf(AID_KIT_ID to it.id)
+            val bundle = bundleOf(AID_KIT_ID to it.id, AID_KIT_NAME to it.name)
             findNavController().navigate(R.id.action_listAidKitFragment_to_aidKitDetailFragment,
                 bundle)
         }
@@ -257,6 +257,7 @@ class ListAidKitFragment : Fragment() {
 
     companion object {
         const val AID_KIT_ID = "aid_id"
+        const val AID_KIT_NAME = "aid_name"
         const val CHANNEL_ID = "1"
     }
 }
