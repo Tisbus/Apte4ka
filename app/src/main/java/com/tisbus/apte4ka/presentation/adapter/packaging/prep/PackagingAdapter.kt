@@ -3,6 +3,7 @@ package com.tisbus.apte4ka.presentation.adapter.packaging.prep
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.tisbus.apte4ka.R
@@ -29,10 +30,15 @@ class PackagingAdapter(val listPackaging: MutableList<Packaging>) :
         val bind = holder.bind
         bind.packaging = itemPackaging
         if (itemPackaging.status) {
-            bind.cvPackaging.background.setTint(Color.RED)
+            bind.tvPackagingItem.setBackgroundResource(R.color.teal_700)
+            bind.tvPackagingItem.setTextColor(Color.WHITE)
             itemPackaging.status = false
         } else {
-            bind.cvPackaging.background.setTint(Color.WHITE)
+            bind.tvPackagingItem.setBackgroundResource(R.drawable.prep_packaging_shape)
+            bind.tvPackagingItem.setTextColor(ContextCompat.getColor(
+                bind.root.context,
+                R.color.light_black
+            ))
         }
         bind.root.setOnClickListener {
             itemSelect?.invoke(itemPackaging)

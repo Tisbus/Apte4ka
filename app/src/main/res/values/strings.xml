@@ -8,6 +8,7 @@
     <string name="enter_description_aid_kit">Введите описания аптечки</string>
     <string name="description_aid_kit">Описание аптечки</string>
     <string name="button_add">Добавить</string>
+    <string name="button_save">Сохранить</string>
     <string name="img_aid_kit">картинка аптечки</string>
     <string name="button_delete">кнопка удалить</string>
     <string name="button_edit">кнопка изменить</string>

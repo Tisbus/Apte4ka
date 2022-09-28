@@ -3,6 +3,7 @@ package com.tisbus.apte4ka.presentation.adapter.symptom.prep
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.tisbus.apte4ka.R
@@ -28,9 +29,14 @@ class SymptomAdapter(val listSymptom: MutableList<Symptom>) : RecyclerView.Adapt
         val bind = holder.bind
         bind.symptom = itemSymptom
         if (itemSymptom.status) {
-            bind.cvSymptom.background.setTint(Color.RED)
+            bind.tvSymptomsItem.setBackgroundResource(R.color.purple_200)
+            bind.tvSymptomsItem.setTextColor(Color.WHITE)
         } else {
-            bind.cvSymptom.background.setTint(Color.WHITE)
+            bind.tvSymptomsItem.setBackgroundResource(R.drawable.prep_symptom_shape)
+            bind.tvSymptomsItem.setTextColor(ContextCompat.getColor(
+                bind.root.context,
+                R.color.light_black
+            ))
         }
         bind.root.setOnClickListener {
             itemSelect?.invoke(itemSymptom)
