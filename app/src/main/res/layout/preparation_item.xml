@@ -7,7 +7,9 @@
             name="preparation"
             type="com.tisbus.apte4ka.domain.entity.preparation.Preparation" />
     </data>
-    <androidx.cardview.widget.CardView
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/svPrep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="2dp">
@@ -22,24 +24,24 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:contentDescription="@string/prep_img"
-                android:padding="4dp"
-                app:setImagePreparation="@{preparation.image}"
+                android:padding="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:setImagePreparation="@{preparation.image}"
                 app:srcCompat="@drawable/preparation" />
 
             <TextView
                 android:id="@+id/tvNamePreparation"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:gravity="center"
+                android:gravity="start|center"
                 android:padding="2dp"
                 android:text="@{preparation.name}"
                 android:textSize="26sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/tvTextSymptoms"
-                app:layout_constraintEnd_toStartOf="@+id/tvTextPackage"
+                app:layout_constraintBottom_toTopOf="@+id/ivIconSymptom"
+                app:layout_constraintEnd_toStartOf="@+id/ivIconPackage"
                 app:layout_constraintStart_toEndOf="@+id/ivPreparationImg"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Фурацилин" />
@@ -47,50 +49,49 @@
             <TextView
                 android:id="@+id/tvPackage"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="start|center"
                 android:padding="4dp"
                 android:text="@{preparation.packaging}"
                 android:textSize="11sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tvTextPackage"
+                app:layout_constraintStart_toEndOf="@+id/ivIconPackage"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="50 мг" />
+                tools:text="Таблетки" />
 
-            <TextView
-                android:id="@+id/tvTextPackage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:text="@string/text_package"
-                android:textSize="11sp"
-                android:textStyle="bold"
+            <ImageView
+                android:id="@+id/ivIconPackage"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:contentDescription="@string/packaging_list"
+                android:gravity="start|center"
                 app:layout_constraintEnd_toStartOf="@+id/tvPackage"
                 app:layout_constraintStart_toEndOf="@+id/tvNamePreparation"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/icon_packaging" />
 
-            <TextView
-                android:id="@+id/tvTextSymptoms"
-                android:layout_width="70dp"
+            <ImageView
+                android:id="@+id/ivIconSymptom"
+                android:layout_width="30dp"
                 android:layout_height="0dp"
+                android:contentDescription="@string/symptoms"
                 android:gravity="center"
-                android:textStyle="bold"
                 android:padding="4dp"
-                android:text="@string/symptoms"
-                android:textSize="11sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ivPreparationImg"
-                app:layout_constraintTop_toBottomOf="@+id/tvNamePreparation" />
+                app:layout_constraintTop_toBottomOf="@+id/tvNamePreparation"
+                app:srcCompat="@drawable/icon_symptom" />
 
             <TextView
                 android:id="@+id/tvSymptoms"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:gravity="center"
+                android:gravity="start|center"
                 android:padding="4dp"
                 android:textSize="11sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tvTextDataEnd"
-                app:layout_constraintStart_toEndOf="@+id/tvTextSymptoms"
+                app:layout_constraintStart_toEndOf="@+id/ivIconSymptom"
                 app:layout_constraintTop_toBottomOf="@+id/tvNamePreparation"
                 app:makeSymptomsText="@{preparation.symptoms}"
                 tools:text="Кашель, боль в голове" />
@@ -106,7 +107,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/tvTextCountDayEnd"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tvNamePreparation"
-                app:layout_constraintTop_toBottomOf="@+id/tvTextPackage" />
+                app:layout_constraintTop_toBottomOf="@+id/ivIconPackage" />
 
             <TextView
                 android:id="@+id/tvTextCountDayEnd"
@@ -120,8 +121,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tvTextDataEnd"
                 app:layout_constraintTop_toBottomOf="@+id/tvTextDataEnd"
-                tools:text="550 Дней" />
+                tools:text="550 Д" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

@@ -61,7 +61,7 @@ class PreparationEditFragment : Fragment() {
     private val aidId: Int
         get() = _aidId ?: throw RuntimeException("aidId == null")
 
-    private var _aidName: String? = null
+    private var _aidName: String? = ""
     private val aidName: String
         get() = _aidName ?: throw RuntimeException("_aidName == null")
 
@@ -141,6 +141,9 @@ class PreparationEditFragment : Fragment() {
                 if (i.id == aidId) {
                     i.status = true
                 }
+            }
+            if(aidName.isEmpty()){
+                _aidName = it[aidId].name
             }
             adapterListAidKit.itemSelect = { item ->
                 _aidId = item.id
