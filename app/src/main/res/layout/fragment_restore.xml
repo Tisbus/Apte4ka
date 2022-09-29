@@ -8,7 +8,35 @@
         android:layout_height="match_parent"
         tools:context=".presentation.fragment.pagemenu.restore.RestoreFragment">
 
-        <Button
+        <ImageView
+            android:id="@+id/ivBackupIcon"
+            android:layout_width="120dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:background="@color/green"
+            android:contentDescription="@string/backup"
+            android:padding="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvDescBackup"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvDescBackup"
+            app:srcCompat="@drawable/ic_baseline_restore_24" />
+
+        <TextView
+            android:id="@+id/tvDescBackup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/aid_kit_shape"
+            android:gravity="center"
+            android:padding="4dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/text_restore"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/bRestoreDB"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivBackupIcon"
+            app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/bRestoreDB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

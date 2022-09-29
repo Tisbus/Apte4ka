@@ -56,4 +56,6 @@
     <string name="image_list_aid_kit">image_list_aid_kit</string>
     <string name="icon_aid_kit">Иконка Аптечки</string>
     <string name="press_button_icon_change">Нажмите на иконку чтобы заменить</string>
+    <string name="text_backup">Сохраните файл базы данных для переноса на другое устройство</string>
+    <string name="text_restore">Выберите файл базы данных для восстановления на данном устройстве</string>
 </resources>
