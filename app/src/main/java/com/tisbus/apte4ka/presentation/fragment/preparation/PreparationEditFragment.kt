@@ -102,6 +102,7 @@ class PreparationEditFragment : Fragment() {
         arguments?.let {
             idPrep = it.getInt(DETAIL_PREP_ID)
             _aidId = it.getInt(AID_KIT_ID)
+            _aidName = it.getString(AID_KIT_NAME)
         }
     }
 
@@ -141,9 +142,6 @@ class PreparationEditFragment : Fragment() {
                 if (i.id == aidId) {
                     i.status = true
                 }
-            }
-            if(aidName.isEmpty()){
-                _aidName = it[aidId].name
             }
             adapterListAidKit.itemSelect = { item ->
                 _aidId = item.id

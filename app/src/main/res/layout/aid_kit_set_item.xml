@@ -8,7 +8,7 @@
         type="com.tisbus.apte4ka.domain.entity.aidkit.AidKit" />
 </data>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cvAidKitItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,5 +35,5 @@
                 tools:text="Аптечка на кухне" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

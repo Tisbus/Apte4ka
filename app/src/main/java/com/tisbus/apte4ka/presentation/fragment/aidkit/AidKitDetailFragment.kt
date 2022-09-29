@@ -120,7 +120,8 @@ class AidKitDetailFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val bundle =
                     bundleOf(DETAIL_PREP_ID to adapterPrep.currentList[viewHolder.adapterPosition].id,
-                        AID_KIT_ID to aidKitId)
+                        AID_KIT_ID to aidKitId,
+                        AID_KIT_NAME to aidKitName)
 
                 findNavController().navigate(
                     R.id.action_aidKitDetailFragment_to_preparationEditFragment,

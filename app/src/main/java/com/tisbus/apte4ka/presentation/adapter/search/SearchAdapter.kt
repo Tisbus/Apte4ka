@@ -4,11 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.tisbus.apte4ka.R
 import com.tisbus.apte4ka.databinding.SearchItemBinding
 import com.tisbus.apte4ka.domain.entity.preparation.Preparation
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SearchAdapter(private var listPrep: MutableList<Preparation>) :
     RecyclerView.Adapter<SearchViewHolder>(), Filterable {
@@ -29,6 +32,13 @@ class SearchAdapter(private var listPrep: MutableList<Preparation>) :
         bind.preparation = itemSearch
         bind.root.setOnClickListener {
             itemSelect?.invoke(itemSearch)
+        }
+        if (getCountDayToEnd(itemSearch.dateExp)) {
+            bind.svPrep.strokeColor = ContextCompat.getColor(
+                bind.root.context,
+                R.color.red
+            )
+            bind.svPrep.strokeWidth = 2
         }
     }
 
@@ -65,5 +75,15 @@ class SearchAdapter(private var listPrep: MutableList<Preparation>) :
                 notifyDataSetChanged()
             }
         }
+    }
+
+    private fun getCountDayToEnd(endDate: String?): Boolean {
+        val fmt = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val toDay = Date()
+        val eDate = endDate?.let { fmt.parse(it) }
+        val milliseconds = eDate?.time?.minus(toDay.time)
+        val days = (milliseconds?.div(1000) ?: throw RuntimeException("div to zero")).div(3600)
+            .div(24)
+        return days.toInt() <= 30
     }
 }

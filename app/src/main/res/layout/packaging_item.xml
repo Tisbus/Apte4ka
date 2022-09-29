@@ -10,7 +10,7 @@
             type="com.tisbus.apte4ka.domain.entity.packaging.Packaging" />
     </data>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cvPackaging"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,5 +38,5 @@
                 tools:text="Суспензия" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </layout>
