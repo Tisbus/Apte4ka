@@ -24,10 +24,20 @@
             android:text="@{detailPrep.prepLD.name}"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/ivDetImage"
-            app:layout_constraintEnd_toStartOf="@+id/tvDetPackage"
+            app:layout_constraintEnd_toStartOf="@+id/ivPackagingIcon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Фурацилин" />
+
+        <ImageView
+            android:id="@+id/ivPackagingIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="@string/packaging_list"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvTitleDetPrep"
+            app:layout_constraintEnd_toStartOf="@+id/tvDetPackage"
+            app:srcCompat="@drawable/icon_packaging" />
 
         <TextView
             android:id="@+id/tvDetPackage"
@@ -40,9 +50,9 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/tvTitleDetPrep"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tvTitleDetPrep"
+            app:layout_constraintStart_toEndOf="@+id/ivPackagingIcon"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="17 мг" />
+            tools:text="Суспензия" />
 
         <ImageView
             android:id="@+id/ivDetImage"
@@ -62,6 +72,7 @@
             android:id="@+id/tvDetTitleDateCreate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/prep_detail_shape"
             android:gravity="center"
             android:padding="4dp"
             android:text="@string/date_create"
@@ -76,6 +87,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="4dp"
+            android:background="@drawable/prep_detail_shape"
             android:text="@{detailPrep.prepLD.dataCreate}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvDetTitleDateCreate"
@@ -90,6 +102,7 @@
             android:padding="4dp"
             android:text="@string/date_exp"
             android:textStyle="bold"
+            android:background="@drawable/prep_detail_shape"
             app:layout_constraintEnd_toStartOf="@+id/tvDetDateExp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDetTitleDateCreate" />
@@ -100,6 +113,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="4dp"
+            android:background="@drawable/prep_detail_shape"
             android:text="@{detailPrep.prepLD.dateExp}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvDetTitleDateExp"
@@ -114,6 +128,7 @@
             android:padding="4dp"
             android:text="@string/symptoms"
             android:textStyle="bold"
+            android:background="@drawable/prep_detail_shape"
             app:layout_constraintBottom_toBottomOf="@+id/tvDetSymptoms"
             app:layout_constraintEnd_toStartOf="@+id/tvDetSymptoms"
             app:layout_constraintStart_toStartOf="parent"
@@ -125,6 +140,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="4dp"
+            android:background="@drawable/prep_detail_shape"
             app:makeSymptomsText="@{detailPrep.prepLD.symptoms}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvDetTitleSymptoms"
@@ -148,6 +164,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:padding="4dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/prep_detail_shape"
             android:text="@{detailPrep.prepLD.description}"
             app:layout_constraintBottom_toTopOf="@+id/bCopyPrepDetail"
             app:layout_constraintEnd_toEndOf="parent"
@@ -155,11 +173,16 @@
             app:layout_constraintTop_toBottomOf="@+id/tvDetTitleDescription"
             tools:text="TextViewTextViewTextViewTextViewTextView" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/bCopyPrepDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/copy_prep"
+            android:backgroundTint="@color/white"
+            android:textStyle="bold"
+            android:textColor="@color/green"
+            app:strokeColor="@color/very_light_grey"
+            app:strokeWidth="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

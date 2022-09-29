@@ -133,7 +133,7 @@
                 tools:ignore="TextContrastCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/bConfirmAddAidKit"
             style="@style/button_aid_kit"
             android:text="@string/button_save"
