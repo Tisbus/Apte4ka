@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.tisbus.apte4ka.R
 import com.tisbus.apte4ka.databinding.FragmentPreparationAddBinding
 import com.tisbus.apte4ka.domain.entity.aidkit.AidKit
@@ -203,8 +204,12 @@ class PreparationAddFragment : Fragment() {
         val takeImages =
             registerForActivityResult(ActivityResultContracts.TakePicture()) { success: Boolean ->
                 if (success) {
-                    Picasso.get().load(urlImg).into(bind.ivAddPhotoPreparation)
-/*                    Picasso.get().load(urlImg).rotate(90F).into(bind.ivAddPhotoPreparation)*/
+                    Glide.with(this@PreparationAddFragment).load(urlImg).override(
+                        300,
+                        300
+                    ).error(R.drawable.ic_add_a_photo_50).into(bind.ivAddPhotoPreparation)
+/*                    Picasso.get().load(urlImg).into(bind.ivAddPhotoPreparation)
+                    Picasso.get().load(urlImg).rotate(90F).into(bind.ivAddPhotoPreparation)*/
                 }
             }
 

@@ -6,16 +6,31 @@ import android.widget.CalendarView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 import com.tisbus.apte4ka.domain.entity.symptom.Symptom
 import com.squareup.picasso.Picasso
+import com.tisbus.apte4ka.R
 import java.text.SimpleDateFormat
 import java.util.*
 
 @BindingAdapter("setImagePreparation")
 fun setImagePreparation(iv: ImageView, imgUrl: String?) {
-    Picasso.get().load(imgUrl).into(iv)
-/*    Picasso.get().load(imgUrl).rotate(90F).into(iv)*/
+/*    Picasso.get().load(imgUrl).into(iv)
+    Picasso.get().load(imgUrl).rotate(90F).into(iv)*/
+    Glide.with(iv.context).load(imgUrl).override(
+        300,
+        300
+    ).error(R.drawable.ic_add_a_photo_50).into(iv)
 }
+
+@BindingAdapter("setImageDetPreparation")
+fun setImageDetPreparation(iv: ImageView, imgUrl: String?) {
+/*    Picasso.get().load(imgUrl).into(iv)
+    Picasso.get().load(imgUrl).rotate(90F).into(iv)*/
+    Glide.with(iv.context).load(imgUrl)
+        .error(R.drawable.ic_add_a_photo_50).into(iv)
+}
+
 
 @BindingAdapter("setIconAidKit")
 fun setIconAidKit(iv: ImageView, rId: String?) {

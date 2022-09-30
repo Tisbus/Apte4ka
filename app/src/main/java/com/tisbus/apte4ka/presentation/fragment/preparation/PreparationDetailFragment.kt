@@ -2,6 +2,7 @@ package com.tisbus.apte4ka.presentation.fragment.preparation
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -75,6 +76,9 @@ class PreparationDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModelPrep = ViewModelProvider(this, viewModelFactory)[PreparationViewModel::class.java]
         getData()
+        viewModelPrep.listPreparation.observe(viewLifecycleOwner){
+            aidKitId = idPrep?.let { id -> it[id].aidKit }
+        }
         bind.bCopyPrepDetail.setOnClickListener {
             val bundle = bundleOf(DETAIL_PREP_ID to idPrep,
                 AID_KIT_ID to aidKitId)

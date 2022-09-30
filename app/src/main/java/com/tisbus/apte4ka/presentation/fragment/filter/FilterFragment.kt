@@ -230,7 +230,7 @@ class FilterFragment : Fragment() {
     }
 
     private fun goToDetailPreparation(itemId: Int) {
-        val bundle = bundleOf(SearchFragment.DETAIL_PREP_ID to itemId)
+        val bundle = bundleOf(DETAIL_PREP_ID to itemId)
         findNavController().navigate(
             R.id.action_filterFragment_to_preparationDetailFragment,
             bundle
