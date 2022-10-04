@@ -155,7 +155,7 @@ class AidKitDetailFragment : Fragment() {
         val dialogBuilder = AlertDialog.Builder(requireContext())
         dialogBuilder.setTitle("Удаление препарата")
         dialogBuilder.setMessage("Хотите удалить препарат?")
-        val bundle = bundleOf(AID_KIT_ID to aidKitId)
+        val bundle = bundleOf(AID_KIT_ID to aidKitId, AID_KIT_NAME to aidKitName)
         dialogBuilder.setPositiveButton("Да") { dialog, id ->
             val aidItem = adapterPrep.currentList[viewHolder.adapterPosition].id
             prepModel.deletePreparationItem(aidItem)
