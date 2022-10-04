@@ -144,6 +144,7 @@ class PreparationCopyFragment : Fragment() {
             listAidKit.forEach { i ->
                 if (i.id == aidId) {
                     i.status = true
+                    _aidName = i.name
                 }
             }
             adapterListAidKit.itemSelect = { item ->

@@ -40,7 +40,7 @@ class PreparationDetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             idPrep = it.getInt(DETAIL_PREP_ID)
-            aidKitId = arguments?.getInt(AID_KIT_ID)
+            aidKitId = it.getInt(AID_KIT_ID)
         }
         setHasOptionsMenu(true)
     }
@@ -76,10 +76,8 @@ class PreparationDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModelPrep = ViewModelProvider(this, viewModelFactory)[PreparationViewModel::class.java]
         getData()
-        viewModelPrep.listPreparation.observe(viewLifecycleOwner){
-            aidKitId = idPrep?.let { id -> it[id].aidKit }
-        }
         bind.bCopyPrepDetail.setOnClickListener {
+            aidKitId = viewModelPrep.prepLD.value?.aidKit
             val bundle = bundleOf(DETAIL_PREP_ID to idPrep,
                 AID_KIT_ID to aidKitId)
             findNavController().navigate(
