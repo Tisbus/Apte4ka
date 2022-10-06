@@ -2,6 +2,8 @@ package com.tisbus.apte4ka.presentation.fragment.aidkit
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AlertDialog
@@ -87,8 +89,41 @@ class AidKitEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this, viewModelFactory)[AidKitViewModel::class.java]
         getData()
+        checkErrorListener()
         chooseIcon()
         saveEditForm()
+    }
+
+    private fun checkErrorListener() {
+        with(bind){
+            etName.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    viewModel.resetCheckNameError()
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+
+                }
+            }
+            )
+            etDescription.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    viewModel.resetCheckDescError()
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+
+                }
+            })
+        }
     }
 
     private fun chooseIcon() {
@@ -122,14 +157,22 @@ class AidKitEditFragment : Fragment() {
                 if(iconId.isEmpty()){
                     _iconId = viewModel.aidKitLD.value?.icon
                 }
+                val name = etName.text.toString()
+                val desc = etDescription.text.toString()
                 viewModel.editAidKitItem(
-                    etName.text.toString(),
-                    etDescription.text.toString(),
+                    name,
+                    desc,
                     iconId
                 )
-                findNavController().navigate(R.id.action_aidKitEditFragment_to_listAidKitFragment)
+                if(checkError(name, desc)){
+                    findNavController().navigate(R.id.action_aidKitEditFragment_to_listAidKitFragment)
+                }
             }
         }
+    }
+
+    private fun checkError(name: String, desc: String): Boolean {
+        return name.isNotBlank() && desc.isNotBlank()
     }
 
     private fun getData() {

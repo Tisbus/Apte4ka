@@ -91,13 +91,15 @@ class AidKitViewModel @Inject constructor(
 
     fun editAidKitItem(name: String, description: String, icon: String) {
         _aidKitLD.value?.let {
-            viewModelScope.launch {
-                val item = it.copy(
-                    name = name,
-                    description = description,
-                    icon = icon
-                )
-                editAidKitItemUseCase.editAidKitItem(item)
+            if(checkTextError(name, description)) {
+                viewModelScope.launch {
+                    val item = it.copy(
+                        name = name,
+                        description = description,
+                        icon = icon
+                    )
+                    editAidKitItemUseCase.editAidKitItem(item)
+                }
             }
         }
     }
