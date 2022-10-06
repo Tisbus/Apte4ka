@@ -2,6 +2,8 @@ package com.tisbus.apte4ka.presentation.fragment.aidkit
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -21,6 +23,7 @@ import com.tisbus.apte4ka.presentation.adapter.aidkit.list_icons.ListIconsAdapte
 import com.tisbus.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 import com.tisbus.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
 import javax.inject.Inject
+import kotlin.random.Random
 
 class AidKitAddFragment : Fragment() {
 
@@ -74,44 +77,91 @@ class AidKitAddFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        with(bind) {
-            ivIconAidKit.setOnClickListener {
-                showNewDeleteDialog()
+        setupLifeCycle()
+        checkErrorListener()
+        addAidKit()
+        showNewDeleteDialog()
+    }
+
+    private fun setupLifeCycle() {
+        bind.aid = viewModel
+        bind.lifecycleOwner = viewLifecycleOwner
+    }
+
+    private fun checkErrorListener() {
+        with(bind){
+            etName.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    viewModel.resetCheckNameError()
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+
+                }
             }
-            bConfirmAddAidKit.setOnClickListener {
-                addAidKit()
-                findNavController().navigate(R.id.action_aidKitAddFragment_to_listAidKitFragment)
-            }
+            )
+            etDescription.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    viewModel.resetCheckDescError()
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+
+                }
+            })
         }
     }
 
     //AlertDialog
     private fun showNewDeleteDialog() {
-        val imageList = layoutInflater.inflate(R.layout.custom_aid_kit, null)
-        val recyclerView = imageList.findViewById<RecyclerView>(R.id.rvCustomAidIcon)
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
-        adapterItem = ListIconsAdapter()
-        recyclerView.adapter = adapterItem
-        val dialogBuilder = AlertDialog.Builder(requireContext())
-            .setTitle("Выберите иконку")
-            .setView(imageList)
-        val dialog = dialogBuilder.create()
-        dialog.show()
-        adapterItem.itemSelect = {
-            Picasso.get().load(it).into(bind.ivIconAidKit)
-            iconId = it.toString()
-            dialog.dismiss()
+        with(bind) {
+            ivIconAidKit.setOnClickListener {
+                val imageList = layoutInflater.inflate(R.layout.custom_aid_kit, null)
+                val recyclerView = imageList.findViewById<RecyclerView>(R.id.rvCustomAidIcon)
+                recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+                adapterItem = ListIconsAdapter()
+                recyclerView.adapter = adapterItem
+                val dialogBuilder = AlertDialog.Builder(requireContext())
+                    .setTitle("Выберите иконку")
+                    .setView(imageList)
+                val dialog = dialogBuilder.create()
+                dialog.show()
+                adapterItem.itemSelect = {
+                    Picasso.get().load(it).into(ivIconAidKit)
+                    iconId = it.toString()
+                    dialog.dismiss()
+                }
+            }
         }
     }
 
     private fun addAidKit() {
         with(bind) {
-            viewModel.addAidKit(
-                etName.text.toString(),
-                etDescription.text.toString(),
-                iconId
-            )
+            bConfirmAddAidKit.setOnClickListener {
+                val itemName = etName.text.toString()
+                val itemDesc = etDescription.text.toString()
+                viewModel.addAidKit(
+                    itemName,
+                    itemDesc,
+                    iconId
+                )
+                if (checkError(itemName, itemDesc)) {
+                    findNavController().navigate(R.id.action_aidKitAddFragment_to_listAidKitFragment)
+                }
+            }
         }
+    }
+
+    private fun checkError(name: String, desc: String): Boolean {
+        return name.isNotBlank() && desc.isNotBlank()
     }
 
     companion object {

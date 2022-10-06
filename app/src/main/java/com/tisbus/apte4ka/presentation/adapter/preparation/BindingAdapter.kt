@@ -7,6 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.tisbus.apte4ka.domain.entity.symptom.Symptom
 import com.squareup.picasso.Picasso
 import com.tisbus.apte4ka.R
@@ -75,4 +77,23 @@ fun getCountDayToEnd(text: TextView, endDate: String?) {
     }
     val countDay = "${days.toInt()} Д."
     text.text = countDay
+}
+
+@BindingAdapter("checkErrName")
+fun checkErrorName(edit: TextInputLayout, check : Boolean) {
+    val message = if(check){
+        "Поле не должно быть пустое, введите текст"
+    }else{
+        null
+    }
+    edit.error = message
+}
+@BindingAdapter("checkErrDesc")
+fun checkErrorDesc(edit: TextInputLayout, check : Boolean) {
+    val message = if(check){
+        "Поле не должно быть пустое, введите текст"
+    }else{
+        null
+    }
+    edit.error = message
 }
