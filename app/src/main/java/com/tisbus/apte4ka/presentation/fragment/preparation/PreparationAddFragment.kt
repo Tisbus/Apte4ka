@@ -3,6 +3,8 @@ package com.tisbus.apte4ka.presentation.fragment.preparation
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -138,9 +140,17 @@ class PreparationAddFragment : Fragment() {
             recyclerSetupSymptom()
             selectSymptoms()
         }
+        setupLifeCycle()
+        checkErrorListener()
         addNewPreparation()
         setupSetImages()
         setupDate()
+    }
+
+    //need for work update status error
+    private fun setupLifeCycle() {
+        bind.editPrep = prepModel
+        bind.lifecycleOwner = viewLifecycleOwner
     }
 
     private fun selectPackaging() {
@@ -200,6 +210,25 @@ class PreparationAddFragment : Fragment() {
         }
     }
 
+    private fun checkErrorListener() {
+        with(bind){
+            etNamePreparation.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    prepModel.resetCheckNameError()
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+
+                }
+            }
+            )
+        }
+    }
+
     private fun setupSetImages() {
         val takeImages =
             registerForActivityResult(ActivityResultContracts.TakePicture()) { success: Boolean ->
@@ -231,8 +260,8 @@ class PreparationAddFragment : Fragment() {
     }
 
     private fun addNewPreparation() {
-        bind.bAddPreparation.setOnClickListener {
-            with(bind) {
+        with(bind) {
+            bAddPreparation.setOnClickListener {
                 val name = etNamePreparation.text.toString()
                 val image = urlImg.toString()
                 val symptom: MutableList<Symptom> = mutableListOf()
@@ -253,11 +282,17 @@ class PreparationAddFragment : Fragment() {
                     description,
                     dateCreate,
                     dateExp)
+                if(checkError(name)){
+                    val bundle = bundleOf(AID_KIT_ID to aidId, AID_KIT_NAME to aidName)
+                    findNavController().navigate(R.id.action_preparationAddFragment_to_aidKitDetailFragment2,
+                        bundle)
+                }
             }
-            val bundle = bundleOf(AID_KIT_ID to aidId, AID_KIT_NAME to aidName)
-            findNavController().navigate(R.id.action_preparationAddFragment_to_aidKitDetailFragment2,
-                bundle)
         }
+    }
+
+    private fun checkError(name: String): Boolean {
+        return name.isNotBlank()
     }
 
     private fun recyclerSetup(): RecyclerView {

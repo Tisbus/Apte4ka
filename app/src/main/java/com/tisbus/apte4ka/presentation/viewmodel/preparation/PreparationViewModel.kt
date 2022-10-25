@@ -28,6 +28,26 @@ class PreparationViewModel @Inject constructor(
     private val application: Application,
 ) : ViewModel() {
 
+
+    private val _prepCheckNameError = MutableLiveData<Boolean>()
+    val prepCheckNameError : LiveData<Boolean>
+        get() = _prepCheckNameError
+
+    private fun checkTextError(name : String) : Boolean{
+        var result = true
+        if(name.isBlank()){
+            _prepCheckNameError.value = true
+            result = false
+        }else{
+            _prepCheckNameError.value = false
+        }
+        return result
+    }
+
+    fun resetCheckNameError(){
+        _prepCheckNameError.value = false
+    }
+
     val listPreparation = getPreparationListUseCase.getPreparationList()
 
     private var _prepLD = MutableLiveData<Preparation>()
@@ -60,18 +80,20 @@ class PreparationViewModel @Inject constructor(
         dateCreate: String,
         dateExp: String,
     ) {
-        viewModelScope.launch {
-            addPreparationItemUseCase.addPreparationItem(
-                Preparation(
-                    aidKitId,
-                    name,
-                    image,
-                    symptoms,
-                    packaging,
-                    description,
-                    dateCreate,
-                    dateExp)
-            )
+        if(checkTextError(name)){
+            viewModelScope.launch {
+                addPreparationItemUseCase.addPreparationItem(
+                    Preparation(
+                        aidKitId,
+                        name,
+                        image,
+                        symptoms,
+                        packaging,
+                        description,
+                        dateCreate,
+                        dateExp)
+                )
+            }
         }
     }
 
@@ -105,18 +127,20 @@ class PreparationViewModel @Inject constructor(
         dateExp: String,
     ) {
         _prepLD.value?.let {
-            val item = it.copy(
-                aidKit = aidKitId,
-                name = name,
-                image = image,
-                symptoms = symptoms,
-                packaging = packaging,
-                description = description,
-                dataCreate = dateCreate,
-                dateExp = dateExp
-            )
-            viewModelScope.launch {
-                editPreparationItemUseCase.editPreparationItem(item)
+            if (checkTextError(name)) {
+                val item = it.copy(
+                    aidKit = aidKitId,
+                    name = name,
+                    image = image,
+                    symptoms = symptoms,
+                    packaging = packaging,
+                    description = description,
+                    dataCreate = dateCreate,
+                    dateExp = dateExp
+                )
+                viewModelScope.launch {
+                    editPreparationItemUseCase.editPreparationItem(item)
+                }
             }
         }
     }
@@ -132,19 +156,21 @@ class PreparationViewModel @Inject constructor(
         dateExp: String,
     ) {
         _prepLD.value?.let {
-            val item = it.copy(
-                aidKit = aidKitId,
-                name = name,
-                image = image,
-                symptoms = symptoms,
-                packaging = packaging,
-                description = description,
-                dataCreate = dateCreate,
-                dateExp = dateExp,
-                id = Preparation.UNDEFINED_ID
-            )
-            viewModelScope.launch {
-                copyPreparationItemUseCase.copyPreparationItem(item)
+            if (checkTextError(name)) {
+                val item = it.copy(
+                    aidKit = aidKitId,
+                    name = name,
+                    image = image,
+                    symptoms = symptoms,
+                    packaging = packaging,
+                    description = description,
+                    dataCreate = dateCreate,
+                    dateExp = dateExp,
+                    id = Preparation.UNDEFINED_ID
+                )
+                viewModelScope.launch {
+                    copyPreparationItemUseCase.copyPreparationItem(item)
+                }
             }
         }
     }
