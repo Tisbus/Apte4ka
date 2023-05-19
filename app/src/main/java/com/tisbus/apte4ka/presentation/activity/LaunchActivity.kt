@@ -9,18 +9,23 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 
+
 class LaunchActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //hide status bar
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        super.onCreate(savedInstanceState)
+        splashScreenDelay()
+    }
+
+    //hide status bar
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
         } else {
             window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
         }
-        super.onCreate(savedInstanceState)
-        splashScreenDelay()
     }
     //Delay launch activity
     private fun splashScreenDelay() {
