@@ -33,9 +33,6 @@ import com.tisbus.apte4ka.presentation.viewmodel.aidkit.AidKitViewModel
 import com.tisbus.apte4ka.presentation.viewmodel.factory.AidKitViewModelFactory
 import com.tisbus.apte4ka.presentation.viewmodel.lists.ListsViewModel
 import com.tisbus.apte4ka.presentation.viewmodel.preparation.PreparationViewModel
-import com.squareup.picasso.Picasso
-import com.tisbus.apte4ka.data.lists.packaging.ListPackaging
-import com.tisbus.apte4ka.data.lists.symptom.ListSymptom
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -124,18 +121,18 @@ class PreparationAddFragment : Fragment() {
         aidKitModel.listAidKit.observe(viewLifecycleOwner) {
             listAidKit = it
             recyclerSetup()
-            adapterListAidKit.itemSelect = {item ->
+            adapterListAidKit.itemSelect = { item ->
                 _aidId = item.id
                 _aidName = item.name
                 Log.i("itemId", aidId.toString())
             }
         }
-        listsModel.listPackaging.observe(viewLifecycleOwner){
+        listsModel.listPackaging.observe(viewLifecycleOwner) {
             listPackaging = it
             recyclerSetupPackaging()
             selectPackaging()
         }
-        listsModel.listSymptom.observe(viewLifecycleOwner){
+        listsModel.listSymptom.observe(viewLifecycleOwner) {
             listSymptoms = it
             recyclerSetupSymptom()
             selectSymptoms()
@@ -199,6 +196,14 @@ class PreparationAddFragment : Fragment() {
             ->
             currentDate = getDate(year, month, day)
         }
+        fun getCurDate(): String {
+            val dateFormat = SimpleDateFormat("dd.MM.yyyy")
+            val calendar = Calendar.getInstance().time
+            return dateFormat.format(calendar)
+        }
+        if (currentDate.isEmpty()) {
+            currentDate = getCurDate()
+        }
 
         bind.cvDateExp.setOnDateChangeListener {
                 calendarView,
@@ -211,7 +216,7 @@ class PreparationAddFragment : Fragment() {
     }
 
     private fun checkErrorListener() {
-        with(bind){
+        with(bind) {
             etNamePreparation.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
@@ -282,7 +287,7 @@ class PreparationAddFragment : Fragment() {
                     description,
                     dateCreate,
                     dateExp)
-                if(checkError(name)){
+                if (checkError(name)) {
                     val bundle = bundleOf(AID_KIT_ID to aidId, AID_KIT_NAME to aidName)
                     findNavController().navigate(R.id.action_preparationAddFragment_to_aidKitDetailFragment2,
                         bundle)
